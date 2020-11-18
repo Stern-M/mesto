@@ -1,15 +1,18 @@
 .root__footer {
-  margin: 0 auto 0;
-  padding: 5.796rem 3.024rem 1.512rem;
+  margin: 4.19rem auto 3.75rem;
 }
 
 @media screen and (max-width: 1280px) {
   .root__footer {
     margin: 0;
+    padding: 4.19rem calc((100% - 880px)/2) 3.75rem;
+    /*padding-top: 4.19rem;
+    padding-left: calc(100% - 880px);
+    padding-bottom: 3.75rem;*/
   }
 }
 
-@media screen and (max-width: 1024px) {
+/*@media screen and (max-width: 1024px) {
   .root__footer {
     padding: 5.922rem 3.024rem 1.512rem;
   }
@@ -19,10 +22,10 @@
   .root__footer {
     padding: 5.544rem 1.512rem 1.512rem;
   }
-}
+}*/
 
 @media screen and (max-width: 320px) {
   .root__footer {
-    padding: 4.032rem 7.434rem 1.512rem 1.008rem;
+    padding: 3rem 1.19rem 2.25rem;
   }
 }

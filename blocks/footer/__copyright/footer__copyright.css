@@ -1,27 +1,20 @@
 .footer__copyright {
   margin: 0;
-  text-align: end;
-  font-size: 14px;
-  line-height: 114%;
+  font-size: 18px;
+  line-height: 100%;
   font-weight: 400;
-  color: white;
+  color: #545454;
 }
 
-@media screen and (max-width: 575px) {
+/*@media screen and (max-width: 575px) {
   .footer__copyright {
     font-size: 12px;
     line-height: 14px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
   }
-}
+}*/
 
 @media screen and (max-width: 320px) {
   .footer__copyright {
-    line-height: 100%;
-    text-align: start;
-    min-width: 186px;
-    padding-top: 1.008rem;
+    font-size: 14px;
   }
 }
