@@ -1,22 +1,22 @@
 .root__header {
-  margin: 0 auto 0;
-  padding: 1.764rem 3.024rem 0;
+  margin: 2.8rem auto 0;
+  padding: 0;
 }
 
 @media screen and (max-width: 1280px) {
   .root__header {
-    margin: 0;
+    margin: 2.8rem 12.5rem 0;
   }
 }
 
 @media screen and (max-width: 768px) {
   .root__header {
-    padding: 1.764rem 1.512rem 0;
+    margin: 1.764rem 1.512rem 0;
   }
 }
 
 @media screen and (max-width: 320px) {
   .root__header {
-    padding: 1.008rem 1.008rem 0;
+    margin: 1.75rem 0 0;
   }
 }
