@@ -3,23 +3,20 @@
   box-sizing: content-box;
 }
 
-/*@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1024px) {
   .footer {
-    max-width: 100%;
+    max-width: 650px;
   }
 }
 
-@media screen and (max-width: 368px) {
+@media screen and (max-width: 768px) {
   .footer {
-    padding-top: 64px;
-    padding-left: 16px;
+    max-width: 28rem;
   }
 }
 
 @media screen and (max-width: 320px) {
   .footer {
-    min-height: 310px;
-    flex-direction: column;
-    margin: 0;
+    max-width: 17.6rem;
   }
-}*/
+}

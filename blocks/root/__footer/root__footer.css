@@ -6,23 +6,20 @@
   .root__footer {
     margin: 0;
     padding: 4.19rem calc((100% - 880px)/2) 3.75rem;
-    /*padding-top: 4.19rem;
-    padding-left: calc(100% - 880px);
-    padding-bottom: 3.75rem;*/
   }
 }
 
-/*@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
   .root__footer {
-    padding: 5.922rem 3.024rem 1.512rem;
+    padding: 4.19rem calc((100% - 650px)/2) 3.75rem;
   }
 }
 
 @media screen and (max-width: 768px) {
   .root__footer {
-    padding: 5.544rem 1.512rem 1.512rem;
+    padding: 4.19rem calc((100% - 28rem)/2) 3.75rem;
   }
-}*/
+}
 
 @media screen and (max-width: 320px) {
   .root__footer {
