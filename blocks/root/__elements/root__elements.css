@@ -1,0 +1,47 @@
+.root__places {
+  margin: 5.796rem auto 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1280px) {
+  .root__places {
+    margin: 5.796rem 9.324rem 0;
+  }
+}
+
+@media screen and (max-width: 1155px) {
+  .root__places {
+    margin: 5.796rem 5.324rem 0;
+  }
+}
+
+@media screen and (max-width: 1063px) {
+  .root__places {
+    margin: 5.796rem 2.50rem 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .root__places {
+    margin: 5.796rem 3.024rem 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .root__places {
+    margin: 5.544rem 1.512rem 0;
+  }
+}
+
+@media screen and (max-width: 421px) {
+  .root__places {
+    margin: 5.544rem  0 0 0.5rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .root__places {
+    margin: 4.032rem 0 0;
+  }
+}

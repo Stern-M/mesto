@@ -1,0 +1,28 @@
+.root__footer {
+  margin: 0 auto 0;
+  padding: 5.796rem 3.024rem 1.512rem;
+}
+
+@media screen and (max-width: 1280px) {
+  .root__footer {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .root__footer {
+    padding: 5.922rem 3.024rem 1.512rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .root__footer {
+    padding: 5.544rem 1.512rem 1.512rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .root__footer {
+    padding: 4.032rem 7.434rem 1.512rem 1.008rem;
+  }
+}
