@@ -3,3 +3,20 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media screen and (max-width: 645px) {
+  .profile {
+    display: grid;
+    row-gap: 10px;
+    justify-content: normal;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile {
+    max-width: 282px;
+    display: grid;
+    row-gap: 10px;
+    justify-content: normal;
+  }
+}

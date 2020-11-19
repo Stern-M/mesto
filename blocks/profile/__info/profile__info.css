@@ -3,3 +3,19 @@
   grid-template-columns: 120px minmax(min-content, max-content);
   column-gap: 24px;
 }
+
+@media screen and (max-width: 645px) {
+  .profile__info {
+    grid-template-columns: auto;
+    justify-content: center;
+    row-gap: 22.2px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile__info {
+    grid-template-columns: auto;
+    justify-content: center;
+    row-gap: 22.2px;
+  }
+}

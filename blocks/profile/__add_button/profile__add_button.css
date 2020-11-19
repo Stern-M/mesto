@@ -8,3 +8,17 @@
   border: 1px solid #ffffff;
   align-self: center;
 }
+
+@media screen and (max-width: 645px) {
+  .profile__add_button {
+    width: 100%;
+    padding-top: 46px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile__add_button {
+    width: 100%;
+    padding-top: 46px;
+  }
+}
