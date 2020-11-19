@@ -1,0 +1,9 @@
+.element__group {
+  grid-row: 2/2;
+  background-color: white;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.56rem 0.9rem 1.9rem 1.3rem;
+}
