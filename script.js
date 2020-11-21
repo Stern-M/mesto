@@ -7,7 +7,6 @@ const ProfileSubTitleNode = document.querySelector('.profile__subtitle');
 const SaveButtonNode = document.querySelector('.popup__save_button');
 
 
-
 ProfileEditButton.addEventListener('click', togglePopupVisibility);
 PopupCancelButtonNode.addEventListener('click', togglePopupVisibility);
 SaveButtonNode.addEventListener('click', togglePopupVisibility);
@@ -16,11 +15,15 @@ function togglePopupVisibility() {
   PopupNode.classList.toggle('popup_visible');
 }
 
+document.getElementById("1").value = ProfileTitleNode.textContent;
+document.getElementById("2").value = ProfileSubTitleNode.textContent;
+
 const form1 = document.querySelector('.popup__container');
 const form2 = document.querySelector('.popup__container');
 
 form1.addEventListener('submit', NameFormSubmit) & ('click', togglePopupVisibility);
 form2.addEventListener('submit', descriptionFormSubmit);
+
 
 function NameFormSubmit(event) {
   console.log(event.currentTarget);
@@ -29,9 +32,11 @@ function NameFormSubmit(event) {
   ProfileTitleNode.textContent = TitleInputNode.value;
 }
 
+
 function descriptionFormSubmit(event) {
   console.log(event.currentTarget);
   event.preventDefault();
   const SubInputNode = event.currentTarget.querySelector('.popup__description');
   ProfileSubTitleNode.textContent = SubInputNode.value;
 }
+

@@ -7,6 +7,7 @@
   background-color: #000000;
   border: 1px solid #ffffff;
   align-self: center;
+  outline: none;
 }
 
 @media screen and (max-width: 645px) {

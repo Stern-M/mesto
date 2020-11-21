@@ -9,6 +9,13 @@
   }
 }
 
+@media screen and (max-width: 915px) {
+  .root__profile {
+    margin: 0;
+    padding: 2.5rem calc((100% - 645px)/2) 0;
+  }
+}
+
 @media screen and (max-width: 645px) {
   .root__profile {
     padding: 2.62rem calc((100% - 500px)/2) 0;

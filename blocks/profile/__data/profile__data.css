@@ -12,14 +12,11 @@
   .profile__data {
     column-gap: 10px;
     row-gap: 14px;
-    padding-left: 46px;
   }
 }
 
 @media screen and (max-width: 320px) {
   .profile__data {
-    column-gap: 10px;
-    row-gap: 14px;
     padding-left: 46px;
   }
 }

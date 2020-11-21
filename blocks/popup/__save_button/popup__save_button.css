@@ -9,6 +9,7 @@
   background-color: black;
   color: white;
   box-sizing: border-box;
+  outline: none;
 }
 
 @media screen and (max-width: 570px) {

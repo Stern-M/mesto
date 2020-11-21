@@ -8,6 +8,7 @@
   background-position: center;
   background-color: #000000;
   border: 1px solid #ffffff;
+  outline: none;
 }
 
 @media screen and (max-width: 320px) {
