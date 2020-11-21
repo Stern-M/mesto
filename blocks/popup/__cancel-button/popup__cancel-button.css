@@ -21,7 +21,7 @@
   }
 }
 
-.popup__cance-button:hover {
+.popup__cancel-button:hover {
   cursor: pointer;
   opacity: 60%;
 }
