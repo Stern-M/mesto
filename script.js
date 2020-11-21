@@ -1,9 +1,9 @@
-let ProfileEditButton = document.querySelector('.profile__edit_button');
+let ProfileEditButton = document.querySelector('.profile__edit-button');
 let PopupNode = document.querySelector('.popup');
-let PopupCancelButtonNode = document.querySelector('.popup__cancel_button');
+let PopupCancelButtonNode = document.querySelector('.popup__cancel-button');
 let ProfileTitleNode = document.querySelector('.profile__title');
 let ProfileSubTitleNode = document.querySelector('.profile__subtitle');
-let SaveButtonNode = document.querySelector('.popup__save_button');
+let SaveButtonNode = document.querySelector('.popup__save-button');
 
 ProfileEditButton.addEventListener('click', togglePopupVisibility);
 PopupCancelButtonNode.addEventListener('click', togglePopupVisibility);

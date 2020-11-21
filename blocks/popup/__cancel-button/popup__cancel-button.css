@@ -1,4 +1,4 @@
-.popup__cancel_button {
+.popup__cancel-button {
   position: absolute;
   background-image: url("../../../images/popup__close_button.png");
   background-color: transparent;
@@ -13,7 +13,7 @@
 }
 
 @media screen and (max-width: 570px) {
-  .popup__cancel_button {
+  .popup__cancel-button {
     width: 26px;
     height: 26px;
     top: -39px;
@@ -21,7 +21,7 @@
   }
 }
 
-.popup__cancel_button:hover {
+.popup__cance-button:hover {
   cursor: pointer;
   opacity: 60%;
 }
