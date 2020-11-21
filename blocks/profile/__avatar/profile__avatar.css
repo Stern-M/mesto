@@ -8,9 +8,3 @@
     justify-self: center;
   }
 }
-
-@media screen and (max-width: 320px) {
-  .profile__avatar {
-    justify-self: center;
-  }
-}

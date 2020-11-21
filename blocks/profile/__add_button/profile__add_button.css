@@ -17,13 +17,6 @@
   }
 }
 
-@media screen and (max-width: 320px) {
-  .profile__add_button {
-    width: 100%;
-    padding-top: 46px;
-  }
-}
-
 .profile__add_button:hover {
   cursor: pointer;
   opacity: 60%;
