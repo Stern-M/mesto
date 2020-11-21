@@ -9,3 +9,14 @@
   align-self: center;
   padding: 0;
 }
+
+.element__like_button:hover {
+  cursor: pointer;
+  opacity: 50%;
+}
+
+.element__like_button:active {
+  background-image: url("../../../images/element__like_button_active.png");
+  opacity: 100%;
+  border: none;
+}

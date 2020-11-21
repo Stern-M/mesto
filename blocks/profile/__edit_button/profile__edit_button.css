@@ -16,3 +16,8 @@
     height: 18px;
   }
 }
+
+.profile__edit_button:hover {
+  cursor: pointer;
+  opacity: 60%;
+}
