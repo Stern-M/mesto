@@ -1,6 +1,6 @@
 .popup__cancel-button {
   position: absolute;
-  background-image: url("../../../images/popup__close_button.png");
+  background-image: url("../../../images/popup__close_button.svg");
   background-color: transparent;
   background-position: center;
   border: none;
