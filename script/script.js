@@ -4,34 +4,31 @@ let popupCancelButtonNode = document.querySelector('.popup__cancel-button');
 let profileTitleNode = document.querySelector('.profile__title');
 let profileSubTitleNode = document.querySelector('.profile__subtitle');
 let saveButtonNode = document.querySelector('.popup__save-button');
-let form = document.querySelector('.popup__container');
-
-profileEditButton.addEventListener('click', togglePopupVisibility);
-popupCancelButtonNode.addEventListener('click', togglePopupVisibility);
-saveButtonNode.addEventListener('click', togglePopupVisibility);
+let forms = document.querySelector('.popup__data');
+let titleInputNode = document.querySelector('.popup__data_name');
+let subInputNode = document.querySelector('.popup__data_description');
 
 function togglePopupVisibility() {
   popupNode.classList.toggle('popup_visible');
 }
 
-document.getElementById("1").value = profileTitleNode.textContent;
-document.getElementById("2").value = profileSubTitleNode.textContent;
+profileEditButton.addEventListener('click', togglePopupVisibility);
+popupCancelButtonNode.addEventListener('click', togglePopupVisibility);
+/*saveButtonNode.addEventListener('submit', togglePopupVisibility);*/
 
+/*forms.forEach((formNode) => {
+    formNode.addEventListener('submit', popFormSubmit);
+});*/
 
-form.addEventListener('submit', NameFormSubmit) & ('click', togglePopupVisibility);
-form2.addEventListener('submit', descriptionFormSubmit);
+forms.addEventListener('submit', popFormSubmit);
 
-function NameFormSubmit(event) {
-  console.log(event.currentTarget);
+function popFormSubmit(event) {
   event.preventDefault();
-  let titleInputNode = event.currentTarget.querySelector('.popup__data_name');
-  profileTitleNode.textContent = titleInputNode.value;
+  titleInputNode.value = profileTitleNode.textContent;
+  subInputNode.value = profileSubTitleNode.textContent;
+  profileTitleNode.textContent = event.currentTarget.titleInputNode.value;
+  profileSubTitleNode.textContent = event.currentTarget.subInputNode.value;
 }
 
-function descriptionFormSubmit(event) {
-  console.log(event.currentTarget);
-  event.preventDefault();
-  let subInputNode = event.currentTarget.querySelector('.popup__data_description');
-  profileSubTitleNode.textContent = subInputNode.value;
-}
+
 
