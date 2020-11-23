@@ -5,8 +5,8 @@ let profileTitleNode = document.querySelector('.profile__title');
 let profileSubTitleNode = document.querySelector('.profile__subtitle');
 let saveButtonNode = document.querySelector('.popup__save-button');
 let forms = document.querySelector('.popup__container');
-let titleInputNode = document.querySelector('.popup__data_name');
-let subInputNode = document.querySelector('.popup__data_description');
+let titleInputNode = document.querySelector('.popup__data_input_name');
+let subInputNode = document.querySelector('.popup__data_input_description');
 
 function togglePopupVisibility() {
   popupNode.classList.toggle('popup_visible');
