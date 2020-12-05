@@ -1,4 +1,5 @@
 let profileEditButton = document.querySelector('.profile__edit-button');
+let profileAddButton = document.querySelector('.profile__add-button');
 let popupNode = document.querySelector('.popup');
 let popupCancelButtonNode = document.querySelector('.popup__cancel-button');
 let profileTitleNode = document.querySelector('.profile__title');
@@ -27,6 +28,7 @@ function popFormSubmit(event) {
 
 profileEditButton.addEventListener('click', togglePopupVisibility);
 popupCancelButtonNode.addEventListener('click', togglePopupVisibilitynone);
+profileAddButton.addEventListener('click', togglePopupVisibility);
 forms.addEventListener('submit', popFormSubmit);
 
 
