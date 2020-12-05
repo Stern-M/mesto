@@ -5,7 +5,10 @@ let popupCancelButtonNode = document.querySelector('.popup__cancel-button');
 let profileTitleNode = document.querySelector('.profile__title');
 let profileSubTitleNode = document.querySelector('.profile__subtitle');
 let saveButtonNode = document.querySelector('.popup__save-button');
-let forms = document.querySelector('.popup__container');
+let popupInputTitle = document.querySelector('.popup__data_input_title');
+let popupInputUrl = document.querySelector('.popup__data_input_url');
+let form1 = document.querySelector('.popup__container');
+let form2 = document.querySelector('.popup__add');
 let titleInputNode = document.querySelector('.popup__data_input_name');
 let subInputNode = document.querySelector('.popup__data_input_description');
 
@@ -15,21 +18,33 @@ function togglePopupVisibility() {
   subInputNode.value = profileSubTitleNode.textContent;
 }
 
+function togglePopupAddVisibility() {
+  popupNode.classList.toggle('popup_visible');
+}
+
 function togglePopupVisibilitynone() {
   popupNode.classList.toggle('popup_visible');
 }
 
-function popFormSubmit(event) {
-  event.preventDefault();
+function popForm1Submit(event1) {
+  event1.preventDefault();
   profileTitleNode.textContent = titleInputNode.value;
   profileSubTitleNode.textContent = subInputNode.value;
   popupNode.classList.toggle('popup_visible');
 }
 
+function popForm2Submit(event2) {
+  event2.preventDefault();
+  /*profileTitleNode.textContent = titleInputNode.value;
+  profileSubTitleNode.textContent = subInputNode.value;*/
+  popupNode.classList.toggle('popup_visible');
+}
+
 profileEditButton.addEventListener('click', togglePopupVisibility);
 popupCancelButtonNode.addEventListener('click', togglePopupVisibilitynone);
-profileAddButton.addEventListener('click', togglePopupVisibility);
-forms.addEventListener('submit', popFormSubmit);
+profileAddButton.addEventListener('click', togglePopupAddVisibility);
+form1.addEventListener('submit', popForm1Submit);
+form2.addEventListener('submit', popForm2Submit);
 
 
 
