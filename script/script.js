@@ -1,3 +1,48 @@
+const initialCards = [
+  {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+]; 
+
+const cardContainerElement = document.querySelector('.elements');
+const templateElement = document.querySelector('.element');
+
+function renderCards() {
+  const cardItems = initialCards.map(composeItem);
+  cardContainerElement.append(...cardItems);
+}
+
+function composeItem(item) {
+  const newCard = templateElement.content.cloneNode(true);
+  const cardTitle = newCard.querySelector('.element__title');
+  const cardImage = newCard.querySelector('.element__image');
+  cardTitle.textContent = item.name;
+  cardImage.src = item.link;
+  return newCard;
+}
+renderCards();
+
 let profileEditButton = document.querySelector('.profile__edit-button');
 let profileAddButton = document.querySelector('.profile__add-button');
 let popupNode = document.querySelector('.popup');
