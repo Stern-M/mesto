@@ -26,7 +26,7 @@ const initialCards = [
 ]; 
 
 const cardContainerElement = document.querySelector('.elements');
-const templateElement = document.querySelector('.element');
+const templateElement = document.querySelector('.template');
 
 function renderCards() {
   const cardItems = initialCards.map(composeItem);
