@@ -75,15 +75,16 @@ function togglePopupAddVisibility() {
   popupAddingNode.classList.toggle('popup_visible');
 }
 
-function togglePopupVisibilitynone() {
-  popupProfileNode.classList.toggle('popup_visible');
+function togglePopupVisibilitynone(event) {
+  const targetPopup = event.target.closest('.popup');
+  targetPopup.classList.remove('popup_visible');
 }
 
 
 renderCards();
 profileEditButton.addEventListener('click', togglePopupVisibility);
-popupCancelButtonNode.addEventListener('click', togglePopupVisibilitynone);
 profileAddButton.addEventListener('click', togglePopupAddVisibility);
+popupCancelButtonNode.addEventListener('click', togglePopupVisibilitynone);
 
 // все что выше - работает
 
