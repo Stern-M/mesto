@@ -22,8 +22,9 @@
       </div>
       <button type="button" class="profile__add-button" aria-label="добавить данные"></button>
     </section>
-    <section class="elements root__elements"> 
+    <!--<section class="elements root__elements"> 
       <div class="element">
+        <button type="button" class="element__remove-button" aria-label="удалить элемент"></button>
         <img class="element__image" src="images/Karachaevsk.jpg" alt="Карачаевск">
         <div class="element__group">
           <h2 class="element__title">Карачаево-Черкесск</h2>
@@ -65,7 +66,7 @@
           <button type="button" class="element__like-button" aria-label="поставить лайк"></button>
         </div>
       </div>
-    </section>
+    </section>-->
   </main>
   <footer class="footer root__footer">
     <p class="footer__copyright">© 2020 Mesto Russia</p>
@@ -88,6 +89,16 @@
       <button type="submit" class="popup__save-button" aria-label="сохранить и закрыть">Сохранить</button>
     </form>
   </div>
+  <template class="elements root__elements"> 
+    <div class="element">
+      <button type="button" class="element__remove-button" aria-label="удалить элемент"></button>
+      <img class="element__image" src="" alt="Карачаевск">
+      <div class="element__group">
+        <h2 class="element__title"></h2>
+        <button type="button" class="element__like-button" aria-label="поставить лайк"></button>
+      </div>
+    </div>
+    </template>
   <script src="./script/script.js"></script>
 </body>
 </html>
