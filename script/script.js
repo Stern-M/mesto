@@ -36,10 +36,11 @@ let popupCancelAddeButton = document.querySelector('.popup__cancel-adding');
 let profileTitleNode = document.querySelector('.profile__title');
 let profileSubTitleNode = document.querySelector('.profile__subtitle');
 let saveButtonNode = document.querySelector('.popup__save-button');
+let addButtonNode = document.querySelector('.popup__add-button');
 let popupInputTitle = document.querySelector('.popup__data_input_title');
 let popupInputUrl = document.querySelector('.popup__data_input_url');
-let form1 = document.querySelector('.popup__container');
-let form2 = document.querySelector('.popup__add');
+let formEdit = document.querySelector('.popup__container');
+let formAdd = document.querySelector('.popup__add');
 let titleInputNode = document.querySelector('.popup__data_input_name');
 let subInputNode = document.querySelector('.popup__data_input_description');
 
@@ -59,22 +60,22 @@ function composeItem(item) {
   return newCard;
 }
 
-function addRemoveListenerToCard(item){       
+function addRemoveListenerToCard(item) {       
   const removeButton = item.querySelector('.element__remove-button');
   removeButton.addEventListener('click', removeCard);
 }
 
-function removeCard(event){
+function removeCard(event) {
   const targetCard = event.target.closest('.element');
   targetCard.remove();
 }
 
-function addLikeListenerToCard(item){
+function addLikeListenerToCard(item) {
   const likeButton = item.querySelector('.element__like-button');
   likeButton.addEventListener('click', toggleLike);
 }
 
-function toggleLike(event){
+function toggleLike(event) {
   const targetLike = event.target.closest('.element__like-button');
   targetLike.classList.toggle('element__like-active');
 }
@@ -89,6 +90,7 @@ function togglePopupAddVisibility() {
   popupAddingNode.classList.toggle('popup_visible');
   popupInputTitle.value = '';
   popupInputUrl.value = '';
+  popFormAddSubmitListener(formAdd);
 }
 
 function togglePopupEditVisibilitynone() {
@@ -99,21 +101,31 @@ function togglePopupAddVisibilitynone() {
   popupAddingNode.classList.toggle('popup_visible');
 }
 
-function popForm1Submit(event) {
+function popFormSubmit(event) {
   event.preventDefault();
   profileTitleNode.textContent = titleInputNode.value;
   profileSubTitleNode.textContent = subInputNode.value;
   popupProfileNode.classList.toggle('popup_visible');
 }
 
-form1.addEventListener('submit', popForm1Submit);
+function popFormAddSubmitListener() {
+  addButtonNode.addEventListener('submit', addNewCard);
+}
+
+function addNewCard() {
+  let cardTitle = popupInputTitle.value;
+  let cardImage = popupInputUrl.value;
+  const newCard = composeItem({name:cardTitle, link:cardImage});
+  cardContainerElement.prepend(newCard);
+  popupAddingNode.classList.toggle('popup_visible');
+}
 
 renderCards();
 profileEditButton.addEventListener('click', togglePopupVisibility);
 profileAddButton.addEventListener('click', togglePopupAddVisibility);
 popupCancelProfileButton.addEventListener('click', togglePopupEditVisibilitynone);
 popupCancelAddeButton.addEventListener('click', togglePopupAddVisibilitynone);
-
+formEdit.addEventListener('submit', popFormSubmit);
 
 
 // все что выше - работает
@@ -134,7 +146,11 @@ function removeListenersToCard(){
 }
 
 
-
+function bindAddItemListener() {
+  event.preventDefault();
+  const addButtonElement = document.querySelector('.button_add');
+  addButtonElement.addEventListener('click', addNewItem)
+}
 
 
 function togglePopupVisibility() {
