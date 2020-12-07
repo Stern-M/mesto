@@ -42,7 +42,6 @@ let form1 = document.querySelector('.popup__container');
 let form2 = document.querySelector('.popup__add');
 let titleInputNode = document.querySelector('.popup__data_input_name');
 let subInputNode = document.querySelector('.popup__data_input_description');
-//let removeButton = document.querySelectorAll('.element__remove-button');
 
 function renderCards() {
   const cardItems = initialCards.map(composeItem);
@@ -56,6 +55,7 @@ function composeItem(item) {
   cardTitle.textContent = item.name;
   cardImage.src = item.link;
   addRemoveListenerToCard(newCard);
+  addLikeListenerToCard(newCard);
   return newCard;
 }
 
@@ -69,6 +69,16 @@ function removeCard(event){
   targetCard.remove();
 }
 
+function addLikeListenerToCard(item){
+  const likeButton = item.querySelector('.element__like-button');
+  likeButton.addEventListener('click', toggleLike);
+}
+
+function toggleLike(event){
+  const targetLike = event.target.closest('.element__like-button');
+  targetLike.classList.toggle('element__like-active');
+}
+
 function togglePopupVisibility() {
   popupProfileNode.classList.toggle('popup_visible');
   titleInputNode.value = profileTitleNode.textContent;
@@ -77,6 +87,8 @@ function togglePopupVisibility() {
 
 function togglePopupAddVisibility() {
   popupAddingNode.classList.toggle('popup_visible');
+  popupInputTitle.value = '';
+  popupInputUrl.value = '';
 }
 
 function togglePopupEditVisibilitynone() {
@@ -102,7 +114,7 @@ profileAddButton.addEventListener('click', togglePopupAddVisibility);
 popupCancelProfileButton.addEventListener('click', togglePopupEditVisibilitynone);
 popupCancelAddeButton.addEventListener('click', togglePopupAddVisibilitynone);
 
-//removeButton.addEventListener('click', removeItem);
+
 
 // все что выше - работает
 
