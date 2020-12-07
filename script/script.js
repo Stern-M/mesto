@@ -42,6 +42,7 @@ let form1 = document.querySelector('.popup__container');
 let form2 = document.querySelector('.popup__add');
 let titleInputNode = document.querySelector('.popup__data_input_name');
 let subInputNode = document.querySelector('.popup__data_input_description');
+//let removeButton = document.querySelectorAll('.element__remove-button');
 
 function renderCards() {
   const cardItems = initialCards.map(composeItem);
@@ -54,7 +55,18 @@ function composeItem(item) {
   const cardImage = newCard.querySelector('.element__image');
   cardTitle.textContent = item.name;
   cardImage.src = item.link;
+  addRemoveListenerToCard(newCard);
   return newCard;
+}
+
+function addRemoveListenerToCard(item){       
+  const removeButton = item.querySelector('.element__remove-button');
+  removeButton.addEventListener('click', removeCard);
+}
+
+function removeCard(event){
+  const targetCard = event.target.closest('.element');
+  targetCard.remove();
 }
 
 function togglePopupVisibility() {
@@ -90,6 +102,8 @@ profileAddButton.addEventListener('click', togglePopupAddVisibility);
 popupCancelProfileButton.addEventListener('click', togglePopupEditVisibilitynone);
 popupCancelAddeButton.addEventListener('click', togglePopupAddVisibilitynone);
 
+//removeButton.addEventListener('click', removeItem);
+
 // все что выше - работает
 
 /*function addNewCardListener(){
@@ -105,11 +119,6 @@ function addNewCard(){
 function removeListenersToCard(){       
   const removeButton = document.querySelector('.element__remove-button');
   removeButton.addEventListener('click', removeItem);
-}
-
-function removeItem(event){
-  const targetCard = event.target.closest('.element');
-  targetCard.remove();
 }
 
 
