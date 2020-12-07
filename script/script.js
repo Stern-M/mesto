@@ -27,12 +27,12 @@ const initialCards = [
 
 const cardContainerElement = document.querySelector('.elements');
 const templateElement = document.querySelector('.template');
-
 let profileEditButton = document.querySelector('.profile__edit-button');
 let profileAddButton = document.querySelector('.profile__add-button');
-let popupProfileNode = document.querySelector('.popup');
+let popupProfileNode = document.querySelector('.popup-profile');
 let popupAddingNode = document.querySelector('.popup-adding');
-let popupCancelButtonNode = document.querySelector('.popup__cancel-button');
+let popupCancelProfileButton = document.querySelector('.popup__cancel-profile');
+let popupCancelAddeButton = document.querySelector('.popup__cancel-adding');
 let profileTitleNode = document.querySelector('.profile__title');
 let profileSubTitleNode = document.querySelector('.profile__subtitle');
 let saveButtonNode = document.querySelector('.popup__save-button');
@@ -63,28 +63,32 @@ function togglePopupVisibility() {
   subInputNode.value = profileSubTitleNode.textContent;
 }
 
-function popForm1Submit(event1) {
-  event1.preventDefault();
-  profileTitleNode.textContent = titleInputNode.value;
-  profileSubTitleNode.textContent = subInputNode.value;
-  popupProfileNode.classList.toggle('popup_visible');
-}
-form1.addEventListener('submit', popForm1Submit);
-
 function togglePopupAddVisibility() {
   popupAddingNode.classList.toggle('popup_visible');
 }
 
-function togglePopupVisibilitynone(event) {
-  const targetPopup = event.target.closest('.popup');
-  targetPopup.classList.remove('popup_visible');
+function togglePopupEditVisibilitynone() {
+  popupProfileNode.classList.toggle('popup_visible');
 }
 
+function togglePopupAddVisibilitynone() {
+  popupAddingNode.classList.toggle('popup_visible');
+}
+
+function popForm1Submit(event) {
+  event.preventDefault();
+  profileTitleNode.textContent = titleInputNode.value;
+  profileSubTitleNode.textContent = subInputNode.value;
+  popupProfileNode.classList.toggle('popup_visible');
+}
+
+form1.addEventListener('submit', popForm1Submit);
 
 renderCards();
 profileEditButton.addEventListener('click', togglePopupVisibility);
 profileAddButton.addEventListener('click', togglePopupAddVisibility);
-popupCancelButtonNode.addEventListener('click', togglePopupVisibilitynone);
+popupCancelProfileButton.addEventListener('click', togglePopupEditVisibilitynone);
+popupCancelAddeButton.addEventListener('click', togglePopupAddVisibilitynone);
 
 // все что выше - работает
 
