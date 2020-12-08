@@ -57,6 +57,7 @@ function composeItem(item) {
   cardImage.src = item.link;
   addRemoveListenerToCard(newCard);
   addLikeListenerToCard(newCard);
+  addImageListenerToCard(newCard);
   return newCard;
 }
 
@@ -73,6 +74,23 @@ function removeCard(event) {
 function addLikeListenerToCard(item) {
   const likeButton = item.querySelector('.element__like-button');
   likeButton.addEventListener('click', toggleLike);
+}
+
+function addImageListenerToCard(item) {
+  const imageReview = item.querySelector('.element__image-button');
+  imageReview.addEventListener('click', cardReview);
+}
+
+function cardReview(event) {
+  const targetCardReview = document.querySelector('.popup-preview');
+  targetCardReview.classList.toggle('popup__review_visible');
+  const previewImage = event.target.closest('.element__image');
+  const popupImage = document.querySelector('.popup__image');
+  const previewElement = event.target.closest('.element');
+  const previewTitle = previewElement.querySelector('.element__title');
+  const popupPreviewTitel = document.querySelector('.popup__review-title');
+  popupImage.src = previewImage.src;
+  popupPreviewTitel.textContent = previewTitle.textContent;
 }
 
 function toggleLike(event) {
@@ -112,7 +130,8 @@ function popFormAddSubmitListener() {
   formAdd.addEventListener('submit', addNewCard);
 }
 
-function addNewCard() {
+function addNewCard(event) {
+  event.preventDefault();
   let cardTitle = popupInputTitle.value;
   let cardImage = popupInputUrl.value;
   const newCard = composeItem({name:cardTitle, link:cardImage});

@@ -46,10 +46,17 @@
       <button type="submit" class="popup__add-button" aria-label="сохранить и закрыть">Создать</button>
     </form>
   </div>
+  <div class="popup popup-preview">
+    <div class="popup__review">
+      <button type="button" class="popup__cancel-button" aria-label="закрыть окно"></button>
+      <img class="popup__image" src="">
+      <h2 class="popup__review-title"></h2>
+    </div>
+  </div>
   <template class="template">
     <div class="element">
       <button type="button" class="element__remove-button" aria-label="удалить элемент"></button>
-      <img class="element__image" src="" alt="Карачаевск">
+      <button type="button" class="element__image-button"><img class="element__image" src="" alt="Карачаевск"></button>
       <div class="element__group">
         <h2 class="element__title"></h2>
         <button type="button" class="element__like-button" aria-label="поставить лайк"></button>
