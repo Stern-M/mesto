@@ -31,8 +31,10 @@ let profileEditButton = document.querySelector('.profile__edit-button');
 let profileAddButton = document.querySelector('.profile__add-button');
 let popupProfileNode = document.querySelector('.popup-profile');
 let popupAddingNode = document.querySelector('.popup-adding');
+const targetCardReview = document.querySelector('.popup-preview');
 let popupCancelProfileButton = document.querySelector('.popup__cancel-profile');
 let popupCancelAddeButton = document.querySelector('.popup__cancel-adding');
+let popupCancelReviewButton = document.querySelector('.popup__cancel-review')
 let profileTitleNode = document.querySelector('.profile__title');
 let profileSubTitleNode = document.querySelector('.profile__subtitle');
 let saveButtonNode = document.querySelector('.popup__save-button');
@@ -82,7 +84,6 @@ function addImageListenerToCard(item) {
 }
 
 function cardReview(event) {
-  const targetCardReview = document.querySelector('.popup-preview');
   targetCardReview.classList.toggle('popup__review_visible');
   const previewImage = event.target.closest('.element__image');
   const popupImage = document.querySelector('.popup__image');
@@ -91,6 +92,10 @@ function cardReview(event) {
   const popupPreviewTitel = document.querySelector('.popup__review-title');
   popupImage.src = previewImage.src;
   popupPreviewTitel.textContent = previewTitle.textContent;
+}
+
+function reviewClose() {
+  targetCardReview.classList.toggle('popup__review_visible');
 }
 
 function toggleLike(event) {
@@ -145,6 +150,7 @@ profileAddButton.addEventListener('click', togglePopupAddVisibility);
 popupCancelProfileButton.addEventListener('click', togglePopupEditVisibilitynone);
 popupCancelAddeButton.addEventListener('click', togglePopupAddVisibilitynone);
 formEdit.addEventListener('submit', popFormSubmit);
+popupCancelReviewButton.addEventListener('click', reviewClose);
 
 
 // все что выше - работает
