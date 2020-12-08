@@ -109,7 +109,7 @@ function popFormSubmit(event) {
 }
 
 function popFormAddSubmitListener() {
-  addButtonNode.addEventListener('submit', addNewCard);
+  formAdd.addEventListener('submit', addNewCard);
 }
 
 function addNewCard() {
