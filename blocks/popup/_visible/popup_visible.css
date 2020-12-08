@@ -1,4 +1,6 @@
 .popup_visible {
   display: flex;
   background-color: rgba(0, 0, 0, 0.5);
+  visibility: visible;
+  opacity: 1;
 }

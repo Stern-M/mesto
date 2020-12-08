@@ -57,6 +57,7 @@ function composeItem(item) {
   const cardImage = newCard.querySelector('.element__image');
   cardTitle.textContent = item.name;
   cardImage.src = item.link;
+  cardImage.alt = item.name;
   addRemoveListenerToCard(newCard);
   addLikeListenerToCard(newCard);
   addImageListenerToCard(newCard);
@@ -91,6 +92,7 @@ function cardReview(event) {
   const previewTitle = previewElement.querySelector('.element__title');
   const popupPreviewTitel = document.querySelector('.popup__review-title');
   popupImage.src = previewImage.src;
+  popupImage.alt = previewTitle.textContent;
   popupPreviewTitel.textContent = previewTitle.textContent;
 }
 
