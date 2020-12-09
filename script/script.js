@@ -80,7 +80,7 @@ function addImageListenerToCard(item) {
 }
 
 function reviewCard(event) {
-  const targetCardReview = document.querySelector('.popup__preview');
+  const targetCardReview = document.querySelector('.popup_preview');
   targetCardReview.classList.remove('popup__close');
   targetCardReview.classList.add('popup__review_visible');
   const previewImage = event.target.closest('.element__image');
