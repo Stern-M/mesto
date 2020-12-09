@@ -27,24 +27,19 @@ const initialCards = [
 
 const cardContainerElement = document.querySelector('.elements');
 const templateElement = document.querySelector('.template');
-let profileEditButton = document.querySelector('.profile__edit-button');
-let profileAddButton = document.querySelector('.profile__add-button');
-let popupProfileNode = document.querySelector('.popup-profile');
-let popupAddingNode = document.querySelector('.popup-adding');
-const targetCardReview = document.querySelector('.popup-preview');
-let popupCancelProfileButton = document.querySelector('.popup__cancel-profile');
-let popupCancelAddeButton = document.querySelector('.popup__cancel-adding');
-let popupCancelReviewButton = document.querySelector('.popup__cancel-review')
-let profileTitleNode = document.querySelector('.profile__title');
-let profileSubTitleNode = document.querySelector('.profile__subtitle');
-let saveButtonNode = document.querySelector('.popup__save-button');
-let addButtonNode = document.querySelector('.popup__add-button');
-let popupInputTitle = document.querySelector('.popup__data_input_title');
-let popupInputUrl = document.querySelector('.popup__data_input_url');
-let formEdit = document.querySelector('.popup__container');
-let formAdd = document.querySelector('.popup__add');
-let titleInputNode = document.querySelector('.popup__data_input_name');
-let subInputNode = document.querySelector('.popup__data_input_description');
+const profileEditButton = document.querySelector('.profile__edit-button');
+const profileAddButton = document.querySelector('.profile__add-button');
+const popupProfileNode = document.querySelector('.popup__profile-form');
+const popupAddingNode = document.querySelector('.popup__adding-form');
+const popupCloseButtons = [...document.querySelectorAll('.popup__cancel-button')];
+const profileTitleNode = document.querySelector('.profile__title');
+const profileSubTitleNode = document.querySelector('.profile__subtitle');
+const popupInputTitle = document.querySelector('.popup__data_input_title');
+const popupInputUrl = document.querySelector('.popup__data_input_url');
+const formEdit = document.querySelector('.popup__container');
+const formAdd = document.querySelector('.popup__add');
+const titleInputNode = document.querySelector('.popup__data_input_name');
+const subInputNode = document.querySelector('.popup__data_input_description');
 
 function renderCards() {
   const cardItems = initialCards.map(composeItem);
@@ -85,10 +80,11 @@ function addImageListenerToCard(item) {
 }
 
 function cardReview(event) {
+  const targetCardReview = document.querySelector('.popup__preview');
   targetCardReview.classList.remove('popup__close');
   targetCardReview.classList.add('popup__review_visible');
   const previewImage = event.target.closest('.element__image');
-  const popupImage = document.querySelector('.popup__image');
+  const popupImage = document.querySelector('.popup__review-image');
   const previewElement = event.target.closest('.element');
   const previewTitle = previewElement.querySelector('.element__title');
   const popupPreviewTitel = document.querySelector('.popup__review-title');
@@ -97,17 +93,12 @@ function cardReview(event) {
   popupPreviewTitel.textContent = previewTitle.textContent;
 }
 
-function reviewClose() {
-  targetCardReview.classList.remove('popup__review_visible');
-  targetCardReview.classList.add('popup__close');
-}
-
 function toggleLike(event) {
   const targetLike = event.target.closest('.element__like-button');
   targetLike.classList.toggle('element__like-active');
 }
 
-function togglePopupVisibility() {
+function togglePopupEditVisibility() {
   popupProfileNode.classList.remove('popup__close');
   popupProfileNode.classList.add('popup_visible');
   titleInputNode.value = profileTitleNode.textContent;
@@ -120,16 +111,6 @@ function togglePopupAddVisibility() {
   popupInputTitle.value = '';
   popupInputUrl.value = '';
   popFormAddSubmitListener(formAdd);
-}
-
-function togglePopupEditVisibilitynone() {
-  popupProfileNode.classList.remove('popup_visible');
-  popupProfileNode.classList.add('popup__close');
-}
-
-function togglePopupAddVisibilitynone() {
-  popupAddingNode.classList.remove('popup_visible');
-  popupAddingNode.classList.add('popup__close');
 }
 
 function popFormSubmit(event) {
@@ -146,24 +127,53 @@ function popFormAddSubmitListener() {
 
 function addNewCard(event) {
   event.preventDefault();
-  let cardTitle = popupInputTitle.value;
-  let cardImage = popupInputUrl.value;
+  const cardTitle = popupInputTitle.value;
+  const cardImage = popupInputUrl.value;
   const newCard = composeItem({name:cardTitle, link:cardImage});
   cardContainerElement.prepend(newCard);
   popupAddingNode.classList.remove('popup_visible');
   popupAddingNode.classList.add('popup__close');
 }
 
+function closePopup(popup) {
+  popup.classList.remove('popup_visible');
+  popup.classList.remove('popup__review_visible');
+  popup.classList.add('popup__close');
+}
+
+popupCloseButtons.forEach((button) => {
+  button.addEventListener('click', function(evt) {
+    closePopup(evt.target.closest('.popup'));
+  });
+})
+
 renderCards();
-profileEditButton.addEventListener('click', togglePopupVisibility);
+profileEditButton.addEventListener('click', togglePopupEditVisibility);
 profileAddButton.addEventListener('click', togglePopupAddVisibility);
-popupCancelProfileButton.addEventListener('click', togglePopupEditVisibilitynone);
-popupCancelAddeButton.addEventListener('click', togglePopupAddVisibilitynone);
 formEdit.addEventListener('submit', popFormSubmit);
-popupCancelReviewButton.addEventListener('click', reviewClose);
+
 
 
 // все что выше - работает
+
+/*function reviewClose() {
+  targetCardReview.classList.remove('popup__review_visible');
+  targetCardReview.classList.add('popup__close');
+}*/
+
+//popupCancelProfileButton.addEventListener('click', togglePopupEditVisibilitynone);
+//popupCancelAddeButton.addEventListener('click', togglePopupAddVisibilitynone);
+//popupCancelReviewButton.addEventListener('click', reviewClose);
+
+/*function togglePopupEditVisibilitynone() {
+  popupProfileNode.classList.remove('popup_visible');
+  popupProfileNode.classList.add('popup__close');
+}
+
+function togglePopupAddVisibilitynone() {
+  popupAddingNode.classList.remove('popup_visible');
+  popupAddingNode.classList.add('popup__close');
+}*/
 
 /*function addNewCardListener(){
   profileAddButton.addEventListener('click', togglePopupVisibility)
