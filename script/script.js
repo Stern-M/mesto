@@ -76,10 +76,10 @@ function addLikeListenerToCard(item) {
 
 function addImageListenerToCard(item) {
   const imageReview = item.querySelector('.element__image-button');
-  imageReview.addEventListener('click', cardReview);
+  imageReview.addEventListener('click', reviewCard);
 }
 
-function cardReview(event) {
+function reviewCard(event) {
   const targetCardReview = document.querySelector('.popup__preview');
   targetCardReview.classList.remove('popup__close');
   targetCardReview.classList.add('popup__review_visible');
@@ -113,7 +113,7 @@ function togglePopupAddVisibility() {
   popFormAddSubmitListener(formAdd);
 }
 
-function popFormSubmit(event) {
+function submitPopupEditForm(event) {
   event.preventDefault();
   profileTitleNode.textContent = titleInputNode.value;
   profileSubTitleNode.textContent = subInputNode.value;
@@ -150,85 +150,4 @@ popupCloseButtons.forEach((button) => {
 renderCards();
 profileEditButton.addEventListener('click', togglePopupEditVisibility);
 profileAddButton.addEventListener('click', togglePopupAddVisibility);
-formEdit.addEventListener('submit', popFormSubmit);
-
-
-
-// все что выше - работает
-
-/*function reviewClose() {
-  targetCardReview.classList.remove('popup__review_visible');
-  targetCardReview.classList.add('popup__close');
-}*/
-
-//popupCancelProfileButton.addEventListener('click', togglePopupEditVisibilitynone);
-//popupCancelAddeButton.addEventListener('click', togglePopupAddVisibilitynone);
-//popupCancelReviewButton.addEventListener('click', reviewClose);
-
-/*function togglePopupEditVisibilitynone() {
-  popupProfileNode.classList.remove('popup_visible');
-  popupProfileNode.classList.add('popup__close');
-}
-
-function togglePopupAddVisibilitynone() {
-  popupAddingNode.classList.remove('popup_visible');
-  popupAddingNode.classList.add('popup__close');
-}*/
-
-/*function addNewCardListener(){
-  profileAddButton.addEventListener('click', togglePopupVisibility)
-}
-addNewCardListener();
-
-function addNewCard(){
-  let newItem =  composeItem(item);
-  cardContainerElement.prepend(newItem);
-}
-
-function removeListenersToCard(){       
-  const removeButton = document.querySelector('.element__remove-button');
-  removeButton.addEventListener('click', removeItem);
-}
-
-
-function bindAddItemListener() {
-  event.preventDefault();
-  const addButtonElement = document.querySelector('.button_add');
-  addButtonElement.addEventListener('click', addNewItem)
-}
-
-
-function togglePopupVisibility() {
-  popupNode.classList.toggle('popup_visible');
-  titleInputNode.value = profileTitleNode.textContent;
-  subInputNode.value = profileSubTitleNode.textContent;
-}
-
-function togglePopupAddVisibility() {
-  popupNode.classList.toggle('popup_visible');
-}
-
-
-
-
-
-function popForm2Submit(event2) {
-  event2.preventDefault();
-  profileTitleNode.textContent = titleInputNode.value;
-  profileSubTitleNode.textContent = subInputNode.value;
-  popupNode.classList.toggle('popup_visible');
-}
-
-
-
-
-//form2.addEventListener('submit', popForm2Submit);
-
-
-
-
-
-/* popupCloseButton.addEventListener('click', function(evt) {
-  const targetPopup = evt.target.closest('.popup');
-  targetPopup.classList.remove('popup_opened');
-});*/
+formEdit.addEventListener('submit', submitPopupEditForm);
