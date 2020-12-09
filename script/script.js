@@ -85,7 +85,8 @@ function addImageListenerToCard(item) {
 }
 
 function cardReview(event) {
-  targetCardReview.classList.toggle('popup__review_visible');
+  targetCardReview.classList.remove('popup__close');
+  targetCardReview.classList.add('popup__review_visible');
   const previewImage = event.target.closest('.element__image');
   const popupImage = document.querySelector('.popup__image');
   const previewElement = event.target.closest('.element');
@@ -97,7 +98,8 @@ function cardReview(event) {
 }
 
 function reviewClose() {
-  targetCardReview.classList.toggle('popup__review_visible');
+  targetCardReview.classList.remove('popup__review_visible');
+  targetCardReview.classList.add('popup__close');
 }
 
 function toggleLike(event) {
@@ -106,31 +108,36 @@ function toggleLike(event) {
 }
 
 function togglePopupVisibility() {
-  popupProfileNode.classList.toggle('popup_visible');
+  popupProfileNode.classList.remove('popup__close');
+  popupProfileNode.classList.add('popup_visible');
   titleInputNode.value = profileTitleNode.textContent;
   subInputNode.value = profileSubTitleNode.textContent;
 }
 
 function togglePopupAddVisibility() {
-  popupAddingNode.classList.toggle('popup_visible');
+  popupAddingNode.classList.remove('popup__close');
+  popupAddingNode.classList.add('popup_visible');
   popupInputTitle.value = '';
   popupInputUrl.value = '';
   popFormAddSubmitListener(formAdd);
 }
 
 function togglePopupEditVisibilitynone() {
-  popupProfileNode.classList.toggle('popup_visible');
+  popupProfileNode.classList.remove('popup_visible');
+  popupProfileNode.classList.add('popup__close');
 }
 
 function togglePopupAddVisibilitynone() {
-  popupAddingNode.classList.toggle('popup_visible');
+  popupAddingNode.classList.remove('popup_visible');
+  popupAddingNode.classList.add('popup__close');
 }
 
 function popFormSubmit(event) {
   event.preventDefault();
   profileTitleNode.textContent = titleInputNode.value;
   profileSubTitleNode.textContent = subInputNode.value;
-  popupProfileNode.classList.toggle('popup_visible');
+  popupProfileNode.classList.remove('popup_visible');
+  popupProfileNode.classList.add('popup__close');
 }
 
 function popFormAddSubmitListener() {
@@ -143,7 +150,8 @@ function addNewCard(event) {
   let cardImage = popupInputUrl.value;
   const newCard = composeItem({name:cardTitle, link:cardImage});
   cardContainerElement.prepend(newCard);
-  popupAddingNode.classList.toggle('popup_visible');
+  popupAddingNode.classList.remove('popup_visible');
+  popupAddingNode.classList.add('popup__close');
 }
 
 renderCards();

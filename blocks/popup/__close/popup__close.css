@@ -1,0 +1,15 @@
+.popup__close {
+  display: flex;
+  animation-name: visibility;
+  animation-duration: 0.5s;
+}
+
+@keyframes visibility {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
