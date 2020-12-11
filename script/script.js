@@ -29,7 +29,7 @@ const cardContainerElement = document.querySelector('.elements');
 const templateElement = document.querySelector('.template');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
-const popupOpenButton = [...document.querySelectorAll('.profile_button')];
+const popupOpenButton = [...document.querySelectorAll('.profile__popup-open-button')];
 const popupProfileNode = document.querySelector('.popup_profile_form');
 const popupAddingNode = document.querySelector('.popup_adding_form');
 const popupCloseButtons = [...document.querySelectorAll('.popup__cancel-button')];
@@ -51,35 +51,26 @@ function composeItem({name, link}) {
   const newCard = templateElement.content.cloneNode(true);
   const cardTitle = newCard.querySelector('.element__title');
   const cardImage = newCard.querySelector('.element__image');
+  const likeButton = newCard.querySelector('.element__like-button');
+  const removeButton = newCard.querySelector('.element__remove-button');
   cardTitle.textContent = name;
   cardImage.src = link;
   cardImage.alt = name;
-  addRemoveListenerToCard(newCard);
-  addLikeListenerToCard(newCard);
   cardImage.addEventListener('click', function(){
     imageReview(name, link);
+  });
+  likeButton.addEventListener('click', function(){
+    handleLikeIcon(likeButton);
+  });
+  removeButton.addEventListener('click', function(event){
+    const targetCard = event.target.closest('.element');
+    targetCard.remove();
   });
   return newCard;
 }
 
-function addRemoveListenerToCard(item) {       
-  const removeButton = item.querySelector('.element__remove-button');
-  removeButton.addEventListener('click', handleDeleteCard);
-}
-
-function handleDeleteCard(event) {
-  const targetCard = event.target.closest('.element');
-  targetCard.remove();
-}
-
-function addLikeListenerToCard(item) {
-  const likeButton = item.querySelector('.element__like-button');
-  likeButton.addEventListener('click', handleLikeIcon);
-}
-
-function handleLikeIcon(event) {
-  const targetLike = event.target.closest('.element__like-button');
-  targetLike.classList.toggle('element__like-active');
+function handleLikeIcon(likeButton) {
+  likeButton.classList.toggle('element__like-active');
 }
 
 const imageReview = (name, link) => {
