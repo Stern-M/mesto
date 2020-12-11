@@ -29,9 +29,10 @@ const cardContainerElement = document.querySelector('.elements');
 const templateElement = document.querySelector('.template');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
+const popupOpenButton = [...document.querySelectorAll('.profile_button')];
 const popupProfileNode = document.querySelector('.popup_profile_form');
 const popupAddingNode = document.querySelector('.popup_adding_form');
-const popupCloseButtons = [...document.querySelectorAll('.popup__cancel-button')];
+const popupCloseButtons = [...document.querySelectorAll('.popup__cancel-button'), document.querySelector('.popup__save-button'), document.querySelector('.popup__add-button')];
 const profileTitleNode = document.querySelector('.profile__title');
 const profileSubTitleNode = document.querySelector('.profile__subtitle');
 const popupInputTitle = document.querySelector('.popup__data_input_title');
@@ -93,17 +94,15 @@ function handleLikeIcon(event) {
 }
 
 function togglePopupEditVisibility() {
-  popupProfileNode.classList.remove('popup__close');
-  popupProfileNode.classList.add('popup_visible');
+  openPopup(popupProfileNode);
   titleInputNode.value = profileTitleNode.textContent;
   subInputNode.value = profileSubTitleNode.textContent;
 }
 
 function togglePopupAddVisibility() {
-  popupAddingNode.classList.remove('popup__close');
-  popupAddingNode.classList.add('popup_visible');
   popupInputTitle.value = '';
   popupInputUrl.value = '';
+  openPopup(popupAddingNode);
   popFormAddSubmitListener(formAdd);
 }
 
@@ -111,8 +110,6 @@ function submitPopupEditForm(event) {
   event.preventDefault();
   profileTitleNode.textContent = titleInputNode.value;
   profileSubTitleNode.textContent = subInputNode.value;
-  popupProfileNode.classList.remove('popup_visible');
-  popupProfileNode.classList.add('popup__close');
 }
 
 function popFormAddSubmitListener() {
@@ -125,8 +122,10 @@ function addNewCard(event) {
   const cardImage = popupInputUrl.value;
   const newCard = composeItem({name:cardTitle, link:cardImage});
   cardContainerElement.prepend(newCard);
-  popupAddingNode.classList.remove('popup_visible');
-  popupAddingNode.classList.add('popup__close');
+}
+
+function openPopup(popup) {
+  popup.classList.add('popup_visible');
 }
 
 function closePopup(popup) {
