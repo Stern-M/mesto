@@ -32,7 +32,7 @@ const profileAddButton = document.querySelector('.profile__add-button');
 const popupOpenButton = [...document.querySelectorAll('.profile_button')];
 const popupProfileNode = document.querySelector('.popup_profile_form');
 const popupAddingNode = document.querySelector('.popup_adding_form');
-const popupCloseButtons = [...document.querySelectorAll('.popup__cancel-button'), document.querySelector('.popup__save-button'), document.querySelector('.popup__add-button')];
+const popupCloseButtons = [...document.querySelectorAll('.popup__cancel-button')];
 const profileTitleNode = document.querySelector('.profile__title');
 const profileSubTitleNode = document.querySelector('.profile__subtitle');
 const popupInputTitle = document.querySelector('.popup__data_input_title');
@@ -77,6 +77,11 @@ function addLikeListenerToCard(item) {
   likeButton.addEventListener('click', handleLikeIcon);
 }
 
+function handleLikeIcon(event) {
+  const targetLike = event.target.closest('.element__like-button');
+  targetLike.classList.toggle('element__like-active');
+}
+
 const imageReview = (name, link) => {
   const targetCardReview = document.querySelector('.popup_preview');
   const previewImage = targetCardReview.querySelector('.popup__review-image');
@@ -86,11 +91,6 @@ const imageReview = (name, link) => {
   previewImage.src = link;
   previewImage.alt = name;
   previewTitle.textContent = name;
-}
-
-function handleLikeIcon(event) {
-  const targetLike = event.target.closest('.element__like-button');
-  targetLike.classList.toggle('element__like-active');
 }
 
 function togglePopupEditVisibility() {
@@ -110,6 +110,7 @@ function submitPopupEditForm(event) {
   event.preventDefault();
   profileTitleNode.textContent = titleInputNode.value;
   profileSubTitleNode.textContent = subInputNode.value;
+  closePopup(popupProfileNode);
 }
 
 function popFormAddSubmitListener() {
@@ -122,6 +123,7 @@ function addNewCard(event) {
   const cardImage = popupInputUrl.value;
   const newCard = composeItem({name:cardTitle, link:cardImage});
   cardContainerElement.prepend(newCard);
+  closePopup(popupAddingNode);
 }
 
 function openPopup(popup) {
