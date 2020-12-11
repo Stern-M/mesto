@@ -55,7 +55,6 @@ function composeItem({name, link}) {
   cardImage.alt = name;
   addRemoveListenerToCard(newCard);
   addLikeListenerToCard(newCard);
-  //addImageListenerToCard(newCard);
   cardImage.addEventListener('click', function(){
     imageReview(name, link);
   });
@@ -77,16 +76,6 @@ function addLikeListenerToCard(item) {
   likeButton.addEventListener('click', handleLikeIcon);
 }
 
-/*function addImageListenerToCard(item) {
-  const imageReview = item.querySelector('.element__image-button');
-  imageReview.addEventListener('click', handlePreviewPicture);
-}
-
-function addImageListenerToCard(item) {
-  const imageReview = item.querySelector('.element__image-button');
-  imageReview.addEventListener('click', imageReviewC);
-}*/
-
 const imageReview = (name, link) => {
   const targetCardReview = document.querySelector('.popup_preview');
   const previewImage = targetCardReview.querySelector('.popup__review-image');
@@ -97,24 +86,6 @@ const imageReview = (name, link) => {
   previewImage.alt = name;
   previewTitle.textContent = name;
 }
-
-/*imageReview.addEventListener('click', handlePreviewPicture);
-}
-
-
-function handlePreviewPicture(event) {
-  const targetCardReview = document.querySelector('.popup_preview');
-  targetCardReview.classList.remove('popup__close');
-  targetCardReview.classList.add('popup__review_visible');
-  const previewImage = event.target.closest('.element__image');
-  const popupImage = document.querySelector('.popup__review-image');
-  const previewElement = event.target.closest('.element');
-  const previewTitle = previewElement.querySelector('.element__title');
-  const popupPreviewTitel = document.querySelector('.popup__review-title');
-  popupImage.src = previewImage.src;
-  popupImage.alt = previewTitle.textContent;
-  popupPreviewTitel.textContent = previewTitle.textContent;
-}*/
 
 function handleLikeIcon(event) {
   const targetLike = event.target.closest('.element__like-button');
