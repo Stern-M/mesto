@@ -46,40 +46,63 @@ function renderCards() {
   cardContainerElement.append(...cardItems);
 }
 
-function composeItem(item) {
+function composeItem({name, link}) {
   const newCard = templateElement.content.cloneNode(true);
   const cardTitle = newCard.querySelector('.element__title');
   const cardImage = newCard.querySelector('.element__image');
-  cardTitle.textContent = item.name;
-  cardImage.src = item.link;
-  cardImage.alt = item.name;
+  cardTitle.textContent = name;
+  cardImage.src = link;
+  cardImage.alt = name;
   addRemoveListenerToCard(newCard);
   addLikeListenerToCard(newCard);
-  addImageListenerToCard(newCard);
+  //addImageListenerToCard(newCard);
+  cardImage.addEventListener('click', function(){
+    imageReview(name, link);
+  });
   return newCard;
 }
 
 function addRemoveListenerToCard(item) {       
   const removeButton = item.querySelector('.element__remove-button');
-  removeButton.addEventListener('click', removeCard);
+  removeButton.addEventListener('click', handleDeleteCard);
 }
 
-function removeCard(event) {
+function handleDeleteCard(event) {
   const targetCard = event.target.closest('.element');
   targetCard.remove();
 }
 
 function addLikeListenerToCard(item) {
   const likeButton = item.querySelector('.element__like-button');
-  likeButton.addEventListener('click', toggleLike);
+  likeButton.addEventListener('click', handleLikeIcon);
+}
+
+/*function addImageListenerToCard(item) {
+  const imageReview = item.querySelector('.element__image-button');
+  imageReview.addEventListener('click', handlePreviewPicture);
 }
 
 function addImageListenerToCard(item) {
   const imageReview = item.querySelector('.element__image-button');
-  imageReview.addEventListener('click', reviewCard);
+  imageReview.addEventListener('click', imageReviewC);
+}*/
+
+const imageReview = (name, link) => {
+  const targetCardReview = document.querySelector('.popup_preview');
+  const previewImage = targetCardReview.querySelector('.popup__review-image');
+  const previewTitle = targetCardReview.querySelector('.popup__review-title');
+  targetCardReview.classList.remove('popup__close');
+  targetCardReview.classList.add('popup__review_visible');
+  previewImage.src = link;
+  previewImage.alt = name;
+  previewTitle.textContent = name;
 }
 
-function reviewCard(event) {
+/*imageReview.addEventListener('click', handlePreviewPicture);
+}
+
+
+function handlePreviewPicture(event) {
   const targetCardReview = document.querySelector('.popup_preview');
   targetCardReview.classList.remove('popup__close');
   targetCardReview.classList.add('popup__review_visible');
@@ -91,9 +114,9 @@ function reviewCard(event) {
   popupImage.src = previewImage.src;
   popupImage.alt = previewTitle.textContent;
   popupPreviewTitel.textContent = previewTitle.textContent;
-}
+}*/
 
-function toggleLike(event) {
+function handleLikeIcon(event) {
   const targetLike = event.target.closest('.element__like-button');
   targetLike.classList.toggle('element__like-active');
 }
