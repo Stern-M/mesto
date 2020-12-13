@@ -28,9 +28,9 @@
 @import url("../blocks/root/__footer/root__footer.css");
 @import url("../blocks/footer/__copyright/footer__copyright.css");
 @import url("../blocks/popup/popup.css");
-@import url("../blocks/popup/__profile_form/popup__profile_form.css");
-@import url("../blocks/popup/__adding_form/popup__adding_form.css");
-@import url("../blocks/popup/__preview_form/popup__preview_form.css");
+@import url("../blocks/popup/__profile/popup__profile.css");
+@import url("../blocks/popup/__adding/popup__adding.css");
+@import url("../blocks/popup/__preview/popup__preview.css");
 @import url("../blocks/popup/__container/popup__container.css");
 @import url("../blocks/popup/__add/popup__add.css");
 @import url("../blocks/popup/__cancel-button/popup__cancel-button.css");
