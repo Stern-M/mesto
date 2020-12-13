@@ -29,7 +29,6 @@ const cardContainerElement = document.querySelector('.elements');
 const templateElement = document.querySelector('.template');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
-const popupOpenButton = [...document.querySelectorAll('.profile__popup-open-button')];
 const popupProfileNode = document.querySelector('.popup__profile-form');
 const popupAddingNode = document.querySelector('.popup__adding-form');
 const popupCloseButtons = [...document.querySelectorAll('.popup__cancel-button')];
@@ -113,12 +112,10 @@ function submitPopupAddForm(event) {
 
 function openPopup(popup) {
   popup.classList.add('popup_visible');
-  popup.classList.remove('popup_unvisible');
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_visible');
-  popup.classList.add('popup_unvisible');
 }
 
 popupCloseButtons.forEach((button) => {

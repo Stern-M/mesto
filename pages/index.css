@@ -40,7 +40,6 @@
 @import url("../blocks/popup/__add-button/popup__add-button.css");
 @import url("../blocks/popup/_visible/popup_visible.css");
 @import url("../blocks/popup/__review/popup__review.css");
-@import url("../blocks/popup/_unvisible/popup_unvisible.css");
 @import url("../blocks/popup/__review-image/popup__review-image.css");
 @import url("../blocks/popup/__review-title/popup__review-title.css");
 
