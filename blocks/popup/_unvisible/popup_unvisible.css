@@ -1,4 +1,4 @@
-.popup__close {
+.popup_unvisible {
   display: flex;
   animation-name: visibility;
   animation-duration: 0.5s;

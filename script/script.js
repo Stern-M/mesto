@@ -30,8 +30,8 @@ const templateElement = document.querySelector('.template');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const popupOpenButton = [...document.querySelectorAll('.profile__popup-open-button')];
-const popupProfileNode = document.querySelector('.popup_profile_form');
-const popupAddingNode = document.querySelector('.popup_adding_form');
+const popupProfileNode = document.querySelector('.popup__profile-form');
+const popupAddingNode = document.querySelector('.popup__adding-form');
 const popupCloseButtons = [...document.querySelectorAll('.popup__cancel-button')];
 const profileTitleNode = document.querySelector('.profile__title');
 const profileSubTitleNode = document.querySelector('.profile__subtitle');
@@ -74,11 +74,10 @@ function handleLikeIcon(likeButton) {
 }
 
 const imageReview = (name, link) => {
-  const targetCardReview = document.querySelector('.popup_preview');
+  const targetCardReview = document.querySelector('.popup__preview-form');
   const previewImage = targetCardReview.querySelector('.popup__review-image');
   const previewTitle = targetCardReview.querySelector('.popup__review-title');
-  targetCardReview.classList.remove('popup__close');
-  targetCardReview.classList.add('popup__review_visible');
+  openPopup(targetCardReview);
   previewImage.src = link;
   previewImage.alt = name;
   previewTitle.textContent = name;
@@ -94,7 +93,6 @@ function togglePopupAddVisibility() {
   popupInputTitle.value = '';
   popupInputUrl.value = '';
   openPopup(popupAddingNode);
-  popFormAddSubmitListener(formAdd);
 }
 
 function submitPopupEditForm(event) {
@@ -104,11 +102,7 @@ function submitPopupEditForm(event) {
   closePopup(popupProfileNode);
 }
 
-function popFormAddSubmitListener() {
-  formAdd.addEventListener('submit', addNewCard);
-}
-
-function addNewCard(event) {
+function submitPopupAddForm(event) {
   event.preventDefault();
   const cardTitle = popupInputTitle.value;
   const cardImage = popupInputUrl.value;
@@ -119,12 +113,12 @@ function addNewCard(event) {
 
 function openPopup(popup) {
   popup.classList.add('popup_visible');
+  popup.classList.remove('popup_unvisible');
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_visible');
-  popup.classList.remove('popup__review_visible');
-  popup.classList.add('popup__close');
+  popup.classList.add('popup_unvisible');
 }
 
 popupCloseButtons.forEach((button) => {
@@ -137,3 +131,4 @@ renderCards();
 profileEditButton.addEventListener('click', togglePopupEditVisibility);
 profileAddButton.addEventListener('click', togglePopupAddVisibility);
 formEdit.addEventListener('submit', submitPopupEditForm);
+formAdd.addEventListener('submit', submitPopupAddForm);
