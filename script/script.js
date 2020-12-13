@@ -29,8 +29,8 @@ const cardContainerElement = document.querySelector('.elements');
 const templateElement = document.querySelector('.template');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
-const popupProfileNode = document.querySelector('.popup__profile');
-const popupAddingNode = document.querySelector('.popup__adding');
+const popupProfileNode = document.querySelector('.popup_profile_form');
+const popupAddingNode = document.querySelector('.popup_adding_form');
 const popupCloseButtons = [...document.querySelectorAll('.popup__cancel-button')];
 const profileTitleNode = document.querySelector('.profile__title');
 const profileSubTitleNode = document.querySelector('.profile__subtitle');
@@ -73,7 +73,7 @@ function handleLikeIcon(likeButton) {
 }
 
 const imageReview = (name, link) => {
-  const targetCardReview = document.querySelector('.popup__preview');
+  const targetCardReview = document.querySelector('.popup_preview_form');
   const previewImage = targetCardReview.querySelector('.popup__review-image');
   const previewTitle = targetCardReview.querySelector('.popup__review-title');
   openPopup(targetCardReview);
