@@ -111,11 +111,11 @@ function submitPopupAddForm(event) {
 }
 
 function openPopup(popup) {
-  popup.classList.add('popup_visible');
+  popup.classList.toggle('popup_visible');
 }
 
 function closePopup(popup) {
-  popup.classList.remove('popup_visible');
+  popup.classList.toggle('popup_visible');
 }
 
 popupCloseButtons.forEach((button) => {
