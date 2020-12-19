@@ -1,9 +1,17 @@
 .error {
   font-size: 12px;
-  line-height: 14px;
+  line-height: 15px;
   color: #FF0000;
   display: block;
-  margin: 4px 0 0 6px;
+  margin: 0 36px 13px;
+  max-width: 358px;
   box-sizing: border-box;
-  height: 25px;
+  height: 15px;
+}
+
+@media screen and (max-width: 570px) {
+  .error {
+    margin: 0 22px 5px;
+    max-width: 238px;
+  }
 }

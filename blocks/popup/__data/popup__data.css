@@ -1,5 +1,5 @@
 .popup__data {
-  margin: 0 36px 30px;
+  margin: 0 36px 5px;
   padding: 0 0 13px;
   max-width: 358px;
   font-size: 14px;
@@ -8,11 +8,12 @@
   border: none;
   border-bottom: rgba(0, 0, 0, 0.2) solid 1px;
   box-sizing: border-box;
+  outline: none;
 }
 
 @media screen and (max-width: 570px) {
   .popup__data {
-    margin: 0 22px 30px;
+    margin: 0 22px 5px;
     max-width: 238px;
   }
 }

@@ -10,18 +10,23 @@ function hideError(form, input, config) {
   error.textContent = '';
   input.classList.remove(config.inputInvalidClass);
 }
-//переделать для редактирования профиля
-/*function checkPhoneValidity(input, config) {
-  if (input.type === 'tel' && input.validity.patternMismatch ) {
-      input.setCustomValidity(config.customMessages.phoneMissmath);
+//кастомное значение ошибки если поле text пустое
+function checkTextValidity(input, config) {
+  if (input.type === 'text' && input.validity.valueMissing ) {
+      input.setCustomValidity(config.customMessages.textMissmath);
   }
-}*/
-
+}
+//кастомное значение ошибки если поле url пустое
+function checkUrlValidity(input, config) {
+  if (input.type === 'url' && input.validity.typeMismatch ) {
+      input.setCustomValidity(config.customMessages.urlMissmath);
+  }
+}
 //проверка на валидность
 function checkInputValidity(form, input, config) {
   input.setCustomValidity('');
-  //checkPhoneValidity(input,config);
-
+  checkTextValidity(input, config);
+  checkUrlValidity(input, config);
   if (!input.validity.valid) {
       showError(form, input, config);
   } else {
@@ -38,11 +43,10 @@ function setButtonState(button, isActive, config) {
       button.disabled = true; 
   }
 }
-
+//добавление слушателей 
 function setEventListeners(form, config) {
   const inputsList = form.querySelectorAll(config.inputSelector);
   const submitButton = form.querySelector(config.submitButtonSelector);
-
   inputsList.forEach((input) => {
       input.addEventListener('input', () => {
           checkInputValidity(form, input, config);
@@ -50,7 +54,7 @@ function setEventListeners(form, config) {
       });
   });
 }
-
+//включение валидации всех форм
 function enableValidation(config) {
   const forms = document.querySelectorAll(config.formSelector);
   forms.forEach((form) => {
@@ -58,7 +62,6 @@ function enableValidation(config) {
 
       form.addEventListener('submit', (evt) => {
           evt.preventDefault();
-          console.log('отправка формы');
       });
 
       const submitButton = form.querySelector(config.submitButtonSelector);
@@ -70,11 +73,11 @@ const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__data',
   submitButtonSelector: '.popup__button',
-  inputInvalidClass: 'popup__input_state_invalid',
+  inputInvalidClass: 'popup__data_invalid',
   buttonInvalidClass: 'popup__button_invalid', 
-  
   customMessages: {
-      phoneMissmath: 'Введите телефон в формате +7 999 999 99 99 или 8 999 999 99 99',
+      textMissmath: 'Вы пропустили это поле.',
+      urlMissmath: 'Введите адрес сайта.',
   }
 };
 
