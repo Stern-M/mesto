@@ -93,8 +93,7 @@ function togglePopupEditVisibility() {
 
 //открытие попап для добавления новой карточки
 function togglePopupAddVisibility() {
-  popupInputTitle.value = '';
-  popupInputUrl.value = '';
+  formAdd.reset();
   openPopup(popupAddingNode);
 }
 
@@ -114,16 +113,19 @@ function submitPopupAddForm(event) {
   const newCard = composeItem({name:cardTitle, link:cardImage});
   cardContainerElement.prepend(newCard);
   closePopup(popupAddingNode);
+  formAdd.reset();
 }
 
 //функция открытия любого попап
 function openPopup(popup) {
   popup.classList.toggle('popup_visible');
+  document.addEventListener('keydown', popupOnEscClose);
 }
 
 //функция закрытия любого попап
 function closePopup(popup) {
   popup.classList.toggle('popup_visible');
+  document.removeEventListener('keydown', popupOnEscClose);
 }
 
 //закрытие любого попап через крестик
@@ -144,7 +146,6 @@ function popupOnEscClose(evt) {
 //закрытие любого попап по клику на оверлей
 function popupOnOverlayClose (evt) {
   if (evt.target.classList.contains('popup_visible')) {
-    console.log('клик');
     closePopup(evt.target);
   }
 }
@@ -154,5 +155,5 @@ profileEditButton.addEventListener('click', togglePopupEditVisibility);
 profileAddButton.addEventListener('click', togglePopupAddVisibility);
 formEdit.addEventListener('submit', submitPopupEditForm);
 formAdd.addEventListener('submit', submitPopupAddForm);
-document.addEventListener('keydown', popupOnEscClose);
+
 document.addEventListener('click', popupOnOverlayClose);

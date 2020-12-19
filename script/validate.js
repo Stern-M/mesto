@@ -49,7 +49,7 @@ function checkInputValidity(form, input, config) {
       hideError(form, input, config);
   }
 }
-//настройка кнопки сабмит (автоматически подстраиватьется под валидность/не валидность)
+//настройка кнопки сабмит (автоматически подстраивается под валидность/не валидность)
 function setButtonState(button, isActive, config) {
   if (isActive) {
       button.classList.remove(config.inactiveButtonClass);
@@ -59,6 +59,7 @@ function setButtonState(button, isActive, config) {
       button.disabled = true; 
   }
 }
+
 //добавление слушателей 
 function setEventListeners(form, config) {
   const inputsList = form.querySelectorAll(config.inputSelector);
@@ -71,6 +72,7 @@ function setEventListeners(form, config) {
       });
   });
 }
+
 //включение валидации всех форм
 function enableValidation(config) {
   const forms = document.querySelectorAll(config.formSelector);
