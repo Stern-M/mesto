@@ -68,10 +68,12 @@ function composeItem({name, link}) {
   return newCard;
 }
 
+//функция для добавления/снятия лайка
 function handleLikeIcon(likeButton) {
   likeButton.classList.toggle('element__like-active');
 }
 
+//просмотр попап с картинкой
 const imageReview = (name, link) => {
   const targetCardReview = document.querySelector('.popup_preview_form');
   const previewImage = targetCardReview.querySelector('.popup__review-image');
@@ -82,18 +84,21 @@ const imageReview = (name, link) => {
   previewTitle.textContent = name;
 }
 
+//открытие попап редактирование профиля
 function togglePopupEditVisibility() {
   openPopup(popupProfileNode);
   titleInputNode.value = profileTitleNode.textContent;
   subInputNode.value = profileSubTitleNode.textContent;
 }
 
+//открытие попап для добавления новой карточки
 function togglePopupAddVisibility() {
   popupInputTitle.value = '';
   popupInputUrl.value = '';
   openPopup(popupAddingNode);
 }
 
+//сабмит попап редактирования
 function submitPopupEditForm(event) {
   event.preventDefault();
   profileTitleNode.textContent = titleInputNode.value;
@@ -101,6 +106,7 @@ function submitPopupEditForm(event) {
   closePopup(popupProfileNode);
 }
 
+//сабмит попап с новой карточкой
 function submitPopupAddForm(event) {
   event.preventDefault();
   const cardTitle = popupInputTitle.value;
@@ -110,22 +116,43 @@ function submitPopupAddForm(event) {
   closePopup(popupAddingNode);
 }
 
+//функция открытия любого попап
 function openPopup(popup) {
   popup.classList.toggle('popup_visible');
 }
 
+//функция закрытия любого попап
 function closePopup(popup) {
   popup.classList.toggle('popup_visible');
 }
 
+//закрытие любого попап через крестик
 popupCloseButtons.forEach((button) => {
   button.addEventListener('click', function(evt) {
     closePopup(evt.target.closest('.popup'));
   });
 })
 
+//закрытие любого попап через Esc
+function popupOnEscClose(evt) {
+  if (evt.key === 'Escape') {
+    const activePopup = document.querySelector('.popup_visible');
+    closePopup(activePopup);
+  }
+}
+
+//закрытие любого попап по клику на оверлей
+function popupOnOverlayClose (evt) {
+  if (evt.target.classList.contains('popup_visible')) {
+    console.log('клик');
+    closePopup(evt.target);
+  }
+}
+
 renderCards();
 profileEditButton.addEventListener('click', togglePopupEditVisibility);
 profileAddButton.addEventListener('click', togglePopupAddVisibility);
 formEdit.addEventListener('submit', submitPopupEditForm);
 formAdd.addEventListener('submit', submitPopupAddForm);
+document.addEventListener('keydown', popupOnEscClose);
+document.addEventListener('click', popupOnOverlayClose);
