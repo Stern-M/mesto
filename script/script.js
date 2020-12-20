@@ -86,9 +86,11 @@ const imageReview = (name, link) => {
 
 //открытие попап редактирование профиля
 function togglePopupEditVisibility() {
+  openPopup(popupProfileNode);
+  const submitButton = formEdit.querySelector('.popup__button')
   titleInputNode.value = profileTitleNode.textContent;
   subInputNode.value = profileSubTitleNode.textContent;
-  openPopup(popupProfileNode);
+  setButtonState(submitButton, formEdit.checkValidity(), formEdit);
 }
 
 //открытие попап для добавления новой карточки
@@ -103,7 +105,6 @@ function submitPopupEditForm(event) {
   profileTitleNode.textContent = titleInputNode.value;
   profileSubTitleNode.textContent = subInputNode.value;
   closePopup(popupProfileNode);
-  formEdit.reset();
 }
 
 //сабмит попап с новой карточкой
@@ -115,7 +116,7 @@ function submitPopupAddForm(event) {
   const newCard = composeItem({name:cardTitle, link:cardImage});
   cardContainerElement.prepend(newCard);
   closePopup(popupAddingNode);
-  popupSubmitUnActive(submitButton);
+  popupSubmitUnactive(submitButton);
   formAdd.reset();
 }
 
@@ -154,7 +155,7 @@ function popupOnOverlayClose (evt) {
 }
 
 //функция деактивации кнопки сабмит у попап с добавлением
-function popupSubmitUnActive (button) {
+function popupSubmitUnactive (button) {
   button.classList.add('popup__button_invalid');
   button.disabled = true;
 }
