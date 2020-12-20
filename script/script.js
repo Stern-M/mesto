@@ -111,9 +111,11 @@ function submitPopupAddForm(event) {
   event.preventDefault();
   const cardTitle = popupInputTitle.value;
   const cardImage = popupInputUrl.value;
+  const submitButton = popupAddingNode.querySelector('.popup__button');
   const newCard = composeItem({name:cardTitle, link:cardImage});
   cardContainerElement.prepend(newCard);
   closePopup(popupAddingNode);
+  popupSubmitUnActive(submitButton);
   formAdd.reset();
 }
 
@@ -151,10 +153,15 @@ function popupOnOverlayClose (evt) {
   }
 }
 
+//функция деактивации кнопки сабмит у попап с добавлением
+function popupSubmitUnActive (button) {
+  button.classList.add('popup__button_invalid');
+  button.disabled = true;
+}
+
 renderCards();
 profileEditButton.addEventListener('click', togglePopupEditVisibility);
 profileAddButton.addEventListener('click', togglePopupAddVisibility);
 formEdit.addEventListener('submit', submitPopupEditForm);
 formAdd.addEventListener('submit', submitPopupAddForm);
-
 document.addEventListener('click', popupOnOverlayClose);
