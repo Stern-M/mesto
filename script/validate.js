@@ -56,21 +56,8 @@ function setButtonState(button, isActive, config) {
       button.disabled = false;
   } else {
       button.classList.add(config.inactiveButtonClass);
-      button.disabled = true; 
+      button.disabled = true;
   }
-}
-
-//добавление слушателей 
-function setEventListeners(form, config) {
-  const inputsList = form.querySelectorAll(config.inputSelector);
-  const submitButton = form.querySelector(config.submitButtonSelector);
-  inputsList.forEach((input) => {
-      
-      input.addEventListener('input', () => {
-          checkInputValidity(form, input, config);
-          setButtonState(submitButton, form.checkValidity(), config);
-      });
-  });
 }
 
 //включение валидации всех форм
@@ -83,6 +70,19 @@ function enableValidation(config) {
     });
   const submitButton = form.querySelector(config.submitButtonSelector);
   setButtonState(submitButton, form.checkValidity(), config);
+  });
+}
+
+//добавление слушателей 
+function setEventListeners(form, config) {
+  const inputsList = form.querySelectorAll(config.inputSelector);
+  const submitButton = form.querySelector(config.submitButtonSelector);
+  inputsList.forEach((input) => {
+      
+      input.addEventListener('input', () => {
+          checkInputValidity(form, input, config);
+          setButtonState(submitButton, form.checkValidity(), config);
+      });
   });
 }
 

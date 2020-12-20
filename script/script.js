@@ -86,9 +86,9 @@ const imageReview = (name, link) => {
 
 //открытие попап редактирование профиля
 function togglePopupEditVisibility() {
-  openPopup(popupProfileNode);
   titleInputNode.value = profileTitleNode.textContent;
   subInputNode.value = profileSubTitleNode.textContent;
+  openPopup(popupProfileNode);
 }
 
 //открытие попап для добавления новой карточки
@@ -103,6 +103,7 @@ function submitPopupEditForm(event) {
   profileTitleNode.textContent = titleInputNode.value;
   profileSubTitleNode.textContent = subInputNode.value;
   closePopup(popupProfileNode);
+  formEdit.reset();
 }
 
 //сабмит попап с новой карточкой
