@@ -91,11 +91,16 @@ function submitPopupAddForm(event) {
 
 //функция открытия любого попап
 function openPopup(popup) {
-  popup.classList.toggle('popup_visible');
-  document.addEventListener('keydown', popupOnEscClose);
-  const activePopup = popup.querySelector('.popup__form')
-  const submitButton = popup.querySelector('.popup__button');
-  setButtonState(submitButton, activePopup.checkValidity(), validationConfig);
+  if (popup.classList.contains('popup_preview_form')) {
+    popup.classList.toggle('popup_visible');
+    document.addEventListener('keydown', popupOnEscClose);
+  } else {
+    popup.classList.toggle('popup_visible');
+    document.addEventListener('keydown', popupOnEscClose);
+    const activePopup = popup.querySelector('.popup__form')
+    const submitButton = popup.querySelector('.popup__button');
+    setButtonState(submitButton, activePopup.checkValidity(), validationConfig);
+  }
 }
 
 //функция закрытия любого попап
