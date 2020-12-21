@@ -59,19 +59,15 @@ const imageReview = (name, link) => {
 
 //открытие попап редактирование профиля
 function openEditProfilePopup () {
-  openPopup(popupProfileNode);
-  const submitButton = popupProfileNode.querySelector('.popup__button');
   titleInputNode.value = profileTitleNode.textContent;
   subInputNode.value = profileSubTitleNode.textContent;
-  setButtonState(submitButton, formEdit.checkValidity(), validationConfig);
+  openPopup(popupProfileNode);
 }
 
 //открытие попап для добавления новой карточки
 function openAddCardPopup () {
   formAdd.reset();
   openPopup(popupAddingNode);
-  const submitButton = formAdd.querySelector('.popup__button');
-  setButtonState(submitButton, formAdd.checkValidity(), validationConfig);
 }
 
 //сабмит попап редактирования
@@ -97,6 +93,9 @@ function submitPopupAddForm(event) {
 function openPopup(popup) {
   popup.classList.toggle('popup_visible');
   document.addEventListener('keydown', popupOnEscClose);
+  const activePopup = popup.querySelector('.popup__form')
+  const submitButton = popup.querySelector('.popup__button');
+  setButtonState(submitButton, activePopup.checkValidity(), validationConfig);
 }
 
 //функция закрытия любого попап
