@@ -59,20 +59,15 @@ const imageReview = (name, link) => {
 
 //открытие попап редактирование профиля
 function openEditProfilePopup () {
-  
-  //const submitButton = popupProfileNode.querySelector('.popup__button');
   titleInputNode.value = profileTitleNode.textContent;
   subInputNode.value = profileSubTitleNode.textContent;
   openPopup(popupProfileNode);
-  //setButtonState(submitButton, formEdit.checkValidity(), validationConfig);
 }
 
 //открытие попап для добавления новой карточки
 function openAddCardPopup () {
   formAdd.reset();
   openPopup(popupAddingNode);
-  //const submitButton = formAdd.querySelector('.popup__button');
-  //setButtonState(submitButton, formAdd.checkValidity(), validationConfig);
 }
 
 //сабмит попап редактирования
