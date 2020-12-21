@@ -6,7 +6,7 @@ const validationConfig = {
   inactiveButtonClass: 'popup__button_invalid', 
   customMessages: {
       textValueMissing: 'Вы пропустили это поле.',
-      urlMissmath: 'Введите адрес сайта.',
+      urlMissmath: 'Введите адрес изображения.',
       urlValueMissing: 'Вы пропустили это поле.'
   }
 };
@@ -17,18 +17,21 @@ function showError(form, input, config) {
   error.textContent = input.validationMessage;
   input.classList.add(config.inputErrorClass);
 }
+
 //убрать подсветку ошибки если все ок
 function hideError(form, input, config) {
   const error = form.querySelector(`#${input.id}-error`);
   error.textContent = '';
   input.classList.remove(config.inputErrorClass);
 }
+
 //кастомное значение ошибки если поле text пустое
 function checkTextValidity(input, config) {
   if (input.type === 'text' && input.validity.valueMissing ) {
       input.setCustomValidity(config.customMessages.textValueMissing);
   }
 }
+
 //кастомное значение ошибки если поле url пустое
 function checkUrlValidity(input, config) {
   if (input.type === 'url' && input.validity.typeMismatch ) {
@@ -38,6 +41,7 @@ function checkUrlValidity(input, config) {
     input.setCustomValidity(config.customMessages.urlValueMissing);
   }
 }
+
 //проверка на валидность
 function checkInputValidity(form, input, config) {
   input.setCustomValidity('');
@@ -49,6 +53,7 @@ function checkInputValidity(form, input, config) {
       hideError(form, input, config);
   }
 }
+
 //настройка кнопки сабмит (автоматически подстраивается под валидность/не валидность)
 function setButtonState(button, isActive, config) {
   if (isActive) {

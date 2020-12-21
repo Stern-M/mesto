@@ -1,30 +1,3 @@
-const initialCards = [
-  {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]; 
-
 const cardContainerElement = document.querySelector('.elements');
 const templateElement = document.querySelector('.template');
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -40,6 +13,9 @@ const formEdit = document.querySelector('.popup__container');
 const formAdd = document.querySelector('.popup__add');
 const titleInputNode = document.querySelector('.popup__data_input_name');
 const subInputNode = document.querySelector('.popup__data_input_description');
+const targetCardReview = document.querySelector('.popup_preview_form');
+const previewImage = targetCardReview.querySelector('.popup__review-image');
+const previewTitle = targetCardReview.querySelector('.popup__review-title');
 
 function renderCards() {
   const cardItems = initialCards.map(composeItem);
@@ -75,9 +51,6 @@ function handleLikeIcon(likeButton) {
 
 //просмотр попап с картинкой
 const imageReview = (name, link) => {
-  const targetCardReview = document.querySelector('.popup_preview_form');
-  const previewImage = targetCardReview.querySelector('.popup__review-image');
-  const previewTitle = targetCardReview.querySelector('.popup__review-title');
   openPopup(targetCardReview);
   previewImage.src = link;
   previewImage.alt = name;
@@ -85,18 +58,20 @@ const imageReview = (name, link) => {
 }
 
 //открытие попап редактирование профиля
-function togglePopupEditVisibility() {
+function openEditProfilePopup () {
   openPopup(popupProfileNode);
-  const submitButton = formEdit.querySelector('.popup__button')
+  const submitButton = popupProfileNode.querySelector('.popup__button');
   titleInputNode.value = profileTitleNode.textContent;
   subInputNode.value = profileSubTitleNode.textContent;
-  setButtonState(submitButton, formEdit.checkValidity(), formEdit);
+  setButtonState(submitButton, formEdit.checkValidity(), validationConfig);
 }
 
 //открытие попап для добавления новой карточки
-function togglePopupAddVisibility() {
+function openAddCardPopup () {
   formAdd.reset();
   openPopup(popupAddingNode);
+  const submitButton = formAdd.querySelector('.popup__button');
+  setButtonState(submitButton, formAdd.checkValidity(), validationConfig);
 }
 
 //сабмит попап редактирования
@@ -112,11 +87,9 @@ function submitPopupAddForm(event) {
   event.preventDefault();
   const cardTitle = popupInputTitle.value;
   const cardImage = popupInputUrl.value;
-  const submitButton = popupAddingNode.querySelector('.popup__button');
   const newCard = composeItem({name:cardTitle, link:cardImage});
   cardContainerElement.prepend(newCard);
   closePopup(popupAddingNode);
-  popupSubmitUnactive(submitButton);
   formAdd.reset();
 }
 
@@ -154,15 +127,9 @@ function popupOnOverlayClose (evt) {
   }
 }
 
-//функция деактивации кнопки сабмит у попап с добавлением
-function popupSubmitUnactive (button) {
-  button.classList.add('popup__button_invalid');
-  button.disabled = true;
-}
-
 renderCards();
-profileEditButton.addEventListener('click', togglePopupEditVisibility);
-profileAddButton.addEventListener('click', togglePopupAddVisibility);
+profileEditButton.addEventListener('click', openEditProfilePopup);
+profileAddButton.addEventListener('click', openAddCardPopup);
 formEdit.addEventListener('submit', submitPopupEditForm);
 formAdd.addEventListener('submit', submitPopupAddForm);
 document.addEventListener('click', popupOnOverlayClose);
