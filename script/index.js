@@ -48,8 +48,7 @@ function composeItem({name, link}) {
 
 initialCards.forEach((item) => {
 	const card = new Card(item, '.template');
-	const cardElement = card.generate(item);
-
+	const cardElement = card.generateCard(item);
 	document.querySelector('.elements').append(cardElement);
 });
 
@@ -92,18 +91,19 @@ function submitPopupEditForm(event) {
 }
 
 //сабмит попап с новой карточкой
-function submitPopupAddForm(event) {
+function submitPopupAddForm(event, item) {
   event.preventDefault();
-  const cardTitle = popupInputTitle.value;
+  const cardTitle = popupInputTitle.value; 
   const cardImage = popupInputUrl.value;
-  const newCard = composeItem({name:cardTitle, link:cardImage});
-  cardContainerElement.prepend(newCard);
+  const card = new Card({name:cardTitle, link:cardImage}, '.template');
+	const cardElement = card.generateCard(item);
+	document.querySelector('.elements').prepend(cardElement);
   closePopup(popupAddingNode);
   formAdd.reset();
 }
 
 //функция открытия любого попап
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.toggle('popup_visible');
   document.addEventListener('keydown', popupOnEscClose);
 }
