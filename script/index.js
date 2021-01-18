@@ -1,3 +1,5 @@
+import {Card} from './Card.js';
+
 const cardContainerElement = document.querySelector('.elements');
 const templateElement = document.querySelector('.template');
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -17,7 +19,7 @@ const targetCardReview = document.querySelector('.popup_preview_form');
 const previewImage = targetCardReview.querySelector('.popup__review-image');
 const previewTitle = targetCardReview.querySelector('.popup__review-title');
 
-function renderCards() {
+/*function renderCards() {
   const cardItems = initialCards.map(composeItem);
   cardContainerElement.append(...cardItems);
 }
@@ -42,7 +44,14 @@ function composeItem({name, link}) {
     targetCard.remove();
   });
   return newCard;
-}
+}*/
+
+initialCards.forEach((item) => {
+	const card = new Card(item, '.template');
+	const cardElement = card.generate(item);
+
+	document.querySelector('.elements').append(cardElement);
+});
 
 //функция для добавления/снятия лайка
 function handleLikeIcon(likeButton) {
@@ -95,8 +104,8 @@ function submitPopupAddForm(event) {
 
 //функция открытия любого попап
 function openPopup(popup) {
-    popup.classList.toggle('popup_visible');
-    document.addEventListener('keydown', popupOnEscClose);
+  popup.classList.toggle('popup_visible');
+  document.addEventListener('keydown', popupOnEscClose);
 }
 
 //функция закрытия любого попап
@@ -127,7 +136,7 @@ function popupOnOverlayClose (evt) {
   }
 }
 
-renderCards();
+//renderCards();
 profileEditButton.addEventListener('click', openEditProfilePopup);
 profileAddButton.addEventListener('click', openAddCardPopup);
 formEdit.addEventListener('submit', submitPopupEditForm);
