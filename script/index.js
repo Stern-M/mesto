@@ -52,7 +52,7 @@ initialCards.forEach((item) => {
 	document.querySelector('.elements').append(cardElement);
 });
 
-//функция для добавления/снятия лайка
+/*//функция для добавления/снятия лайка
 function handleLikeIcon(likeButton) {
   likeButton.classList.toggle('element__like-active');
 }
@@ -63,7 +63,7 @@ const imageReview = (name, link) => {
   previewImage.src = link;
   previewImage.alt = name;
   previewTitle.textContent = name;
-}
+}*/
 
 //открытие попап редактирование профиля
 function openEditProfilePopup () {
