@@ -78,7 +78,7 @@ function setEventListeners(form, config) {
 }
 
 //включение валидации всех форм
-function enableValidation(config) {
+/*function enableValidation(config) {
   const forms = document.querySelectorAll(config.formSelector);
   forms.forEach((form) => {
     setEventListeners(form, config);
@@ -90,4 +90,4 @@ function enableValidation(config) {
   });
 }
 
-enableValidation(validationConfig);
+enableValidation(validationConfig);*/

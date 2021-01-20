@@ -1,4 +1,5 @@
 import {Card} from './Card.js';
+import {formValidator} from './FormValidator.js';
 
 const cardContainerElement = document.querySelector('.elements');
 const templateElement = document.querySelector('.template');
@@ -46,8 +47,16 @@ function composeItem({name, link}) {
   return newCard;
 }*/
 
+//просмотр попап с картинкой
+const imageReview = (name, link) => { 
+  openPopup(targetCardReview); 
+  previewImage.src = link; 
+  previewImage.alt = name; 
+  previewTitle.textContent = name; 
+} 
+
 initialCards.forEach((item) => {
-	const card = new Card(item, '.template');
+	const card = new Card(item, '.template', imageReview);
 	const cardElement = card.generateCard(item);
 	document.querySelector('.elements').append(cardElement);
 });
@@ -55,15 +64,10 @@ initialCards.forEach((item) => {
 /*//функция для добавления/снятия лайка
 function handleLikeIcon(likeButton) {
   likeButton.classList.toggle('element__like-active');
-}
-
-//просмотр попап с картинкой
-const imageReview = (name, link) => {
-  openPopup(targetCardReview);
-  previewImage.src = link;
-  previewImage.alt = name;
-  previewTitle.textContent = name;
 }*/
+
+
+
 
 //открытие попап редактирование профиля
 function openEditProfilePopup () {
@@ -71,7 +75,9 @@ function openEditProfilePopup () {
   subInputNode.value = profileSubTitleNode.textContent;
   openPopup(popupProfileNode);
   const submitButton = formEdit.querySelector('.popup__button');
-  setButtonState(submitButton, formEdit.checkValidity(), validationConfig);
+  const validation = new formValidator({validationParameters:submitButton, element:formEdit});
+  validation.enableValidation()
+  //setButtonState(submitButton, formEdit.checkValidity(), validationConfig);
 }
 
 //открытие попап для добавления новой карточки
@@ -135,6 +141,7 @@ function popupOnOverlayClose (evt) {
     closePopup(evt.target);
   }
 }
+
 
 //renderCards();
 profileEditButton.addEventListener('click', openEditProfilePopup);

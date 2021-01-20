@@ -1,11 +1,12 @@
 import {openPopup} from './index.js';
 
 export class Card {
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, imageReview) {
     this._name = data.name;
     this._link = data.link;
     
     this._cardSelector = cardSelector;
+    this._imageReview = imageReview;
   }
 
   // возврат разметки
@@ -25,7 +26,7 @@ export class Card {
       this._handleLikeIcon();
     });
     this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._imageReview();
+      this._imageReview(this._name, this._link);
     });
     this._element.querySelector('.element__remove-button').addEventListener('click', () => {
       this._handleDeleteIcon();
@@ -38,16 +39,15 @@ export class Card {
   }
 
   _handleDeleteIcon() {
-    const targetCard = event.target.closest('.element');
-    targetCard.remove();
+    this._element.remove();
   }
 
-  _imageReview () {
+  /*_imageReview () {
     openPopup(document.querySelector('.popup_preview_form'));
     document.querySelector('.popup__review-image').src = this._link;
     document.querySelector('.popup__review-image').alt = this._name;
     document.querySelector('.popup__review-title').textContent = this._name;
-  }
+  }*/
 
   //добавление данных в разметку
   generateCard() {
