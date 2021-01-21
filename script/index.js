@@ -1,8 +1,6 @@
 import {Card} from './Card.js';
 import {formValidator} from './FormValidator.js';
 
-const cardContainerElement = document.querySelector('.elements');
-const templateElement = document.querySelector('.template');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const popupProfileNode = document.querySelector('.popup_profile_form');
@@ -20,32 +18,18 @@ const targetCardReview = document.querySelector('.popup_preview_form');
 const previewImage = targetCardReview.querySelector('.popup__review-image');
 const previewTitle = targetCardReview.querySelector('.popup__review-title');
 
-/*function renderCards() {
-  const cardItems = initialCards.map(composeItem);
-  cardContainerElement.append(...cardItems);
-}
-
-function composeItem({name, link}) {
-  const newCard = templateElement.content.cloneNode(true);
-  const cardTitle = newCard.querySelector('.element__title');
-  const cardImage = newCard.querySelector('.element__image');
-  const likeButton = newCard.querySelector('.element__like-button');
-  const removeButton = newCard.querySelector('.element__remove-button');
-  cardTitle.textContent = name;
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardImage.addEventListener('click', function(){
-    imageReview(name, link);
-  });
-  likeButton.addEventListener('click', function(){
-    handleLikeIcon(likeButton);
-  });
-  removeButton.addEventListener('click', function(event){
-    const targetCard = event.target.closest('.element');
-    targetCard.remove();
-  });
-  return newCard;
-}*/
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__data',
+  submitButtonSelector: '.popup__button',
+  inputErrorClass: 'popup__data_invalid',
+  inactiveButtonClass: 'popup__button_invalid', 
+  customMessages: {
+      textValueMissing: 'Вы пропустили это поле.',
+      urlMissmath: 'Введите адрес изображения.',
+      urlValueMissing: 'Вы пропустили это поле.'
+  }
+};
 
 //просмотр попап с картинкой
 const imageReview = (name, link) => { 
@@ -61,31 +45,23 @@ initialCards.forEach((item) => {
 	document.querySelector('.elements').append(cardElement);
 });
 
-/*//функция для добавления/снятия лайка
-function handleLikeIcon(likeButton) {
-  likeButton.classList.toggle('element__like-active');
-}*/
-
-
-
-
 //открытие попап редактирование профиля
-function openEditProfilePopup () {
-  titleInputNode.value = profileTitleNode.textContent;
+function openEditProfilePopup () { 
+  titleInputNode.value = profileTitleNode.textContent; 
   subInputNode.value = profileSubTitleNode.textContent;
   openPopup(popupProfileNode);
-  const submitButton = formEdit.querySelector('.popup__button');
-  const validation = new formValidator({validationParameters:submitButton, element:formEdit});
-  validation.enableValidation()
-  //setButtonState(submitButton, formEdit.checkValidity(), validationConfig);
-}
+  const formValidate = new formValidator(validationConfig, popupProfileNode);
+  formValidate.enableValidation();
+  formValidate.resetValidation();
+} 
 
 //открытие попап для добавления новой карточки
 function openAddCardPopup () {
   formAdd.reset();
+  const formValidate = new formValidator(validationConfig, popupAddingNode);
   openPopup(popupAddingNode);
-  const submitButton = formAdd.querySelector('.popup__button');
-  setButtonState(submitButton, formAdd.checkValidity(), validationConfig);
+  formValidate.enableValidation();
+  formValidate.resetValidation();
 }
 
 //сабмит попап редактирования
@@ -101,7 +77,7 @@ function submitPopupAddForm(event, item) {
   event.preventDefault();
   const cardTitle = popupInputTitle.value; 
   const cardImage = popupInputUrl.value;
-  const card = new Card({name:cardTitle, link:cardImage}, '.template');
+  const card = new Card({name:cardTitle, link:cardImage}, '.template', imageReview);
 	const cardElement = card.generateCard(item);
 	document.querySelector('.elements').prepend(cardElement);
   closePopup(popupAddingNode);
@@ -109,7 +85,7 @@ function submitPopupAddForm(event, item) {
 }
 
 //функция открытия любого попап
-export function openPopup(popup) {
+function openPopup(popup) {
   popup.classList.toggle('popup_visible');
   document.addEventListener('keydown', popupOnEscClose);
 }
@@ -142,8 +118,6 @@ function popupOnOverlayClose (evt) {
   }
 }
 
-
-//renderCards();
 profileEditButton.addEventListener('click', openEditProfilePopup);
 profileAddButton.addEventListener('click', openAddCardPopup);
 formEdit.addEventListener('submit', submitPopupEditForm);

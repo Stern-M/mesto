@@ -1,10 +1,7 @@
-import {openPopup} from './index.js';
-
 export class Card {
   constructor(data, cardSelector, imageReview) {
     this._name = data.name;
     this._link = data.link;
-    
     this._cardSelector = cardSelector;
     this._imageReview = imageReview;
   }
@@ -42,20 +39,12 @@ export class Card {
     this._element.remove();
   }
 
-  /*_imageReview () {
-    openPopup(document.querySelector('.popup_preview_form'));
-    document.querySelector('.popup__review-image').src = this._link;
-    document.querySelector('.popup__review-image').alt = this._name;
-    document.querySelector('.popup__review-title').textContent = this._name;
-  }*/
-
   //добавление данных в разметку
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
     this._element.querySelector('.element__image').src = this._link;
     this._element.querySelector('.element__title').textContent = this._name;
-    
     return this._element;
   }
 }

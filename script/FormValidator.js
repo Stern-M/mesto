@@ -1,88 +1,91 @@
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__data',
-  submitButtonSelector: '.popup__button',
-  inputErrorClass: 'popup__data_invalid',
-  inactiveButtonClass: 'popup__button_invalid', 
-  customMessages: {
-      textValueMissing: 'Вы пропустили это поле.',
-      urlMissmath: 'Введите адрес изображения.',
-      urlValueMissing: 'Вы пропустили это поле.'
-  }
-};
-
 export class formValidator {
-  constructor(validationParameters, element) {
-    this._validationParameters = validationParameters;
+  constructor(validationConfig, element) {
+    this._validationConfig = validationConfig;
     this._element = element;
+    this._formSelector = element.querySelector(this._validationConfig.formSelector);
+    this._inputSelector = [...element.querySelectorAll(this._validationConfig.inputSelector)];
+    this._submitButtonSelector = element.querySelector(this._validationConfig.submitButtonSelector); 
   }
-
-
-  _showError(form, input) {
-    const error = form.querySelector(`#${input.id}-error`);
+  
+    //подсветить поле с ошибкой
+  _showError(input) {
+    const error = this._element.querySelector(`#${input.id}-error`);
     error.textContent = input.validationMessage;
-    input.classList.add(inputErrorClass);
+    input.classList.add(this._validationConfig.inputErrorClass);
   }
-  
+
   //убрать подсветку ошибки если все ок
-  _hideError(form, input) {
-    const error = form.querySelector(`#${input.id}-error`);
+  _hideError(input) {
+    const error = this._element.querySelector(`#${input.id}-error`);
     error.textContent = '';
-    input.classList.remove(inputErrorClass);
+    input.classList.remove(this._validationConfig.inputErrorClass);
   }
-  
+
   //кастомное значение ошибки если поле text пустое
   _checkTextValidity(input) {
     if (input.type === 'text' && input.validity.valueMissing ) {
-        input.setCustomValidity(customMessages.textValueMissing);
+      input.setCustomValidity(this._validationConfig.customMessages.textValueMissing);
     }
   }
-  
+
   //кастомное значение ошибки если поле url пустое
   _checkUrlValidity(input) {
     if (input.type === 'url' && input.validity.typeMismatch ) {
-        input.setCustomValidity(customMessages.urlMissmath);
+      input.setCustomValidity(this._validationConfig.customMessages.urlMissmath);
     }
     if (input.type === 'url' && input.validity.valueMissing) {
-      input.setCustomValidity(customMessages.urlValueMissing);
+      input.setCustomValidity(this._validationConfig.customMessages.urlValueMissing);
     }
   }
 
-  _checkInputValidity(form, input) {
-    this._input.setCustomValidity('');
-    _checkTextValidity(input);
-    _checkUrlValidity(input);
+  //проверка на валидность
+  _checkInputValidity(input) {
+    input.setCustomValidity("");
+    this._checkTextValidity(input);
+    this._checkUrlValidity(input);
     if (!input.validity.valid) {
-        _showError(form, input);
+        this._showError(input);
     } else {
-        _hideError(form, input);
+        this._hideError(input);
     }
   }
-  
-  _setButtonState () {
+
+  //настройка кнопки сабмит (автоматически подстраивается под валидность/не валидность)
+  _setButtonState(button, isActive) {
     if (isActive) {
-        this._button.classList.remove(inactiveButtonClass);
-        this._button.disabled = false;
+      button.classList.remove(this._validationConfig.inactiveButtonClass);
+      button.disabled = false;
     } else {
-        this._button.classList.add(inactiveButtonClass);
-        this._button.disabled = true;
+      button.classList.add(this._validationConfig.inactiveButtonClass);
+      button.disabled = true;
     }
   }
 
+  //добавление слушателей 
   _setEventListeners() {
-    const inputsList = [...this._element.querySelectorAll('.popup__data')];
-    inputsList.forEach.addEventListener('input', () => {
-            this._checkInputValidity(form, input);
-            this._setButtonState(submitButton, form.checkValidity());
-          });
-    }
+    const submitButton = this._submitButtonSelector;
+    this._inputSelector.forEach((input) => { 
+      input.addEventListener('input', () => { 
+        this._checkInputValidity(input); 
+        this._setButtonState(submitButton, this._formSelector.checkValidity()); 
+      }); 
+    }); 
+  }
 
+  resetValidation() {
+    this._inputSelector.forEach((input) => {
+      const error = this._element.querySelector(`#${input.id}-error`);
+      error.textContent = '';
+      input.classList.remove(this._validationConfig.inputErrorClass);
+    })
+  }
+
+  //включение валидации всех форм
   enableValidation() {
-      this._setEventListeners();
-      this._validationParameters.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-      });
-    const submitButton = this._element.querySelector('.popup__button');
-    _setButtonState(submitButton, form.checkValidity());
+    this._formSelector.addEventListener('submit', (evt) => { 
+      evt.preventDefault(); 
+    });
+    this._setEventListeners();   
+    this._setButtonState(this._submitButtonSelector, this._formSelector.checkValidity());
   }
 }
