@@ -43,10 +43,15 @@ const imageReview = (name, link) => {
 }; 
 
 initialCards.forEach((item) => {
-	const card = new Card(item, '.template', imageReview);
-	const cardElement = card.generateCard(item);
-	document.querySelector('.elements').append(cardElement);
+	createNewCard(item);
 });
+
+function createNewCard(item) {
+  const card = new Card(item, '.template', imageReview);
+	const cardElement = card.generateCard(item);
+	document.querySelector('.elements').prepend(cardElement);
+}
+
 
 //открытие попап редактирование профиля
 function openEditProfilePopup() { 
@@ -71,12 +76,10 @@ function submitPopupEditForm() {
 }
 
 //сабмит попап с новой карточкой
-function submitPopupAddForm(item) {
+function submitPopupAddForm() {
   const cardTitle = popupInputTitle.value; 
   const cardImage = popupInputUrl.value;
-  const card = new Card({name:cardTitle, link:cardImage}, '.template', imageReview);
-	const cardElement = card.generateCard(item);
-	document.querySelector('.elements').prepend(cardElement);
+  createNewCard({name:cardTitle, link:cardImage});
   closePopup(popupAddingNode);
   formAdd.reset();
 }
