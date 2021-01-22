@@ -28,7 +28,7 @@ const validationConfig = {
   customMessages: {
     textValueMissing: 'Вы пропустили это поле.',
     urlMissmath: 'Введите адрес изображения.',
-    urlValueMissing: 'Вы пропустили это поле.'
+    urlValueMissing: 'Вы пропустили это поле.',
   }
 }
 const formEditValidate = new formValidator(validationConfig, popupProfileNode);
@@ -59,8 +59,8 @@ function openEditProfilePopup() {
 //открытие попап для добавления новой карточки
 function openAddCardPopup() {
   formAdd.reset();
-  openPopup(popupAddingNode);
   formAddValidate.resetValidation();
+  openPopup(popupAddingNode);
 }
 
 //сабмит попап редактирования
@@ -79,7 +79,6 @@ function submitPopupAddForm(item) {
 	document.querySelector('.elements').prepend(cardElement);
   closePopup(popupAddingNode);
   formAdd.reset();
-  formAddValidate.resetValidation();
 }
 
 //функция открытия любого попап
@@ -99,7 +98,7 @@ popupCloseButtons.forEach((button) => {
   button.addEventListener('click', function(evt) {
     closePopup(evt.target.closest('.popup'));
   });
-})
+});
 
 //закрытие любого попап через Esc
 function popupOnEscClose(evt) {

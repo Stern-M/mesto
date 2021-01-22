@@ -76,7 +76,8 @@ export default class formValidator {
       const error = this._element.querySelector(`#${input.id}-error`);
       error.textContent = '';
       input.classList.remove(this._validationConfig.inputErrorClass);
-    })
+    });
+    this._setButtonState(this._submitButtonSelector, this._formSelector.checkValidity());
   }
 
   //включение валидации всех форм
@@ -84,7 +85,7 @@ export default class formValidator {
     this._formSelector.addEventListener('submit', (evt) => { 
       evt.preventDefault(); 
     });
-    this._setEventListeners();   
-    this._setButtonState(this._submitButtonSelector, this._formSelector.checkValidity());
+    this._setEventListeners(); 
+    this._setButtonState(this._submitButtonSelector, this._formSelector.checkValidity());  
   }
 }
