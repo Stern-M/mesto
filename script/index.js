@@ -1,5 +1,6 @@
-import {Card} from './Card.js';
-import {formValidator} from './FormValidator.js';
+import Card from './Card.js';
+import formValidator from './FormValidator.js';
+import {initialCards} from './initial-сards.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -25,11 +26,13 @@ const validationConfig = {
   inputErrorClass: 'popup__data_invalid',
   inactiveButtonClass: 'popup__button_invalid', 
   customMessages: {
-      textValueMissing: 'Вы пропустили это поле.',
-      urlMissmath: 'Введите адрес изображения.',
-      urlValueMissing: 'Вы пропустили это поле.'
+    textValueMissing: 'Вы пропустили это поле.',
+    urlMissmath: 'Введите адрес изображения.',
+    urlValueMissing: 'Вы пропустили это поле.'
   }
-};
+}
+const formEditValidate = new formValidator(validationConfig, popupProfileNode);
+const formAddValidate = new formValidator(validationConfig, popupAddingNode);
 
 //просмотр попап с картинкой
 const imageReview = (name, link) => { 
@@ -37,7 +40,7 @@ const imageReview = (name, link) => {
   previewImage.src = link; 
   previewImage.alt = name; 
   previewTitle.textContent = name; 
-} 
+}; 
 
 initialCards.forEach((item) => {
 	const card = new Card(item, '.template', imageReview);
@@ -46,35 +49,29 @@ initialCards.forEach((item) => {
 });
 
 //открытие попап редактирование профиля
-function openEditProfilePopup () { 
+function openEditProfilePopup() { 
   titleInputNode.value = profileTitleNode.textContent; 
   subInputNode.value = profileSubTitleNode.textContent;
   openPopup(popupProfileNode);
-  const formValidate = new formValidator(validationConfig, popupProfileNode);
-  formValidate.enableValidation();
-  formValidate.resetValidation();
+  formEditValidate.resetValidation();
 } 
 
 //открытие попап для добавления новой карточки
-function openAddCardPopup () {
+function openAddCardPopup() {
   formAdd.reset();
-  const formValidate = new formValidator(validationConfig, popupAddingNode);
   openPopup(popupAddingNode);
-  formValidate.enableValidation();
-  formValidate.resetValidation();
+  formAddValidate.resetValidation();
 }
 
 //сабмит попап редактирования
-function submitPopupEditForm(event) {
-  event.preventDefault();
+function submitPopupEditForm() {
   profileTitleNode.textContent = titleInputNode.value;
   profileSubTitleNode.textContent = subInputNode.value;
   closePopup(popupProfileNode);
 }
 
 //сабмит попап с новой карточкой
-function submitPopupAddForm(event, item) {
-  event.preventDefault();
+function submitPopupAddForm(item) {
   const cardTitle = popupInputTitle.value; 
   const cardImage = popupInputUrl.value;
   const card = new Card({name:cardTitle, link:cardImage}, '.template', imageReview);
@@ -82,6 +79,7 @@ function submitPopupAddForm(event, item) {
 	document.querySelector('.elements').prepend(cardElement);
   closePopup(popupAddingNode);
   formAdd.reset();
+  formAddValidate.resetValidation();
 }
 
 //функция открытия любого попап
@@ -112,11 +110,14 @@ function popupOnEscClose(evt) {
 }
 
 //закрытие любого попап по клику на оверлей
-function popupOnOverlayClose (evt) {
+function popupOnOverlayClose(evt) {
   if (evt.target.classList.contains('popup_visible')) {
     closePopup(evt.target);
   }
 }
+
+formEditValidate.enableValidation();
+formAddValidate.enableValidation();
 
 profileEditButton.addEventListener('click', openEditProfilePopup);
 profileAddButton.addEventListener('click', openAddCardPopup);

@@ -1,4 +1,4 @@
-export class formValidator {
+export default class formValidator {
   constructor(validationConfig, element) {
     this._validationConfig = validationConfig;
     this._element = element;
@@ -63,11 +63,10 @@ export class formValidator {
 
   //добавление слушателей 
   _setEventListeners() {
-    const submitButton = this._submitButtonSelector;
     this._inputSelector.forEach((input) => { 
       input.addEventListener('input', () => { 
         this._checkInputValidity(input); 
-        this._setButtonState(submitButton, this._formSelector.checkValidity()); 
+        this._setButtonState(this._submitButtonSelector, this._formSelector.checkValidity()); 
       }); 
     }); 
   }
