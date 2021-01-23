@@ -44,20 +44,22 @@ export default class formValidator {
     this._checkTextValidity(input);
     this._checkUrlValidity(input);
     if (!input.validity.valid) {
-        this._showError(input);
+      this._showError(input);
     } else {
-        this._hideError(input);
+      this._hideError(input);
     }
   }
 
   //настройка кнопки сабмит (автоматически подстраивается под валидность/не валидность)
-  _setButtonState(button, isActive) {
-    if (isActive) {
-      button.classList.remove(this._validationConfig.inactiveButtonClass);
-      button.disabled = false;
+  _setButtonState() {
+    if (this._formSelector.checkValidity()) {
+      this._submitButtonSelector.classList.remove(this._validationConfig.inactiveButtonClass);
+      this._submitButtonSelector.disabled = false;
+      console.log('ok')
     } else {
-      button.classList.add(this._validationConfig.inactiveButtonClass);
-      button.disabled = true;
+      this._submitButtonSelector.classList.add(this._validationConfig.inactiveButtonClass);
+      this._submitButtonSelector.disabled = true;
+      console.log('ne ok')
     }
   }
 
@@ -66,7 +68,7 @@ export default class formValidator {
     this._inputSelector.forEach((input) => { 
       input.addEventListener('input', () => { 
         this._checkInputValidity(input); 
-        this._setButtonState(this._submitButtonSelector, this._formSelector.checkValidity()); 
+        this._setButtonState(); 
       }); 
     }); 
   }
@@ -77,7 +79,8 @@ export default class formValidator {
       error.textContent = '';
       input.classList.remove(this._validationConfig.inputErrorClass);
     });
-    this._setButtonState(this._submitButtonSelector, this._formSelector.checkValidity());
+    this._setButtonState();
+    
   }
 
   //включение валидации всех форм
@@ -85,7 +88,6 @@ export default class formValidator {
     this._formSelector.addEventListener('submit', (evt) => { 
       evt.preventDefault(); 
     });
-    this._setEventListeners(); 
-    this._setButtonState(this._submitButtonSelector, this._formSelector.checkValidity());  
+    this._setEventListeners();  
   }
 }

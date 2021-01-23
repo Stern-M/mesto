@@ -43,22 +43,22 @@ const imageReview = (name, link) => {
 }; 
 
 initialCards.forEach((item) => {
-	createNewCard(item);
+  document.querySelector('.elements').append(createNewCard(item));
 });
 
 function createNewCard(item) {
   const card = new Card(item, '.template', imageReview);
-	const cardElement = card.generateCard(item);
-	document.querySelector('.elements').prepend(cardElement);
+	return card.generateCard();
 }
 
 
 //открытие попап редактирование профиля
-function openEditProfilePopup() { 
+function openEditProfilePopup() {
+  formEdit.reset(); 
   titleInputNode.value = profileTitleNode.textContent; 
   subInputNode.value = profileSubTitleNode.textContent;
-  openPopup(popupProfileNode);
   formEditValidate.resetValidation();
+  openPopup(popupProfileNode);
 } 
 
 //открытие попап для добавления новой карточки
@@ -79,7 +79,7 @@ function submitPopupEditForm() {
 function submitPopupAddForm() {
   const cardTitle = popupInputTitle.value; 
   const cardImage = popupInputUrl.value;
-  createNewCard({name:cardTitle, link:cardImage});
+  document.querySelector('.elements').prepend(createNewCard({name:cardTitle, link:cardImage}));
   closePopup(popupAddingNode);
   formAdd.reset();
 }
