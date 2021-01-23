@@ -55,11 +55,9 @@ export default class formValidator {
     if (this._formSelector.checkValidity()) {
       this._submitButtonSelector.classList.remove(this._validationConfig.inactiveButtonClass);
       this._submitButtonSelector.disabled = false;
-      console.log('ok')
     } else {
       this._submitButtonSelector.classList.add(this._validationConfig.inactiveButtonClass);
       this._submitButtonSelector.disabled = true;
-      console.log('ne ok')
     }
   }
 
@@ -73,21 +71,20 @@ export default class formValidator {
     }); 
   }
 
+  //проверяем валидность полей (актуально для попап редактирования), убираем сообщение об ошибке, валидирование кнопки сабмит)
   resetValidation() {
     this._inputSelector.forEach((input) => {
-      const error = this._element.querySelector(`#${input.id}-error`);
-      error.textContent = '';
-      input.classList.remove(this._validationConfig.inputErrorClass);
-    });
-    this._setButtonState();
-    
+      this._checkInputValidity(input);
+      this._hideError(input);
+      this._setButtonState();
+    }); 
   }
 
   //включение валидации всех форм
-  enableValidation() {
+  enableValidation() { 
     this._formSelector.addEventListener('submit', (evt) => { 
       evt.preventDefault(); 
     });
-    this._setEventListeners();  
+    this._setEventListeners();
   }
 }

@@ -54,11 +54,11 @@ function createNewCard(item) {
 
 //открытие попап редактирование профиля
 function openEditProfilePopup() {
-  formEdit.reset(); 
+  formEdit.reset();
   titleInputNode.value = profileTitleNode.textContent; 
-  subInputNode.value = profileSubTitleNode.textContent;
-  formEditValidate.resetValidation();
+  subInputNode.value = profileSubTitleNode.textContent; 
   openPopup(popupProfileNode);
+  formEditValidate.resetValidation();
 } 
 
 //открытие попап для добавления новой карточки
