@@ -2,6 +2,7 @@ import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import {initialCards} from '../components/initial-сards.js';
 import Section from '../components/Section.js';
+import Popup from '../components/Popup.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -68,7 +69,7 @@ function createNewCard(item) {
 function openEditProfilePopup() {
   formEdit.reset();
   titleInputNode.value = profileTitleNode.textContent; 
-  subInputNode.value = profileSubTitleNode.textContent; 
+  subInputNode.value = profileSubTitleNode.textContent;
   openPopup(popupProfileNode);
   formEditValidate.resetValidation();
 } 
@@ -84,7 +85,7 @@ function openAddCardPopup() {
 function submitPopupEditForm() {
   profileTitleNode.textContent = titleInputNode.value;
   profileSubTitleNode.textContent = subInputNode.value;
-  closePopup(popupProfileNode);
+  close(popupProfileNode);
 }
 
 //сабмит попап с новой карточкой
@@ -92,36 +93,37 @@ function submitPopupAddForm() {
   const cardTitle = popupInputTitle.value; 
   const cardImage = popupInputUrl.value;
   document.querySelector('.elements').prepend(createNewCard({name:cardTitle, link:cardImage}));
-  closePopup(popupAddingNode);
+  close(popupAddingNode);
   formAdd.reset();
 }
 
-//функция открытия любого попап
-function openPopup(popup) {
-  popup.classList.toggle('popup_visible');
-  document.addEventListener('keydown', popupOnEscClose);
+//открытие любого попап
+const openPopup = (popup) => {
+  const eachPopupOpen = new Popup(popup);
+  eachPopupOpen.setEventListeners();
+  eachPopupOpen.open();
 }
 
 //функция закрытия любого попап
-function closePopup(popup) {
+/*function closePopup(popup) {
   popup.classList.toggle('popup_visible');
   document.removeEventListener('keydown', popupOnEscClose);
-}
+}*/
 
 //закрытие любого попап через крестик
-popupCloseButtons.forEach((button) => {
+/*popupCloseButtons.forEach((button) => {
   button.addEventListener('click', function(evt) {
     closePopup(evt.target.closest('.popup'));
   });
-});
+});*/
 
 //закрытие любого попап через Esc
-function popupOnEscClose(evt) {
+/*function popupOnEscClose(evt) {
   if (evt.key === 'Escape') {
     const activePopup = document.querySelector('.popup_visible');
-    closePopup(activePopup);
+    close(activePopup);
   }
-}
+}*/
 
 //закрытие любого попап по клику на оверлей
 function popupOnOverlayClose(evt) {

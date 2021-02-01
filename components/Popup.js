@@ -1,7 +1,9 @@
 export default class Popup {
   constructor(popupSelector) {
-    this._popupSelector = popupSelector;
-    this._escapeHandleBinding = this._handleEscClose.bind(this);
+    this._popup = popupSelector;
+    this._buttonClose = this._popup.querySelector('.popup__cancel-button');
+    this._handleEscClose = this._handleEscClose.bind(this);
+    this.close = this.close.bind(this);
   }
 
   _handleEscClose(evt) {
@@ -10,16 +12,20 @@ export default class Popup {
     }
   }
 
+  _handleCrossClose(evt) {
+
+  }
+
   open() {
-    this._popupSelector.classList.add('popup_visible');
-    document.addEventListener('keydown', this._escapeHandleBinding);
+    this._popup.classList.add('popup_visible');
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
   close() {
-    this._popupSelector.classList.remove('popup_visible');
-    document.removeEventListener('keydown', this._escapeHandleBinding);
+    this._popup.classList.remove('popup_visible');
+    document.removeEventListener('keydown', this._handleEscClose);
   }
   setEventListeners() {
-    document.querySelector('.popup__cancel-button').addEventListener('click', this.close.bind(this));
+    this._buttonClose.addEventListener('click', this.close);
   }
 }
