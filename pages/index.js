@@ -1,6 +1,7 @@
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import {initialCards} from '../components/initial-сards.js';
+import { Section } from '../components/Section.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -18,6 +19,7 @@ const subInputNode = document.querySelector('.popup__data_input_description');
 const targetCardReview = document.querySelector('.popup_preview_form');
 const previewImage = targetCardReview.querySelector('.popup__review-image');
 const previewTitle = targetCardReview.querySelector('.popup__review-title');
+const cardListSelector = '.elements';
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -42,9 +44,19 @@ const imageReview = (name, link) => {
   previewTitle.textContent = name; 
 }; 
 
-initialCards.forEach((item) => {
+/*initialCards.forEach((item) => {
   document.querySelector('.elements').append(createNewCard(item));
-});
+});*/
+
+const cardList = new Section({
+  data: initialCards,
+  renderer: (item) => {
+    const card = new Card(item, '.template', imageReview);
+    const cardElement = card.generateCard();
+    cardList.setItem(cardElement);
+  },
+}, cardListSelector);
+cardList.addItem();
 
 function createNewCard(item) {
   const card = new Card(item, '.template', imageReview);
