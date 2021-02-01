@@ -1,7 +1,7 @@
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import {initialCards} from '../components/initial-сards.js';
-import { Section } from '../components/Section.js';
+import Section from '../components/Section.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
