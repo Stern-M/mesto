@@ -1,6 +1,6 @@
-import Card from './Card.js';
-import formValidator from './FormValidator.js';
-import {initialCards} from './initial-сards.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import {initialCards} from '../components/initial-сards.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -31,8 +31,8 @@ const validationConfig = {
     urlValueMissing: 'Вы пропустили это поле.',
   }
 }
-const formEditValidate = new formValidator(validationConfig, popupProfileNode);
-const formAddValidate = new formValidator(validationConfig, popupAddingNode);
+const formEditValidate = new FormValidator(validationConfig, popupProfileNode);
+const formAddValidate = new FormValidator(validationConfig, popupAddingNode);
 
 //просмотр попап с картинкой
 const imageReview = (name, link) => { 
