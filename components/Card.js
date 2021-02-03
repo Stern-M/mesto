@@ -1,9 +1,9 @@
 export default class Card {
-  constructor(data, cardSelector, imageReview) {
+  constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
-    this._imageReview = imageReview;
+    this._imageReview = handleCardClick;
   }
 
   // возврат разметки
