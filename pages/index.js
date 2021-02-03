@@ -3,6 +3,7 @@ import FormValidator from '../components/FormValidator.js';
 import {initialCards} from '../components/initial-сards.js';
 import Section from '../components/Section.js';
 import Popup from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -17,9 +18,9 @@ const formEdit = document.querySelector('.popup__container');
 const formAdd = document.querySelector('.popup__add');
 const titleInputNode = document.querySelector('.popup__data_input_name');
 const subInputNode = document.querySelector('.popup__data_input_description');
-const targetCardReview = document.querySelector('.popup_preview_form');
-const previewImage = targetCardReview.querySelector('.popup__review-image');
-const previewTitle = targetCardReview.querySelector('.popup__review-title');
+export const targetCardReview = document.querySelector('.popup_preview_form');
+export const previewImage = targetCardReview.querySelector('.popup__review-image');
+export const previewTitle = targetCardReview.querySelector('.popup__review-title');
 const cardListSelector = '.elements';
 
 const validationConfig = {
@@ -36,23 +37,30 @@ const validationConfig = {
 }
 const formEditValidate = new FormValidator(validationConfig, popupProfileNode);
 const formAddValidate = new FormValidator(validationConfig, popupAddingNode);
+//const popupPreviewImage = new PopupWithImage(targetCardReview);
 
 //просмотр попап с картинкой
-const imageReview = (name, link) => { 
-  openPopup(targetCardReview); 
+/*const imageReview = (name, link) => { 
+  openPreviewPopup(popupPreviewImage); 
   previewImage.src = link; 
   previewImage.alt = name; 
   previewTitle.textContent = name; 
 }; 
 
-/*initialCards.forEach((item) => {
+initialCards.forEach((item) => {
   document.querySelector('.elements').append(createNewCard(item));
 });*/
+
+const openPreviewPopup = (name, link) => {
+  const popupPreviewImage = new PopupWithImage(targetCardReview);
+  popupPreviewImage.setEventListeners();
+  popupPreviewImage.open(name, link);
+}
 
 const cardList = new Section({
   data: initialCards,
   renderer: (item) => {
-    const card = new Card(item, '.template', imageReview);
+    const card = new Card(item, '.template', openPreviewPopup);
     const cardElement = card.generateCard();
     cardList.setItem(cardElement);
   },
@@ -60,7 +68,7 @@ const cardList = new Section({
 cardList.addItem();
 
 function createNewCard(item) {
-  const card = new Card(item, '.template', imageReview);
+  const card = new Card(item, '.template', openPreviewPopup);
 	return card.generateCard();
 }
 
@@ -104,11 +112,13 @@ const openPopup = (popup) => {
   eachPopupOpen.open();
 }
 
+
+
 //функция закрытия любого попап
-/*function closePopup(popup) {
+function closePopup(popup) {
   popup.classList.toggle('popup_visible');
   document.removeEventListener('keydown', popupOnEscClose);
-}*/
+}
 
 //закрытие любого попап через крестик
 /*popupCloseButtons.forEach((button) => {

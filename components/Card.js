@@ -24,6 +24,7 @@ export default class Card {
     });
     this._element.querySelector('.element__image').addEventListener('click', () => {
       this._imageReview(this._name, this._link);
+      
     });
     this._element.querySelector('.element__remove-button').addEventListener('click', () => {
       this._handleDeleteIcon();
