@@ -5,14 +5,15 @@ import Section from '../components/Section.js';
 import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+//import UserInfo from '../components/UserInfo.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const popupProfileNode = document.querySelector('.popup_profile_form');
 const popupAddingNode = document.querySelector('.popup_adding_form');
 const popupCloseButtons = [...document.querySelectorAll('.popup__cancel-button')];
-const profileTitleNode = document.querySelector('.profile__title');
-const profileSubTitleNode = document.querySelector('.profile__subtitle');
+export const profileTitleNode = document.querySelector('.profile__title');
+export const profileSubTitleNode = document.querySelector('.profile__subtitle');
 const popupInputTitle = document.querySelector('.popup__data_input_title');
 const popupInputUrl = document.querySelector('.popup__data_input_url');
 const formEdit = document.querySelector('.popup__container');
@@ -85,8 +86,15 @@ function createNewCard(item) {
   }
 );*/
 
-const addPopup = new PopupWithForm(popupAddingNode, handleFormSubmit);
+const addPopup = new PopupWithForm(
+  popupAddingNode, {
+  handleFormSubmit: (name, link) => {
+    document.querySelector('.elements').prepend(createNewCard({name: name, link: link}));
+  }
+});
 addPopup.setEventListeners();
+
+//const editPopup = new PopupWithForm(popupProfileNode, )
 
 //открытие попап редактирование профиля
 function openEditProfilePopup() {
@@ -112,12 +120,11 @@ function submitPopupEditForm() {
 }
 
 //сабмит попап с новой карточкой
-function handleFormSubmit() {
+/*function handleFormSubmit() {
   const cardTitle = popupInputTitle.value; 
   const cardImage = popupInputUrl.value;
   document.querySelector('.elements').prepend(createNewCard({name:cardTitle, link:cardImage}));
-  //close(addPopup);
-}
+}*/
 
 //открытие любого попап
 const openPopup = (popup) => {
