@@ -88,8 +88,8 @@ function createNewCard(item) {
 
 const addPopup = new PopupWithForm(
   popupAddingNode, {
-  handleFormSubmit: (name, link) => {
-    document.querySelector('.elements').prepend(createNewCard({name: name, link: link}));
+  handleFormSubmit: (data) => {
+    document.querySelector('.elements').prepend(createNewCard({name: data.place_name, link: data.place_url}));
   }
 });
 addPopup.setEventListeners();
