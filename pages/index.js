@@ -5,6 +5,7 @@ import Section from '../components/Section.js';
 import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 //import UserInfo from '../components/UserInfo.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -18,8 +19,8 @@ const popupInputTitle = document.querySelector('.popup__data_input_title');
 const popupInputUrl = document.querySelector('.popup__data_input_url');
 const formEdit = document.querySelector('.popup__container');
 const formAdd = document.querySelector('.popup_adding_form');
-const titleInputNode = document.querySelector('.popup__data_input_name');
-const subInputNode = document.querySelector('.popup__data_input_description');
+export const titleInputNode = document.querySelector('.popup__data_input_name');
+export const subInputNode = document.querySelector('.popup__data_input_description');
 const targetCardReview = document.querySelector('.popup_preview_form');
 export const previewImage = targetCardReview.querySelector('.popup__review-image');
 export const previewTitle = targetCardReview.querySelector('.popup__review-title');
@@ -39,7 +40,7 @@ const validationConfig = {
 }
 const formEditValidate = new FormValidator(validationConfig, popupProfileNode);
 const formAddValidate = new FormValidator(validationConfig, popupAddingNode);
-//const popupPreviewImage = new PopupWithImage(targetCardReview);
+const userInfo = new UserInfo(titleInputNode, subInputNode);
 
 //просмотр попап с картинкой
 /*const imageReview = (name, link) => { 
@@ -94,14 +95,19 @@ const addPopup = new PopupWithForm(
 });
 addPopup.setEventListeners();
 
-//const editPopup = new PopupWithForm(popupProfileNode, )
+const editPopup = new PopupWithForm(
+  popupProfileNode, {
+  handleFormSubmit: () => {
+    userInfo.setUserInfo();
+  }
+});
+editPopup.setEventListeners();
 
 //открытие попап редактирование профиля
 function openEditProfilePopup() {
-  formEdit.reset();
-  titleInputNode.value = profileTitleNode.textContent; 
-  subInputNode.value = profileSubTitleNode.textContent;
-  openPopup(popupProfileNode);
+  editPopup.open();
+  userInfo.getUserInfo();
+  //openPopup(popupProfileNode);
   formEditValidate.resetValidation();
 } 
 
@@ -169,7 +175,8 @@ formAddValidate.enableValidation();
 profileEditButton.addEventListener('click', openEditProfilePopup);
 profileAddButton.addEventListener('click', function () {
   addPopup.open();
+  formAddValidate.resetValidation();
 });
-formEdit.addEventListener('submit', submitPopupEditForm);
+//formEdit.addEventListener('submit', submitPopupEditForm);
 //formAdd.addEventListener('submit', submitPopupAddForm);
 document.addEventListener('click', popupOnOverlayClose);

@@ -1,4 +1,4 @@
-/*import {profileTitleNode, profileSubTitleNode} from '../pages/index.js';
+import {profileTitleNode, profileSubTitleNode, titleInputNode, subInputNode } from '../pages/index.js';
 
 export default class UserInfo {
   constructor(name, description) {
@@ -7,14 +7,12 @@ export default class UserInfo {
   };
 
   getUserInfo() {
-    return {
-      this._name = profileTitleNode.textContent;
-      this._description = profileSubTitleNode.textContent;
-    }
+    titleInputNode.value = profileTitleNode.textContent;  
+    subInputNode.value = profileSubTitleNode.textContent;  
   }
 
   setUserInfo() {
-    profileTitleNode.textContent = this._name;
-    profileSubTitleNode.textContent = this._description;
+    profileTitleNode.textContent = this._name.value;
+    profileSubTitleNode.textContent = this._description.value;
   }
-}*/
+}
