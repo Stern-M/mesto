@@ -93,7 +93,6 @@ const addPopup = new PopupWithForm(
     document.querySelector('.elements').prepend(createNewCard({name: data.place_name, link: data.place_url}));
   }
 });
-addPopup.setEventListeners();
 
 const editPopup = new PopupWithForm(
   popupProfileNode, {
@@ -101,13 +100,13 @@ const editPopup = new PopupWithForm(
     userInfo.setUserInfo();
   }
 });
-editPopup.setEventListeners();
+
 
 //открытие попап редактирование профиля
 function openEditProfilePopup() {
   editPopup.open();
   userInfo.getUserInfo();
-  //openPopup(popupProfileNode);
+  editPopup.setEventListeners();
   formEditValidate.resetValidation();
 } 
 
@@ -119,11 +118,11 @@ function openEditProfilePopup() {
 }*/
 
 //сабмит попап редактирования
-function submitPopupEditForm() {
+/*function submitPopupEditForm() {
   profileTitleNode.textContent = titleInputNode.value;
   profileSubTitleNode.textContent = subInputNode.value;
   close(popupProfileNode);
-}
+}*/
 
 //сабмит попап с новой карточкой
 /*function handleFormSubmit() {
@@ -143,8 +142,7 @@ const openPopup = (popup) => {
 
 //функция закрытия любого попап
 function closePopup(popup) {
-  popup.classList.toggle('popup_visible');
-  document.removeEventListener('keydown', popupOnEscClose);
+  popup.close();
 }
 
 //закрытие любого попап через крестик
@@ -163,11 +161,11 @@ function closePopup(popup) {
 }*/
 
 //закрытие любого попап по клику на оверлей
-function popupOnOverlayClose(evt) {
+/*function popupOnOverlayClose(evt) {
   if (evt.target.classList.contains('popup_visible')) {
     closePopup(evt.target);
   }
-}
+}*/
 
 formEditValidate.enableValidation();
 formAddValidate.enableValidation();
@@ -175,8 +173,9 @@ formAddValidate.enableValidation();
 profileEditButton.addEventListener('click', openEditProfilePopup);
 profileAddButton.addEventListener('click', function () {
   addPopup.open();
+  addPopup.setEventListeners();
   formAddValidate.resetValidation();
 });
 //formEdit.addEventListener('submit', submitPopupEditForm);
 //formAdd.addEventListener('submit', submitPopupAddForm);
-document.addEventListener('click', popupOnOverlayClose);
+//document.addEventListener('click', handleOnOverlayClose);
