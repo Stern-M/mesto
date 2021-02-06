@@ -38,6 +38,7 @@ export default class Card {
 
   _handleDeleteIcon() {
     this._element.remove();
+    this._element = null;
   }
 
   //добавление данных в разметку
