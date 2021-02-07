@@ -1,5 +1,3 @@
-import {titleInputNode, subInputNode } from '../pages/index.js';
-
 export default class UserInfo {
   constructor(name, description) {
     this._name = document.querySelector(name);
@@ -7,12 +5,16 @@ export default class UserInfo {
   };
 
   getUserInfo() {
-    titleInputNode.value = this._name.textContent;  
-    subInputNode.value = this._description.textContent;  
+    const CurrentUserInfo = {
+      name: this._name.textContent,
+      description: this._description.textContent
+    } 
+    console.log(CurrentUserInfo) 
+    return CurrentUserInfo
   }
 
-  setUserInfo() {
-    this._name.textContent = titleInputNode.value;
-    this._description.textContent = subInputNode.value;
+  setUserInfo(inputName, inputDescription) {
+    this._name.textContent = inputName.value;
+    this._description.textContent = inputDescription.value;
   }
 }

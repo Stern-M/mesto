@@ -7,15 +7,14 @@ export default class Card {
   }
 
   // возврат разметки
-  _getTemplate() { 
-    const cardItems = document 
+  _getTemplate() {
+    const cardItems = document
+    .querySelector(this._cardSelector)
+    .content
+    .querySelector('.element')
+    .cloneNode(true);
 
-    .querySelector('.template') 
-    .content 
-    .querySelector('.element') 
-    .cloneNode(true); 
- 
-    return cardItems; 
+    return cardItems;
   }
 
   //добавляем слушатели
@@ -34,10 +33,12 @@ export default class Card {
 
   //добавляем события
   _handleLikeIcon() {
+    console.log(this._element);
     this._element.querySelector('.element__like-button').classList.toggle('element__like-active');
   }
 
   _handleDeleteIcon() {
+    console.log(this._element);
     this._element.remove();
     this._element = null;
   }
@@ -46,8 +47,9 @@ export default class Card {
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
-    this._element.querySelector('.element__image').src = this._link;
-    this._element.querySelector('.element__image').alt = this._name;
+    this._image = this._element.querySelector('.element__image')
+    this._image.src = this._link;
+    this._image.alt = this._name;
     this._element.querySelector('.element__title').textContent = this._name;
     return this._element;
   }

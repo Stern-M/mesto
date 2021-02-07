@@ -16,12 +16,10 @@ const popupProfileNode = document.querySelector('.popup_profile_form');
 const popupAddingNode = document.querySelector('.popup_adding_form');
 export const profileTitleNode = '.profile__title';
 export const profileSubTitleNode = '.profile__subtitle';
-export const titleInputNode = document.querySelector('.popup__data_input_name');
-export const subInputNode = document.querySelector('.popup__data_input_description');
+const titleInputNode = document.querySelector('.popup__data_input_name');
+const subInputNode = document.querySelector('.popup__data_input_description');
 const targetCardReview = document.querySelector('.popup_preview_form');
 const cardListSelector = '.elements';
-const popupPreviewImage = new PopupWithImage(targetCardReview);
-
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__data',
@@ -34,10 +32,10 @@ const validationConfig = {
     urlValueMissing: 'Вы пропустили это поле.',
   }
 }
+const popupPreviewImage = new PopupWithImage(targetCardReview);
 const formEditValidate = new FormValidator(validationConfig, popupProfileNode);
 const formAddValidate = new FormValidator(validationConfig, popupAddingNode);
 const userInfo = new UserInfo(profileTitleNode, profileSubTitleNode);
-//const card = new Card(item, '.template', openPreviewPopup);
 
 //открытие попап с картинкой
 const openPreviewPopup = (name, link) => {
@@ -60,14 +58,14 @@ function createNewCard(item) {
   const card = new Card(item, '.template', openPreviewPopup);
   const cardElement = card.generateCard();
   cardList.setItem(cardElement);
-	return card.generateCard();
+	return cardElement;
 }
 
 //попап новой карточки
 const addPopup = new PopupWithForm(
   popupAddingNode, {
   handleFormSubmit: (data) => {
-    createNewCard({name: data.place_name, link: data.place_url})
+    createNewCard({name: data.place_name, link: data.place_url});
     addPopup.close();
   }
 });
@@ -76,7 +74,7 @@ const addPopup = new PopupWithForm(
 const editPopup = new PopupWithForm(
   popupProfileNode, {
   handleFormSubmit: () => {
-    userInfo.setUserInfo();
+    userInfo.setUserInfo(titleInputNode, subInputNode);
     editPopup.close();
   }
 });
@@ -84,7 +82,9 @@ const editPopup = new PopupWithForm(
 //открытие попап редактирование профиля
 function openEditProfilePopup() {
   editPopup.open();
-  userInfo.getUserInfo();
+  const currentData = userInfo.getUserInfo();
+  titleInputNode.value = currentData.name;   
+  subInputNode.value = currentData.description;
   formEditValidate.resetValidation();
 } 
 
