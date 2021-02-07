@@ -14,8 +14,8 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const popupProfileNode = document.querySelector('.popup_profile_form');
 const popupAddingNode = document.querySelector('.popup_adding_form');
-export const profileTitleNode = document.querySelector('.profile__title');
-export const profileSubTitleNode = document.querySelector('.profile__subtitle');
+export const profileTitleNode = '.profile__title';
+export const profileSubTitleNode = '.profile__subtitle';
 export const titleInputNode = document.querySelector('.popup__data_input_name');
 export const subInputNode = document.querySelector('.popup__data_input_description');
 const targetCardReview = document.querySelector('.popup_preview_form');
@@ -37,7 +37,7 @@ const validationConfig = {
 }
 const formEditValidate = new FormValidator(validationConfig, popupProfileNode);
 const formAddValidate = new FormValidator(validationConfig, popupAddingNode);
-const userInfo = new UserInfo(titleInputNode, subInputNode);
+const userInfo = new UserInfo(profileTitleNode, profileSubTitleNode);
 
 //открытие попап с картинкой
 const openPreviewPopup = (name, link) => {

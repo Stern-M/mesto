@@ -1,18 +1,18 @@
-import {profileTitleNode, profileSubTitleNode, titleInputNode, subInputNode } from '../pages/index.js';
+import {titleInputNode, subInputNode } from '../pages/index.js';
 
 export default class UserInfo {
   constructor(name, description) {
-    this._name = name;
-    this._description = description;
+    this._name = document.querySelector(name);
+    this._description = document.querySelector(description);
   };
 
   getUserInfo() {
-    titleInputNode.value = profileTitleNode.textContent;  
-    subInputNode.value = profileSubTitleNode.textContent;  
+    titleInputNode.value = this._name.textContent;  
+    subInputNode.value = this._description.textContent;  
   }
 
   setUserInfo() {
-    profileTitleNode.textContent = this._name.value;
-    profileSubTitleNode.textContent = this._description.value;
+    this._name.textContent = titleInputNode.value;
+    this._description.textContent = subInputNode.value;
   }
 }
