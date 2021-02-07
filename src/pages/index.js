@@ -19,9 +19,8 @@ export const profileSubTitleNode = '.profile__subtitle';
 export const titleInputNode = document.querySelector('.popup__data_input_name');
 export const subInputNode = document.querySelector('.popup__data_input_description');
 const targetCardReview = document.querySelector('.popup_preview_form');
-export const previewImage = targetCardReview.querySelector('.popup__review-image');
-export const previewTitle = targetCardReview.querySelector('.popup__review-title');
 const cardListSelector = '.elements';
+const popupPreviewImage = new PopupWithImage(targetCardReview);
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -38,10 +37,10 @@ const validationConfig = {
 const formEditValidate = new FormValidator(validationConfig, popupProfileNode);
 const formAddValidate = new FormValidator(validationConfig, popupAddingNode);
 const userInfo = new UserInfo(profileTitleNode, profileSubTitleNode);
+//const card = new Card(item, '.template', openPreviewPopup);
 
 //открытие попап с картинкой
 const openPreviewPopup = (name, link) => {
-  const popupPreviewImage = new PopupWithImage(targetCardReview);
   popupPreviewImage.setEventListeners();
   popupPreviewImage.open(name, link);
 };
@@ -50,9 +49,7 @@ const openPreviewPopup = (name, link) => {
 const cardList = new Section({
   data: initialCards,
   renderer: (item) => {
-    const card = new Card(item, '.template', openPreviewPopup);
-    const cardElement = card.generateCard();
-    cardList.setItem(cardElement);
+    createNewCard(item)
   },
 }, cardListSelector);
 
@@ -61,6 +58,8 @@ cardList.addItem();
 //создание новой карточки
 function createNewCard(item) {
   const card = new Card(item, '.template', openPreviewPopup);
+  const cardElement = card.generateCard();
+  cardList.setItem(cardElement);
 	return card.generateCard();
 }
 
@@ -68,7 +67,7 @@ function createNewCard(item) {
 const addPopup = new PopupWithForm(
   popupAddingNode, {
   handleFormSubmit: (data) => {
-    document.querySelector('.elements').prepend(createNewCard({name: data.place_name, link: data.place_url}));
+    createNewCard({name: data.place_name, link: data.place_url})
     addPopup.close();
   }
 });

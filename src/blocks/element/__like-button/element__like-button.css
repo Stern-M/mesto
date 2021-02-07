@@ -13,7 +13,7 @@
 
 .element__like-button:hover {
   cursor: pointer;
-  opacity: 50%;
+  opacity: 0.5;
 }
 
 .element__like-button:active {

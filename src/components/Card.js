@@ -7,14 +7,15 @@ export default class Card {
   }
 
   // возврат разметки
-  _getTemplate() {
-    const cardItems = document
-    .querySelector('.template')
-    .content
-    .querySelector('.element')
-    .cloneNode(true);
+  _getTemplate() { 
+    const cardItems = document 
 
-    return cardItems;
+    .querySelector('.template') 
+    .content 
+    .querySelector('.element') 
+    .cloneNode(true); 
+ 
+    return cardItems; 
   }
 
   //добавляем слушатели
