@@ -5,12 +5,11 @@ export default class UserInfo {
   };
 
   getUserInfo() {
-    const CurrentUserInfo = {
+    const currentUserInfo = {
       name: this._name.textContent,
       description: this._description.textContent
-    } 
-    console.log(CurrentUserInfo) 
-    return CurrentUserInfo
+    }  
+    return currentUserInfo
   }
 
   setUserInfo(inputName, inputDescription) {
