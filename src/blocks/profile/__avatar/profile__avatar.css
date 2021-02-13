@@ -8,3 +8,8 @@
     justify-self: center;
   }
 }
+
+.profile__avatar:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
