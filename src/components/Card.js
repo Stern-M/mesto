@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, api) {
+  constructor(data, cardSelector, handleCardClick, api, deletePopup) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
@@ -7,6 +7,7 @@ export default class Card {
     this._api = api;
     this._id = data.id;
     this._owner = data.owner;
+    this._delPopup = deletePopup;
   }
 
   // возврат разметки
@@ -40,17 +41,19 @@ export default class Card {
   }
 
   _setDelButtonState() {
-    //if (this._owner === )
     this._api
       .getUserData()
       .then((data) => {
-        console.log(data._id)
-        console.log(this._owner._id)
         if (data._id === this._owner._id) {
-          console.log('совпадение')
           this._element.querySelector('.element__remove-button').classList.add('element__remove-button_visible');
         }
       })
+  }
+
+  _cardDeleteRequest() {
+    console.log(this._element)
+    this._delPopup.open();
+    document.querySelector('.popup__delete-button').addEventListener('submit', this._handleDeleteIcon())
   }
 
   //удаление карточки
@@ -67,11 +70,11 @@ export default class Card {
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
-    this._setDelButtonState();
     this._image = this._element.querySelector('.element__image')
     this._image.src = this._link;
     this._image.alt = this._name;
     this._element.querySelector('.element__title').textContent = this._name;
+    this._setDelButtonState();
     return this._element;
   }
 }

@@ -21,6 +21,7 @@ const subInputNode = document.querySelector('.popup__data_input_description');
 const targetCardReview = document.querySelector('.popup_preview_form');
 const cardListSelector = '.elements';
 const cardList = document.querySelector('.elements');
+const deletePopup = document.querySelector('.popup_card_delete')
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__data',
@@ -61,13 +62,14 @@ api
     const cardList = new Section({
       data: newCards,
       renderer: (item) => {
-        const card = new Card(item, '.template', openPreviewPopup, api);
+        const card = new Card(item, '.template', openPreviewPopup, api, deletePopup);
         const cardElement = card.generateCard();
         cardList.setItem(cardElement);
 	      return cardElement;
       },
     }, cardListSelector, api);
     cardList.addItem();
+    
   })
   .catch(err=>console.log(err))
 
@@ -83,9 +85,9 @@ cardList.addItem();*/
 
 //создание новой карточки
 function createNewCard(item) {
-  const card = new Card(item, '.template', openPreviewPopup, api);
+  const card = new Card(item, '.template', openPreviewPopup, api, deletePopup);
   const cardElement = card.generateCard();
-  console.log(cardList)
+  console.log(cardElement)
   cardList.setItem(cardElement);
 	return cardElement;
 }
@@ -104,14 +106,14 @@ const addPopup = new PopupWithForm(
   popupAddingNode, {
   handleFormSubmit: (data) => {
     api
-      .addCard({name: data.place_name, link: data.place_url})
+      .addCard({name: data.place_name, link: data.place_url, id: data._id, owner: data.owner})
       .then((data) => {
         const card = new Card({name: data.place_name, link: data.place_url}, '.template', openPreviewPopup, api);
         const cardElement = card.generateCard();
+        console.log(cardList)
         cardList.setItem(cardElement);
-	      return cardElement;
-        addPopup.close();
-      })
+	      return cardElement})
+      .then(() => addPopup.close())
       .catch(err=>console.log(err))
    }
 });
