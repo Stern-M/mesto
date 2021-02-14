@@ -15,7 +15,7 @@
       <div class="profile__info">
         <div class="profile__image">
           <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватарка">
-          <button type="button" class="profile__avatar-edit"></и>
+          <button type="button" class="profile__avatar-edit">
         </div>
         <div class="profile__data">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -104,7 +104,10 @@
       <img class="element__image" src="#" alt="Карточка пуста">
       <div class="element__group">
         <h2 class="element__title"></h2>
-        <button type="button" class="element__like-button" aria-label="поставить лайк"></button>
+        <div class="element__like">
+          <button type="button" class="element__like-button" aria-label="поставить лайк"></button>
+          <span class="element__like-count">1</span>
+        </div>
       </div>
     </div>
   </template>
