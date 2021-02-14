@@ -105,6 +105,23 @@
       <button type="button" class="popup__button" aria-label="Да">Да</button>
     </div>
   </div>
+  <div class="popup popup_avatar_form" id="myForm3">
+    <form name="popup" action="#" class="popup__avatar popup__form" novalidate>
+      <button type="button" class="popup__cancel-button" aria-label="закрыть форму без сохранения"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <input
+        required
+        type="url"
+        class="popup__data popup__avatar_input_url"
+        placeholder="Ссылка на фото"
+        name="avatar_url"
+        value=""
+        id="avatar-url"
+        novalidate>
+      <span id="avatar-url-error" class="error"></span>
+      <button type="submit" class="popup__button" aria-label="сохранить и закрыть">Сохранить</button>
+    </form>
+  </div>
   <template class="template">
     <div class="element">
       <button type="button" class="element__remove-button" aria-label="удалить элемент"></button>

@@ -1,0 +1,14 @@
+.popup__avatar {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 430px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 570px) {
+  .popup__avatar {
+    width: 282px;
+  }
+}
