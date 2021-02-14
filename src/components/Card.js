@@ -5,7 +5,8 @@ export default class Card {
     this._cardSelector = cardSelector;
     this._imageReview = handleCardClick;
     this._api = api;
-    this._id = data.id
+    this._id = data.id;
+    this._owner = data.owner;
   }
 
   // возврат разметки
@@ -38,6 +39,21 @@ export default class Card {
     this._element.querySelector('.element__like-button').classList.toggle('element__like-active');
   }
 
+  _setDelButtonState() {
+    //if (this._owner === )
+    this._api
+      .getUserData()
+      .then((data) => {
+        console.log(data._id)
+        console.log(this._owner._id)
+        if (data._id === this._owner._id) {
+          console.log('совпадение')
+          this._element.querySelector('.element__remove-button').classList.add('element__remove-button_visible');
+        }
+      })
+  }
+
+  //удаление карточки
   _handleDeleteIcon() {
     this._api
       .removeCard(this._id)
@@ -51,6 +67,7 @@ export default class Card {
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
+    this._setDelButtonState();
     this._image = this._element.querySelector('.element__image')
     this._image.src = this._link;
     this._image.alt = this._name;

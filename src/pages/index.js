@@ -55,11 +55,9 @@ const openPreviewPopup = (name, link) => {
 api
   .getAllCards()
   .then((data) => {
-    console.log(data)
     const newCards = data.map(item=>{
       return {name: item.name, link: item.link, id: item._id, owner: item.owner}
     })
-    console.log(newCards)
     const cardList = new Section({
       data: newCards,
       renderer: (item) => {
@@ -105,7 +103,6 @@ function createNewCard(item) {
 const addPopup = new PopupWithForm(
   popupAddingNode, {
   handleFormSubmit: (data) => {
-    console.log(data)
     api
       .addCard({name: data.place_name, link: data.place_url})
       .then((data) => {

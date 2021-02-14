@@ -20,6 +20,7 @@
 @import url("../blocks/elements/elements.css");
 @import url("../blocks/element/element.css");
 @import url("../blocks/element/__remove-button/element__remove-button.css");
+@import url("../blocks/element/__remove-button/element__remove-button_visible.css");
 @import url("../blocks/element/__image/element__image.css");
 @import url("../blocks/element/__like/element__like.css");
 @import url("../blocks/element/__like-count/element__like-count.css");

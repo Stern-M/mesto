@@ -19,6 +19,14 @@ export default class Api {
     .then(onError)
   }
 
+  getUserData() {
+    return fetch(`${this._url}/users/me`, {
+      method: "GET",
+      headers: this._headers,
+    })
+    .then(onError)
+  }
+
   addCard(data){
     return fetch(`${this._url}/cards`, {
       method: "POST",
