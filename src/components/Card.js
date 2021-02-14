@@ -5,6 +5,7 @@ export default class Card {
     this._cardSelector = cardSelector;
     this._imageReview = handleCardClick;
     this._api = api;
+    this._id = data.id
   }
 
   // возврат разметки
@@ -38,8 +39,12 @@ export default class Card {
   }
 
   _handleDeleteIcon() {
-    this._element.remove();
-    this._element = null;
+    this._api
+      .removeCard(this._id)
+      .then(() => {
+        this._element.remove();
+        this._element = null;
+      })
   }
 
   //добавление данных в разметку

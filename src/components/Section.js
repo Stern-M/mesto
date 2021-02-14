@@ -7,6 +7,13 @@ export default class Section {
     this._api = api;
   }
 
+  addNewCard(newCard) {
+    this._api
+    .addCard(newCard)
+    .then((data) => this._addItem({name: data.name, link: data.link}))
+    .catch(err => console.log(err))
+  }
+
   addItem() {
     this._renderedItems.forEach(item => {
       this._renderer(item);

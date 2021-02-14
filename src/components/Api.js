@@ -27,4 +27,12 @@ export default class Api {
     })
     .then(onError)
   }
+
+  removeCard(id){
+    return fetch(`${this._url}/cards/${id}`, {
+      method: "DELETE",
+      headers: this._headers
+    })
+    .then(onError)
+  }
 }

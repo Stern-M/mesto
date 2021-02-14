@@ -55,9 +55,11 @@ const openPreviewPopup = (name, link) => {
 api
   .getAllCards()
   .then((data) => {
+    console.log(data)
     const newCards = data.map(item=>{
-      return {name: item.name, link: item.link}
+      return {name: item.name, link: item.link, id: item._id, owner: item.owner}
     })
+    console.log(newCards)
     const cardList = new Section({
       data: newCards,
       renderer: (item) => {
@@ -91,13 +93,33 @@ function createNewCard(item) {
 }
 
 //попап новой карточки
-const addPopup = new PopupWithForm(
+/*const addPopup = new PopupWithForm(
   popupAddingNode, {
   handleFormSubmit: (data) => {
     createNewCard({name: data.place_name, link: data.place_url});
     addPopup.close();
   }
+});*/
+
+//попап новой карточки ДОДЕЛАТЬ
+const addPopup = new PopupWithForm(
+  popupAddingNode, {
+  handleFormSubmit: (data) => {
+    console.log(data)
+    api
+      .addCard({name: data.place_name, link: data.place_url})
+      .then((data) => {
+        const card = new Card({name: data.place_name, link: data.place_url}, '.template', openPreviewPopup, api);
+        const cardElement = card.generateCard();
+        cardList.setItem(cardElement);
+	      return cardElement;
+        addPopup.close();
+      })
+      .catch(err=>console.log(err))
+   }
 });
+
+
 
 //попап редактирования профиля
 const editPopup = new PopupWithForm(
