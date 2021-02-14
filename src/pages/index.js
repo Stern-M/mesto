@@ -4,11 +4,11 @@ import '../images/avatar.jpg';
 
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
-import {initialCards} from '../components/initial-сards.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -20,6 +20,7 @@ const titleInputNode = document.querySelector('.popup__data_input_name');
 const subInputNode = document.querySelector('.popup__data_input_description');
 const targetCardReview = document.querySelector('.popup_preview_form');
 const cardListSelector = '.elements';
+const cardList = document.querySelector('.elements');
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__data',
@@ -37,26 +38,54 @@ const formEditValidate = new FormValidator(validationConfig, popupProfileNode);
 const formAddValidate = new FormValidator(validationConfig, popupAddingNode);
 const userInfo = new UserInfo(profileTitleNode, profileSubTitleNode);
 
+const api = new Api({
+  url: "https://mesto.nomoreparties.co/v1/cohort-20",
+  headers: {
+    "content-type": "application/json",
+    "Authorization":"9b76e223-fcf4-4649-a71c-6a4d1969a300"
+  }
+});
+
 //открытие попап с картинкой
 const openPreviewPopup = (name, link) => {
   popupPreviewImage.setEventListeners();
   popupPreviewImage.open(name, link);
 };
 
+api
+  .getAllCards()
+  .then((data) => {
+    const newCards = data.map(item=>{
+      return {name: item.name, link: item.link}
+    })
+    const cardList = new Section({
+      data: newCards,
+      renderer: (item) => {
+        const card = new Card(item, '.template', openPreviewPopup, api);
+        const cardElement = card.generateCard();
+        cardList.setItem(cardElement);
+	      return cardElement;
+      },
+    }, cardListSelector, api);
+    cardList.addItem();
+  })
+  .catch(err=>console.log(err))
+
 //Рендер начальных карточек
-const cardList = new Section({
-  data: initialCards,
+/*const cardList = new Section({
+  data: newCards,
   renderer: (item) => {
     createNewCard(item)
   },
 }, cardListSelector);
 
-cardList.addItem();
+cardList.addItem();*/
 
 //создание новой карточки
 function createNewCard(item) {
-  const card = new Card(item, '.template', openPreviewPopup);
+  const card = new Card(item, '.template', openPreviewPopup, api);
   const cardElement = card.generateCard();
+  console.log(cardList)
   cardList.setItem(cardElement);
 	return cardElement;
 }

@@ -1,9 +1,10 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick) {
+  constructor(data, cardSelector, handleCardClick, api) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._imageReview = handleCardClick;
+    this._api = api;
   }
 
   // возврат разметки
@@ -33,12 +34,10 @@ export default class Card {
 
   //добавляем события
   _handleLikeIcon() {
-    console.log(this._element);
     this._element.querySelector('.element__like-button').classList.toggle('element__like-active');
   }
 
   _handleDeleteIcon() {
-    console.log(this._element);
     this._element.remove();
     this._element = null;
   }
