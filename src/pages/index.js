@@ -68,7 +68,6 @@ api
     cardList.addItem();
     return cardList;
   })
-  .then((list) => console.log(list))
   .catch(err=>console.log(err))
 
 //Старый рендер начальных карточек
@@ -134,10 +133,14 @@ const editPopup = new PopupWithForm(
 //открытие попап редактирование профиля
 function openEditProfilePopup() {
   editPopup.open();
-  const currentData = userInfo.getUserInfo();
-  titleInputNode.value = currentData.name;   
-  subInputNode.value = currentData.description;
-  formEditValidate.resetValidation();
+  api
+    .getUserData()
+    .then((data) => {
+      titleInputNode.value = data.name;   
+      subInputNode.value = data.about;
+      formEditValidate.resetValidation();
+    })
+    .catch(err=>console.log(err))
 } 
 
 //открытие попап для добавления новой карточки
