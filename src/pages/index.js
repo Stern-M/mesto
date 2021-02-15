@@ -125,8 +125,13 @@ const addPopup = new PopupWithForm(
 const editPopup = new PopupWithForm(
   popupProfileNode, {
   handleFormSubmit: () => {
-    userInfo.setUserInfo(titleInputNode, subInputNode);
-    editPopup.close();
+    api
+      .setUserData({name: titleInputNode.value, about: subInputNode.value})
+      .then(() => {
+        userInfo.setUserInfo(titleInputNode, subInputNode);
+        editPopup.close();
+      })
+    
   }
 });
 
