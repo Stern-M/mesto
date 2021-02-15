@@ -131,7 +131,7 @@ const editPopup = new PopupWithForm(
         userInfo.setUserInfo(titleInputNode, subInputNode);
         editPopup.close();
       })
-    
+      .catch(err=>console.log(err))
   }
 });
 
@@ -148,11 +148,25 @@ function openEditProfilePopup() {
     .catch(err=>console.log(err))
 } 
 
+//отображение актуальных данных пользователя
+function showUserData() {
+  api
+    .getUserData()
+    .then((data) => {
+      document.querySelector(profileTitleNode).textContent = data.name;
+      document.querySelector(profileSubTitleNode).textContent = data.about;
+      document.querySelector('.profile__avatar').src = data.avatar
+    })
+    .catch(err=>console.log(err))
+}
+
 //открытие попап для добавления новой карточки
 function openAddCardPopup() {
   addPopup.open();
   formAddValidate.resetValidation();
 }
+
+showUserData();
 
 editPopup.setEventListeners();
 addPopup.setEventListeners();
