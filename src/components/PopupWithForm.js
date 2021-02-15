@@ -19,11 +19,21 @@ export default class PopupWithForm extends Popup {
     return inputValues;
   }
 
+  //добавляю слушатели
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
+    });
+  }
+
+  //добавляю слушатели для попапа с удалением
+  setDeleteEventListener(element, id) {
+    super.setEventListeners();
+    this._form.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      this._handleFormSubmit(element, id);
     });
   }
 

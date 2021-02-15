@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, api, deletePopup) {
+  constructor(data, cardSelector, handleCardClick, api, delPopup) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
@@ -7,7 +7,8 @@ export default class Card {
     this._api = api;
     this._id = data.id;
     this._owner = data.owner;
-    this._delPopup = deletePopup;
+    this._delPopup = delPopup;
+    //this._openDelPopup = openDeletePopup;
   }
 
   // возврат разметки
@@ -31,40 +32,56 @@ export default class Card {
       
     });
     this._element.querySelector('.element__remove-button').addEventListener('click', () => {
-      this._handleDeleteIcon();
+      this._cardDeleteRequest(this._element, this._id);
     });
   }
 
-  //добавляем события
+  //добавляем событие лайка
   _handleLikeIcon() {
     this._element.querySelector('.element__like-button').classList.toggle('element__like-active');
   }
 
+  //стату корзинки (показать/скрыть)
   _setDelButtonState() {
     this._api
       .getUserData()
       .then((data) => {
-        //console.log(this._owner._id)
         if (data._id === this._owner._id) {
+          console.log('можешь удалить меня!')
           this._element.querySelector('.element__remove-button').classList.add('element__remove-button_visible');
         }
       })
+      .catch(err=>console.log(err))
   }
 
-  _cardDeleteRequest() {
-    console.log(this._element)
+  //открытие попапа подтверждения удаления карточки
+  _cardDeleteRequest(element, id) {
     this._delPopup.open();
-    document.querySelector('.popup__delete-button').addEventListener('submit', this._handleDeleteIcon())
+    this._delPopup.setDeleteEventListener(element, id);
+    //document.querySelector('.popup__delete-button').addEventListener('submit', this._handleDelete(element))
   }
 
-  //удаление карточки
-  _handleDeleteIcon() {
+  //удаление карточки после подтверждения
+  handleDelete(element) {
     this._api
       .removeCard(this._id)
+      .then(console.log('я все удалил!!'))
       .then(() => {
-        this._element.remove();
-        this._element = null;
+        element.remove();
+        element = null;
       })
+      .catch(err=>console.log(err))
+  }
+
+  //показать количество лайков
+  _setLikeNumber() {
+    this._api
+      .getLikeNumber()
+      .then((data) => {
+        console.log(data.likes)
+        this._element.querySelector('.element__like-count').value = data.likes
+      })
+      .catch(err=>console.log(err))
   }
 
   //добавление данных в разметку

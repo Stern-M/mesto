@@ -11,6 +11,7 @@ export default class Api {
     this._headers = config.headers;  
   }
 
+  //запрос карточек с сервера
   getAllCards() {
     return fetch(`${this._url}/cards`, {
       method: "GET",
@@ -19,6 +20,7 @@ export default class Api {
     .then(onError)
   }
 
+  //запрос данных по юзеру с сервера
   getUserData() {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
@@ -27,6 +29,7 @@ export default class Api {
     .then(onError)
   }
 
+  //изменение данных юзера на сервере
   setUserData(data) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
@@ -42,6 +45,7 @@ export default class Api {
       .then(onError)
   }
 
+  //добаввление новой карточки на сервер
   addCard(data){
     return fetch(`${this._url}/cards`, {
       method: "POST",
@@ -51,10 +55,20 @@ export default class Api {
     .then(onError)
   }
 
+  //удаление карточки с сервера
   removeCard(id){
     return fetch(`${this._url}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers
+    })
+    .then(onError)
+  }
+
+  //запрос количества лайков карточки
+  getLikeNumber() {
+    return fetch(`${this._url}/cards`, {
+      method: "GET",
+      headers: this._headers,
     })
     .then(onError)
   }

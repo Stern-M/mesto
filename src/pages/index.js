@@ -38,7 +38,6 @@ const popupPreviewImage = new PopupWithImage(targetCardReview);
 const formEditValidate = new FormValidator(validationConfig, popupProfileNode);
 const formAddValidate = new FormValidator(validationConfig, popupAddingNode);
 const userInfo = new UserInfo(profileTitleNode, profileSubTitleNode);
-
 const api = new Api({
   url: "https://mesto.nomoreparties.co/v1/cohort-20",
   headers: {
@@ -53,11 +52,12 @@ const openPreviewPopup = (name, link) => {
   popupPreviewImage.open(name, link);
 };
 
+//рендер и отрисовка карточек с сервера
 api
   .getAllCards()
   .then((data) => {
     const newCards = data.map(item=>{
-      return {name: item.name, link: item.link, id: item._id, owner: item.owner}
+      return {name: item.name, link: item.link, id: item._id, owner: item.owner, likes:item.likes}
     })
     cardList = new Section({
       data: newCards,
@@ -70,43 +70,15 @@ api
   })
   .catch(err=>console.log(err))
 
-//Старый рендер начальных карточек
-/*const cardList = new Section({
-  data: newCards,
-  renderer: (item) => {
-    createNewCard(item)
-  },
-}, cardListSelector);
-
-cardList.addItem();*/
-
-/*const cardList = new Section({
-  data: newCards,
-  renderer: (item) => {
-    createNewCard(item)
-  },
-}, cardListSelector);
-
-cardList.addItem();*/
-
-//создание новой карточки
+//функция для создания карточки
 function createNewCard(item, list) {
-  const card = new Card(item, '.template', openPreviewPopup, api, deletePopup);
+  const card = new Card(item, '.template', openPreviewPopup, api, delPopup);
   const cardElement = card.generateCard();
   list.setItem(cardElement);
 	return cardElement;
 }
 
-//попап новой карточки
-/*const addPopup = new PopupWithForm(
-  popupAddingNode, {
-  handleFormSubmit: (data) => {
-    createNewCard({name: data.place_name, link: data.place_url});
-    addPopup.close();
-  }
-});*/
-
-//попап новой карточки обновленный
+//попап для добавления новой карточки
 const addPopup = new PopupWithForm(
   popupAddingNode, {
   handleFormSubmit: (data) => {
@@ -119,7 +91,28 @@ const addPopup = new PopupWithForm(
   }
 });
 
+//попап для удаления картинки
+const delPopup = new PopupWithForm(
+  deletePopup, {
+  handleFormSubmit: (element, id) => {
+    //handleDelete(element)
+    api
+      .removeCard(id)
+      //.then(console.log(element._id))
+      .then(() => {
+        element.remove();
+        element = null;
+      })
+      .catch(err=>console.log(err))
+    }
+  }
+)
 
+//открытие попап для удаления карточки
+function cardDeleteRequest(element) {
+  delPopup.open();
+  //deletePopup.querySelector('.popup__delete-button').addEventListener('submit', handleDelete(element))
+}
 
 //попап редактирования профиля
 const editPopup = new PopupWithForm(
@@ -170,6 +163,7 @@ showUserData();
 
 editPopup.setEventListeners();
 addPopup.setEventListeners();
+
 
 formEditValidate.enableValidation();
 formAddValidate.enableValidation();
