@@ -7,6 +7,7 @@ export default class Section {
     this._api = api;
   }
 
+  //добавление карточки на сервер
   addNewCard(newCard) {
     this._api
     .addCard(newCard)
@@ -21,7 +22,7 @@ export default class Section {
   }
 
   setItem(element, isArray) { 
-    if (isArray) { 
+    if (isArray) {
       this._container.append(element); 
     } else { 
       this._container.prepend(element); 

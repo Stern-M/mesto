@@ -20,7 +20,7 @@ const titleInputNode = document.querySelector('.popup__data_input_name');
 const subInputNode = document.querySelector('.popup__data_input_description');
 const targetCardReview = document.querySelector('.popup_preview_form');
 const cardListSelector = '.elements';
-const cardList = document.querySelector('.elements');
+let cardList;
 const deletePopup = document.querySelector('.popup_card_delete')
 const validationConfig = {
   formSelector: '.popup__form',
@@ -59,21 +59,28 @@ api
     const newCards = data.map(item=>{
       return {name: item.name, link: item.link, id: item._id, owner: item.owner}
     })
-    const cardList = new Section({
+    cardList = new Section({
       data: newCards,
       renderer: (item) => {
-        const card = new Card(item, '.template', openPreviewPopup, api, deletePopup);
-        const cardElement = card.generateCard();
-        cardList.setItem(cardElement);
-	      return cardElement;
+        createNewCard(item, cardList)
       },
-    }, cardListSelector, api);
+    }, cardListSelector);
     cardList.addItem();
-    
+    return cardList;
   })
+  .then((list) => console.log(list))
   .catch(err=>console.log(err))
 
-//Рендер начальных карточек
+//Старый рендер начальных карточек
+/*const cardList = new Section({
+  data: newCards,
+  renderer: (item) => {
+    createNewCard(item)
+  },
+}, cardListSelector);
+
+cardList.addItem();*/
+
 /*const cardList = new Section({
   data: newCards,
   renderer: (item) => {
@@ -84,11 +91,10 @@ api
 cardList.addItem();*/
 
 //создание новой карточки
-function createNewCard(item) {
+function createNewCard(item, list) {
   const card = new Card(item, '.template', openPreviewPopup, api, deletePopup);
   const cardElement = card.generateCard();
-  console.log(cardElement)
-  cardList.setItem(cardElement);
+  list.setItem(cardElement);
 	return cardElement;
 }
 
@@ -101,21 +107,17 @@ function createNewCard(item) {
   }
 });*/
 
-//попап новой карточки ДОДЕЛАТЬ
+//попап новой карточки обновленный
 const addPopup = new PopupWithForm(
   popupAddingNode, {
   handleFormSubmit: (data) => {
     api
       .addCard({name: data.place_name, link: data.place_url, id: data._id, owner: data.owner})
       .then((data) => {
-        const card = new Card({name: data.place_name, link: data.place_url}, '.template', openPreviewPopup, api);
-        const cardElement = card.generateCard();
-        console.log(cardList)
-        cardList.setItem(cardElement);
-	      return cardElement})
+        createNewCard(data, cardList)})
       .then(() => addPopup.close())
       .catch(err=>console.log(err))
-   }
+  }
 });
 
 

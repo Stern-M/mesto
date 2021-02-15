@@ -44,6 +44,7 @@ export default class Card {
     this._api
       .getUserData()
       .then((data) => {
+        //console.log(this._owner._id)
         if (data._id === this._owner._id) {
           this._element.querySelector('.element__remove-button').classList.add('element__remove-button_visible');
         }
