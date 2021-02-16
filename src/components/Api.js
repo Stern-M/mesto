@@ -64,7 +64,7 @@ export default class Api {
     .then(onError)
   }
 
-  //запрос количества лайков карточки
+  //запрос количества лайков карточки ПРОВЕРИТЬ А НУЖНО ЛИ МНЕ ЭТО!!!!
   getLikeNumber() {
     return fetch(`${this._url}/cards`, {
       method: "GET",
@@ -72,4 +72,23 @@ export default class Api {
     })
     .then(onError)
   }
+
+  //ставлю лайк
+  setLikeOnCard(id) {
+    return fetch(`${this._url}/cards/likes/${id}`, {
+      method: "PUT",
+      headers: this._headers
+    })
+    .then(onError)
+  }
+
+  //снимаю лайк с карточки
+  removeLikeFromCard(id) {
+    return fetch(`${this._url}/cards/likes/${id}`, {
+      method: "DELETE",
+      headers: this._headers
+    })
+    .then(onError)
+  }
+
 }

@@ -9,6 +9,7 @@ export default class Card {
     this._owner = data.owner;
     this._delPopup = delPopup;
     this._userID = userID;
+    this._likes = data.likes
   }
 
   // возврат разметки
@@ -25,7 +26,7 @@ export default class Card {
   //добавляем слушатели
   _setEventListeners() {
     this._element.querySelector('.element__like-button').addEventListener('click', () => {
-      this._handleLikeIcon();
+      this._handleLikeIcon(this._cardID, this._element);
     });
     this._element.querySelector('.element__image').addEventListener('click', () => {
       this._imageReview(this._name, this._link);
@@ -37,8 +38,23 @@ export default class Card {
   }
 
   //добавляем событие лайка
-  _handleLikeIcon() {
-    this._element.querySelector('.element__like-button').classList.toggle('element__like-active');
+  _handleLikeIcon(cardID, card) {
+    //если лайков еще нет, то PUT лайк и сердечко и вернуть кол-во лайков с сервера
+    if (this._likes.length === 0) {
+      this._api
+        .setLikeOnCard(cardID)
+        .then((data) => {
+          console.log(data.likes)
+          card.querySelector('.element__like-count').textContent = data.likes.length;
+          card.querySelector('.element__like-button').classList.add('element__like-active');
+        })
+        .catch(err=>console.log(err))
+      }
+    //если моего лайка еще нет (проверить id юзеров, поставивших лайки) то PUT лайк и сердечко и вернуть количество лайков с сервера
+    //else if (this._likes.)
+
+    //если мой лайк уже есть, то DELETE лайк и сердечко и вернуть кол-во лайков с сервера
+    //this._element.querySelector('.element__like-button').classList.toggle('element__like-active');
   }
 
   //делаем корзину видимой если юзер = создатель карточки
@@ -46,6 +62,12 @@ export default class Card {
     if (this._userID === this._owner._id) {
       this._element.querySelector('.element__remove-button').classList.add('element__remove-button_visible');
     }
+  }
+
+  //показать количество лайков
+  _setLikesNumber() {
+    console.log(this._likes)
+    this._element.querySelector('.element__like-count').textContent = this._likes.length
   }
 
   //открытие попапа подтверждения удаления карточки
@@ -66,16 +88,16 @@ export default class Card {
       .catch(err=>console.log(err))
   }
 
-  //показать количество лайков
-  _setLikeNumber() {
+  //показать количество лайков ПРОВЕРИТЬ А НУЖНО ЛИ МНЕ ЭТО!!!!
+  /*_setLikeNumber() {
     this._api
       .getLikeNumber()
       .then((data) => {
-        console.log(data.likes)
+        console.log(data)
         this._element.querySelector('.element__like-count').value = data.likes
       })
       .catch(err=>console.log(err))
-  }
+  }*/
 
   //добавление данных в разметку
   generateCard() {
@@ -86,6 +108,7 @@ export default class Card {
     this._image.alt = this._name;
     this._element.querySelector('.element__title').textContent = this._name;
     this._setDelButtonState();
+    this._setLikesNumber();
     return this._element;
   }
 }
