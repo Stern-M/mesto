@@ -1,14 +1,14 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, api, delPopup) {
+  constructor(data, cardSelector, handleCardClick, api, delPopup, cardID, userID) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._imageReview = handleCardClick;
     this._api = api;
-    this._id = data.id;
+    this._cardID = cardID;
     this._owner = data.owner;
     this._delPopup = delPopup;
-    //this._openDelPopup = openDeletePopup;
+    this._userID = userID;
   }
 
   // возврат разметки
@@ -32,7 +32,7 @@ export default class Card {
       
     });
     this._element.querySelector('.element__remove-button').addEventListener('click', () => {
-      this._cardDeleteRequest(this._element, this._id);
+      this._cardDeleteRequest(this._element, this._cardID);
     });
   }
 
@@ -41,17 +41,11 @@ export default class Card {
     this._element.querySelector('.element__like-button').classList.toggle('element__like-active');
   }
 
-  //стату корзинки (показать/скрыть)
+  //делаем корзину видимой если юзер = создатель карточки
   _setDelButtonState() {
-    this._api
-      .getUserData()
-      .then((data) => {
-        if (data._id === this._owner._id) {
-          console.log('можешь удалить меня!')
-          this._element.querySelector('.element__remove-button').classList.add('element__remove-button_visible');
-        }
-      })
-      .catch(err=>console.log(err))
+    if (this._userID === this._owner._id) {
+      this._element.querySelector('.element__remove-button').classList.add('element__remove-button_visible');
+    }
   }
 
   //открытие попапа подтверждения удаления карточки
@@ -62,10 +56,9 @@ export default class Card {
   }
 
   //удаление карточки после подтверждения
-  handleDelete(element) {
+  handleDelete(element, id) {
     this._api
-      .removeCard(this._id)
-      .then(console.log('я все удалил!!'))
+      .removeCard(id)
       .then(() => {
         element.remove();
         element = null;

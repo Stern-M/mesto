@@ -21,6 +21,7 @@ const subInputNode = document.querySelector('.popup__data_input_description');
 const targetCardReview = document.querySelector('.popup_preview_form');
 const cardListSelector = '.elements';
 let cardList;
+let userID;
 const deletePopup = document.querySelector('.popup_card_delete')
 const validationConfig = {
   formSelector: '.popup__form',
@@ -62,7 +63,7 @@ api
     cardList = new Section({
       data: newCards,
       renderer: (item) => {
-        createNewCard(item, cardList)
+        createNewCard(item, cardList, item.id)
       },
     }, cardListSelector);
     cardList.addItem();
@@ -71,8 +72,8 @@ api
   .catch(err=>console.log(err))
 
 //функция для создания карточки
-function createNewCard(item, list) {
-  const card = new Card(item, '.template', openPreviewPopup, api, delPopup);
+function createNewCard(data, list, cardID) {
+  const card = new Card(data, '.template', openPreviewPopup, api, delPopup, cardID, userID);
   const cardElement = card.generateCard();
   list.setItem(cardElement);
 	return cardElement;
@@ -83,9 +84,10 @@ const addPopup = new PopupWithForm(
   popupAddingNode, {
   handleFormSubmit: (data) => {
     api
-      .addCard({name: data.place_name, link: data.place_url, id: data._id, owner: data.owner})
+      .addCard({name: data.place_name, link: data.place_url})
       .then((data) => {
-        createNewCard(data, cardList)})
+        createNewCard(data, cardList, data._id)
+        })
       .then(() => addPopup.close())
       .catch(err=>console.log(err))
   }
@@ -95,24 +97,17 @@ const addPopup = new PopupWithForm(
 const delPopup = new PopupWithForm(
   deletePopup, {
   handleFormSubmit: (element, id) => {
-    //handleDelete(element)
     api
       .removeCard(id)
-      //.then(console.log(element._id))
       .then(() => {
         element.remove();
         element = null;
+        delPopup.close();
       })
       .catch(err=>console.log(err))
     }
   }
 )
-
-//открытие попап для удаления карточки
-function cardDeleteRequest(element) {
-  delPopup.open();
-  //deletePopup.querySelector('.popup__delete-button').addEventListener('submit', handleDelete(element))
-}
 
 //попап редактирования профиля
 const editPopup = new PopupWithForm(
@@ -148,7 +143,8 @@ function showUserData() {
     .then((data) => {
       document.querySelector(profileTitleNode).textContent = data.name;
       document.querySelector(profileSubTitleNode).textContent = data.about;
-      document.querySelector('.profile__avatar').src = data.avatar
+      document.querySelector('.profile__avatar').src = data.avatar;
+      userID = data._id;
     })
     .catch(err=>console.log(err))
 }
