@@ -9,7 +9,7 @@ export default class Card {
     this._owner = data.owner;
     this._delPopup = delPopup;
     this._userID = userID;
-    this._likes = data.likes
+    this._likes = data.likes;
   }
 
   // возврат разметки
@@ -64,6 +64,11 @@ export default class Card {
     }
   }
 
+  //сердечко на лайкнутой карточке ЗАКОНЧИТЬ!!
+  /*_setHeartOnCard() {
+    if (this._likes.length = !0 &&  )
+  }*/
+
   //показать количество лайков
   _setLikesNumber() {
     console.log(this._likes)
@@ -78,7 +83,7 @@ export default class Card {
   }
 
   //удаление карточки после подтверждения
-  handleDelete(element, id) {
+  /*handleDelete(element, id) {
     this._api
       .removeCard(id)
       .then(() => {
@@ -86,7 +91,7 @@ export default class Card {
         element = null;
       })
       .catch(err=>console.log(err))
-  }
+  }*/
 
   //показать количество лайков ПРОВЕРИТЬ А НУЖНО ЛИ МНЕ ЭТО!!!!
   /*_setLikeNumber() {

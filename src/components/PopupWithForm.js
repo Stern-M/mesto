@@ -37,6 +37,14 @@ export default class PopupWithForm extends Popup {
     });
   }
 
+  /*deleteSubmitHandler() {
+    super.setEventListeners();
+    this._form.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      //handleDelete(element, id);
+    });
+  }*/
+
   close(){
     super.close();
     this._form.reset();

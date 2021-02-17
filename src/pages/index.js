@@ -22,7 +22,7 @@ const targetCardReview = document.querySelector('.popup_preview_form');
 const cardListSelector = '.elements';
 let cardList;
 let userID;
-const deletePopup = document.querySelector('.popup_card_delete')
+const deletePopup = document.querySelector('.popup_card_delete');
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__data',
@@ -108,6 +108,36 @@ const delPopup = new PopupWithForm(
     }
   }
 )
+
+/*const delPopup = new PopupWithForm('.popup_card_delete');
+
+function onCardDelClick(element, id) {
+  delPopup.deleteSubmitHandler(() => {
+    api
+      .removeCard(id)
+      .then(() => {
+        element.remove();
+        element = null;
+        delPopup.close();
+      })
+      .catch(err=>console.log(err))
+  });
+  delPopup.open();
+}
+
+    /*handleDelete: (element, id) => {
+      delPopup.handleDelete(element, id)
+    api
+      .removeCard(id)
+      .then(() => {
+        element.remove();
+        element = null;
+        delPopup.close();
+      })
+      .catch(err=>console.log(err))
+    }
+  }
+)*/
 
 //попап редактирования профиля
 const editPopup = new PopupWithForm(
