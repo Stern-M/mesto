@@ -8,12 +8,15 @@ export default class PopupWithDeleteForm extends Popup {
     this.close = this.close.bind(this);
   };
 
+  close() {
+    super.close();
+    this._form.removeEventListener('click', this._cardDeleteRequest)
+  }
+
   //добавляю слушатели для попапа с удалением
-  setSubmitHandler() {
+  setSubmitHandler(cardDeleteRequest) {
     super.setEventListeners();
-    this._form.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      this._setSubmitHandler();
-    });
+    this._cardDeleteRequest = cardDeleteRequest;
+    this._form.addEventListener('click', this._cardDeleteRequest);
   }
 }

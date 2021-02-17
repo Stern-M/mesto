@@ -80,7 +80,8 @@ api
 
 //функция для создания карточки
 function createNewCard(data, list, cardID) {
-  const card = new Card(data, '.template', openPreviewPopup, api, delPopup, cardID, userID, cardDeleteRequest);
+  const card = new Card(data, '.template', openPreviewPopup, api, delPopup, cardID, userID,
+  () => {delPopup.setSubmitHandler(cardDeleteRequest(card)), delPopup.open()});
   const cardElement = card.generateCard();
   list.setItem(cardElement);
 	return cardElement;
@@ -98,7 +99,21 @@ const addPopup = new PopupWithForm(
       .then(() => addPopup.close())
       .catch(err=>console.log(err))
     }
-  });
+});
+
+const cardDeleteRequest = (card) => {
+  return () => {
+    api
+    .removeCard(card.getCardID())
+    .then((res) => {
+      if (res.status) 
+      console.log('удаляю')
+      card.deleteCard();
+      delPopup.close();
+    })
+    .catch(err=>console.log(err))
+  }
+}
 
 /*function handleFormSubmit(data) {
   api
@@ -110,10 +125,10 @@ const addPopup = new PopupWithForm(
     .catch(err=>console.log(err))
 }*/
 
-function cardDeleteRequest(element, id) {
+/*function cardDeleteRequest(element, id) {
   delPopup.open();
 
-}
+}*/
 
 //попап для удаления картинки НЕ ТРОГАТЬ
 /*const delPopup = new PopupWithForm(
@@ -133,7 +148,7 @@ function cardDeleteRequest(element, id) {
 
 const delPopup = new PopupWithDeleteForm(deletePopup);
 
-function onCardDelClick(element, id) {
+/*function onCardDelClick(element, id) {
   delPopup.setSubmitHandler(() => {
     api
       .removeCard(id)
@@ -147,7 +162,7 @@ function onCardDelClick(element, id) {
   delPopup.open();
 }
 
-    /*handleDelete: (element, id) => {
+    handleDelete: (element, id) => {
       delPopup.handleDelete(element, id)
     api
       .removeCard(id)

@@ -10,7 +10,11 @@ export default class Card {
     this._delPopup = delPopup;
     this._userID = userID;
     this._likes = data.likes;
-    this._onCardDelClick = cardDeleteRequest;
+    this._cardDeleteRequest = cardDeleteRequest;
+  }
+
+  getCardID() {
+    return this._cardID;
   }
 
   // возврат разметки
@@ -33,9 +37,7 @@ export default class Card {
       this._imageReview(this._name, this._link);
       
     });
-    this._element.querySelector('.element__remove-button').addEventListener('click', () => {
-      this._onCardDelClick(this._element, this._cardID);
-    });
+    this._element.querySelector('.element__remove-button').addEventListener('click', this._cardDeleteRequest);
   }
 
   //добавляем событие лайка
@@ -76,6 +78,10 @@ export default class Card {
 
   //открытие попапа подтверждения удаления карточки
   
+  deleteCard() {
+    this._element.remove();
+    this._element = null;
+  }
 
   //удаление карточки после подтверждения
   /*handleDelete(element, id) {
