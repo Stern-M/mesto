@@ -40,6 +40,13 @@ export default class Card {
     this._element.querySelector('.element__remove-button').addEventListener('click', this._cardDeleteRequest);
   }
 
+  //получаем пользователей, которые поставили лайк
+  _checkLikeOwners() {
+    const amILikeOwner = this._likes.some(owner => owner._id.includes(this._userID))
+    return amILikeOwner
+  };
+
+
   //добавляем событие лайка
   _handleLikeIcon(cardID, card) {
     //если лайков еще нет, то PUT лайк и сердечко и вернуть кол-во лайков с сервера
@@ -52,11 +59,26 @@ export default class Card {
         })
         .catch(err=>console.log(err))
       }
-    //если моего лайка еще нет (проверить id юзеров, поставивших лайки) то PUT лайк и сердечко и вернуть количество лайков с сервера
-    //else if (this._likes.)
-
-    //если мой лайк уже есть, то DELETE лайк и сердечко и вернуть кол-во лайков с сервера
-    //this._element.querySelector('.element__like-button').classList.toggle('element__like-active');
+    // если уже есть лайки, то проверяем есть ли мой лайк и если моего лайка еще нет (проверить id юзеров, поставивших лайки) то PUT лайк и сердечко и вернуть количество лайков с сервера
+    else if (this._likes.length = !0 && this._checkLikeOwners() === false) {
+      this._api
+        .setLikeOnCard(cardID)
+        .then((data) => {
+          card.querySelector('.element__like-count').textContent = data.likes.length;
+          card.querySelector('.element__like-button').classList.add('element__like-active');
+        })
+        .catch(err=>console.log(err))
+    }
+    //лайки есть + есть мой лайк => удаляем лайк с сервера
+    else {
+      this._api
+        .removeLikeFromCard(cardID)
+        .then((data) => {
+          card.querySelector('.element__like-count').textContent = data.likes.length;
+          card.querySelector('.element__like-button').classList.remove('element__like-active');
+        })
+        .catch(err=>console.log(err))
+    }
   }
 
   //делаем корзину видимой если юзер = создатель карточки
@@ -67,9 +89,14 @@ export default class Card {
   }
 
   //сердечко на лайкнутой карточке ЗАКОНЧИТЬ!!
-  /*_setHeartOnCard() {
-    if (this._likes.length = !0 &&  )
-  }*/
+  _setHeartOnCard() {
+    if (this._checkLikeOwners() === true) {
+      console.log(this._element.querySelector('.element__like-button'))
+      this._element.querySelector('.element__like-button').classList.add('element__like-active');
+    } else {
+      this._element.querySelector('.element__like-button').classList.remove('element__like-active');
+    }
+  }
 
   //показать количество лайков
   _setLikesNumber() {
@@ -77,33 +104,10 @@ export default class Card {
   }
 
   //открытие попапа подтверждения удаления карточки
-  
   deleteCard() {
     this._element.remove();
     this._element = null;
   }
-
-  //удаление карточки после подтверждения
-  /*handleDelete(element, id) {
-    this._api
-      .removeCard(id)
-      .then(() => {
-        element.remove();
-        element = null;
-      })
-      .catch(err=>console.log(err))
-  }*/
-
-  //показать количество лайков ПРОВЕРИТЬ А НУЖНО ЛИ МНЕ ЭТО!!!!
-  /*_setLikeNumber() {
-    this._api
-      .getLikeNumber()
-      .then((data) => {
-        console.log(data)
-        this._element.querySelector('.element__like-count').value = data.likes
-      })
-      .catch(err=>console.log(err))
-  }*/
 
   //добавление данных в разметку
   generateCard() {
@@ -115,6 +119,7 @@ export default class Card {
     this._element.querySelector('.element__title').textContent = this._name;
     this._setDelButtonState();
     this._setLikesNumber();
+    this._setHeartOnCard(this._element);
     return this._element;
   }
 }
