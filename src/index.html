@@ -15,7 +15,7 @@
       <div class="profile__info">
         <div class="profile__image">
           <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватарка">
-          <button type="button" class="profile__avatar-edit">
+          <button type="button" class="profile__avatar-edit"></button>
         </div>
         <div class="profile__data">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -103,11 +103,11 @@
       <button type="button" class="popup__cancel-button" aria-label="закрыть окно"></button>
       <h2 class="popup__delete-title">Вы уверены?</h2>
       <button type="submit" class="popup__button popup__delete-button" aria-label="Да">Да</button>
-    </а>
+    </form>
   </div>
   <div class="popup popup_avatar_form" id="myForm3">
     <form name="popup" action="#" class="popup__avatar popup__form" novalidate>
-      <button type="button" class="popup__cancel-button" aria-label="закрыть форму без сохранения"></button>
+      <button type="submit" class="popup__cancel-button" aria-label="закрыть форму без сохранения"></button>
       <h2 class="popup__title">Обновить аватар</h2>
       <input
         required

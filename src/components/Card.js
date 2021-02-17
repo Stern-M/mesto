@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, api, delPopup, cardID, userID) {
+  constructor(data, cardSelector, handleCardClick, api, delPopup, cardID, userID, cardDeleteRequest) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
@@ -10,6 +10,7 @@ export default class Card {
     this._delPopup = delPopup;
     this._userID = userID;
     this._likes = data.likes;
+    this._onCardDelClick = cardDeleteRequest;
   }
 
   // возврат разметки
@@ -33,7 +34,7 @@ export default class Card {
       
     });
     this._element.querySelector('.element__remove-button').addEventListener('click', () => {
-      this._cardDeleteRequest(this._element, this._cardID);
+      this._onCardDelClick(this._element, this._cardID);
     });
   }
 
@@ -44,7 +45,6 @@ export default class Card {
       this._api
         .setLikeOnCard(cardID)
         .then((data) => {
-          console.log(data.likes)
           card.querySelector('.element__like-count').textContent = data.likes.length;
           card.querySelector('.element__like-button').classList.add('element__like-active');
         })
@@ -71,16 +71,11 @@ export default class Card {
 
   //показать количество лайков
   _setLikesNumber() {
-    console.log(this._likes)
     this._element.querySelector('.element__like-count').textContent = this._likes.length
   }
 
   //открытие попапа подтверждения удаления карточки
-  _cardDeleteRequest(element, id) {
-    this._delPopup.open();
-    this._delPopup.setDeleteEventListener(element, id);
-    //document.querySelector('.popup__delete-button').addEventListener('submit', this._handleDelete(element))
-  }
+  
 
   //удаление карточки после подтверждения
   /*handleDelete(element, id) {

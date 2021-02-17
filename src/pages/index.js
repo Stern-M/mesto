@@ -9,16 +9,22 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
+import PopupWithDeleteForm from '../components/PopupWithDeleteForm.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const popupProfileNode = document.querySelector('.popup_profile_form');
 const popupAddingNode = document.querySelector('.popup_adding_form');
+//const popupAvatarForm = document.querySelector('.popup_avatar_form');
 export const profileTitleNode = '.profile__title';
 export const profileSubTitleNode = '.profile__subtitle';
+const profileAvatar = '.profile__avatar';
+const avatarEditButton = document.querySelector('.profile__avatar-edit');
+const inputAvatar = document.querySelector('.popup__avatar_input_url');
 const titleInputNode = document.querySelector('.popup__data_input_name');
 const subInputNode = document.querySelector('.popup__data_input_description');
 const targetCardReview = document.querySelector('.popup_preview_form');
+const popupAvatarNode = document.querySelector('.popup_avatar_form');
 const cardListSelector = '.elements';
 let cardList;
 let userID;
@@ -38,7 +44,8 @@ const validationConfig = {
 const popupPreviewImage = new PopupWithImage(targetCardReview);
 const formEditValidate = new FormValidator(validationConfig, popupProfileNode);
 const formAddValidate = new FormValidator(validationConfig, popupAddingNode);
-const userInfo = new UserInfo(profileTitleNode, profileSubTitleNode);
+const formAvatarValidate = new FormValidator(validationConfig, popupAvatarNode)
+const userInfo = new UserInfo(profileTitleNode, profileSubTitleNode, profileAvatar);
 const api = new Api({
   url: "https://mesto.nomoreparties.co/v1/cohort-20",
   headers: {
@@ -73,7 +80,7 @@ api
 
 //функция для создания карточки
 function createNewCard(data, list, cardID) {
-  const card = new Card(data, '.template', openPreviewPopup, api, delPopup, cardID, userID);
+  const card = new Card(data, '.template', openPreviewPopup, api, delPopup, cardID, userID, cardDeleteRequest);
   const cardElement = card.generateCard();
   list.setItem(cardElement);
 	return cardElement;
@@ -90,13 +97,29 @@ const addPopup = new PopupWithForm(
         })
       .then(() => addPopup.close())
       .catch(err=>console.log(err))
-  }
-});
+    }
+  });
 
-//попап для удаления картинки
-const delPopup = new PopupWithForm(
+/*function handleFormSubmit(data) {
+  api
+    .addCard({name: data.place_name, link: data.place_url})
+    .then((data) => {
+      createNewCard(data, cardList, data._id)
+      })
+    .then(() => addPopup.close())
+    .catch(err=>console.log(err))
+}*/
+
+function cardDeleteRequest(element, id) {
+  delPopup.open();
+
+}
+
+//попап для удаления картинки НЕ ТРОГАТЬ
+/*const delPopup = new PopupWithForm(
   deletePopup, {
   handleFormSubmit: (element, id) => {
+    console.log(id)
     api
       .removeCard(id)
       .then(() => {
@@ -106,13 +129,12 @@ const delPopup = new PopupWithForm(
       })
       .catch(err=>console.log(err))
     }
-  }
-)
+});*/
 
-/*const delPopup = new PopupWithForm('.popup_card_delete');
+const delPopup = new PopupWithDeleteForm(deletePopup);
 
 function onCardDelClick(element, id) {
-  delPopup.deleteSubmitHandler(() => {
+  delPopup.setSubmitHandler(() => {
     api
       .removeCard(id)
       .then(() => {
@@ -153,6 +175,28 @@ const editPopup = new PopupWithForm(
   }
 });
 
+//попап редактирования аватара
+const avatarPopup = new PopupWithForm(
+  popupAvatarNode, {
+    handleFormSubmit: () => {
+      console.log(inputAvatar.value)
+      api
+        .setUserAvatar(inputAvatar.value)
+        .then(() => {
+          userInfo.setUserAvatar(inputAvatar);
+          avatarPopup.close();
+        })
+        .catch(err=>console.log(err))
+    }
+  }
+);
+
+//открытие попап с редактирование аватара
+function openAvatarPopup() {
+  avatarPopup.open();
+  formAvatarValidate.resetValidation();
+}
+
 //открытие попап редактирование профиля
 function openEditProfilePopup() {
   editPopup.open();
@@ -189,11 +233,15 @@ showUserData();
 
 editPopup.setEventListeners();
 addPopup.setEventListeners();
+avatarPopup.setAvatarListners();
+//delPopup.setDeleteEventListener();
 
 
 formEditValidate.enableValidation();
 formAddValidate.enableValidation();
+formAvatarValidate.enableValidation();
 
 //слушаетли для кнопок редактирования и новой карточки
 profileEditButton.addEventListener('click', openEditProfilePopup);
 profileAddButton.addEventListener('click', openAddCardPopup);
+avatarEditButton.addEventListener('click', openAvatarPopup);
