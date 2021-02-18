@@ -11,6 +11,7 @@ export default class Card {
     this._userID = userID;
     this._likes = data.likes;
     this._cardDeleteRequest = cardDeleteRequest;
+    //this._showLikesNumber = showLikesNumber;
   }
 
   getCardID() {
@@ -35,7 +36,6 @@ export default class Card {
     });
     this._element.querySelector('.element__image').addEventListener('click', () => {
       this._imageReview(this._name, this._link);
-      
     });
     this._element.querySelector('.element__remove-button').addEventListener('click', this._cardDeleteRequest);
   }
@@ -91,7 +91,6 @@ export default class Card {
   //сердечко на лайкнутой карточке ЗАКОНЧИТЬ!!
   _setHeartOnCard() {
     if (this._checkLikeOwners() === true) {
-      console.log(this._element.querySelector('.element__like-button'))
       this._element.querySelector('.element__like-button').classList.add('element__like-active');
     } else {
       this._element.querySelector('.element__like-button').classList.remove('element__like-active');
@@ -119,6 +118,7 @@ export default class Card {
     this._element.querySelector('.element__title').textContent = this._name;
     this._setDelButtonState();
     this._setLikesNumber();
+    //this._showLikesNumber();
     this._setHeartOnCard(this._element);
     return this._element;
   }

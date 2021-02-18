@@ -60,6 +60,12 @@ const openPreviewPopup = (name, link) => {
   popupPreviewImage.open(name, link);
 };
 
+const showLikesNumber = (card, likes) => {
+  console.log(card)
+  console.log(likes)
+  card.querySelector('.element__like-count').textContent = likes.length
+}
+
 //рендер и отрисовка карточек с сервера
 api
   .getAllCards()
@@ -91,6 +97,7 @@ function createNewCard(data, list, cardID) {
 const addPopup = new PopupWithForm(
   popupAddingNode, {
   handleFormSubmit: (data) => {
+    submitRender('.popup__add', true)
     api
       .addCard({name: data.place_name, link: data.place_url})
       .then((data) => {
@@ -98,7 +105,9 @@ const addPopup = new PopupWithForm(
         })
       .then(() => addPopup.close())
       .catch(err=>console.log(err))
-    }
+      .finally(() => {
+        submitRender('.popup__add', false)})
+  }
 });
 
 const cardDeleteRequest = (card) => {
@@ -112,6 +121,18 @@ const cardDeleteRequest = (card) => {
       delPopup.close();
     })
     .catch(err=>console.log(err))
+  }
+}
+
+function submitRender(popupSelector, isLoading) {
+  const buttonElement = document.querySelector(popupSelector).querySelector('.popup__button');
+  if (isLoading) {
+    buttonElement.textContent = "Сохранение...";
+    //content.classList.add('content_hidden');
+  } else { 
+    if (popupSelector === '.popup__add') {
+      buttonElement.textContent = "Создать";
+    } else {buttonElement.textContent = "Сохранить";}
   }
 }
 
@@ -180,6 +201,7 @@ const delPopup = new PopupWithDeleteForm(deletePopup);
 const editPopup = new PopupWithForm(
   popupProfileNode, {
   handleFormSubmit: () => {
+    submitRender('.popup__container', true)
     api
       .setUserData({name: titleInputNode.value, about: subInputNode.value})
       .then(() => {
@@ -187,6 +209,7 @@ const editPopup = new PopupWithForm(
         editPopup.close();
       })
       .catch(err=>console.log(err))
+      .finally(() => {submitRender('.popup__container', false)})
   }
 });
 
@@ -194,7 +217,7 @@ const editPopup = new PopupWithForm(
 const avatarPopup = new PopupWithForm(
   popupAvatarNode, {
     handleFormSubmit: () => {
-      console.log(inputAvatar.value)
+      submitRender('.popup__avatar', true)
       api
         .setUserAvatar(inputAvatar.value)
         .then(() => {
@@ -202,6 +225,7 @@ const avatarPopup = new PopupWithForm(
           avatarPopup.close();
         })
         .catch(err=>console.log(err))
+        .finally(() => {submitRender('.popup__avatar', false)})
     }
   }
 );
