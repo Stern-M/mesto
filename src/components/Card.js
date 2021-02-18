@@ -1,10 +1,9 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, api, delPopup, cardID, userID, cardDeleteRequest, putLikeOnCard, deleteLikeFromCard) {
+  constructor(data, cardSelector, handleCardClick, delPopup, cardID, userID, cardDeleteRequest, putLikeOnCard, deleteLikeFromCard) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._imageReview = handleCardClick;
-    this._api = api;
     this._cardID = cardID;
     this._owner = data.owner;
     this._delPopup = delPopup;
@@ -53,41 +52,7 @@ export default class Card {
     } else {
       this._deleteLike();
       this._element.querySelector('.element__like-button').classList.remove('element__like-active');
-  }
-    
-    //const
-    //if (popupSelector === '.')
-
-    //если лайков еще нет, то PUT лайк и сердечко и вернуть кол-во лайков с сервера
-    /*if (this._likes.length === 0) {
-      this._api
-        .setLikeOnCard(cardID)
-        .then((data) => {
-          card.querySelector('.element__like-count').textContent = data.likes.length;
-          card.querySelector('.element__like-button').classList.add('element__like-active');
-        })
-        .catch(err=>console.log(err))
     }
-    // если уже есть лайки, то проверяем есть ли мой лайк и если моего лайка еще нет (проверить id юзеров, поставивших лайки) то PUT лайк и сердечко и вернуть количество лайков с сервера
-    else if (this._likes.length = !0 && this._checkLikeOwners() === false) {
-      this._api
-        .setLikeOnCard(cardID)
-        .then((data) => {
-          card.querySelector('.element__like-count').textContent = data.likes.length;
-          card.querySelector('.element__like-button').classList.add('element__like-active');
-        })
-        .catch(err=>console.log(err))
-    }
-    //лайки есть + есть мой лайк => удаляем лайк с сервера
-    else {
-      this._api
-        .removeLikeFromCard(cardID)
-        .then((data) => {
-          card.querySelector('.element__like-count').textContent = data.likes.length;
-          card.querySelector('.element__like-button').classList.remove('element__like-active');
-        })
-        .catch(err=>console.log(err))
-    }*/
   }
 
   //делаем корзину видимой если юзер = создатель карточки
