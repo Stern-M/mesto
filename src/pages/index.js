@@ -9,7 +9,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
-import PopupWithDeleteForm from '../components/PopupWithDeleteForm.js';
+import PopupWithDelete from '../components/PopupWithDelete.js';
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -60,11 +60,11 @@ const openPreviewPopup = (name, link) => {
   popupPreviewImage.open(name, link);
 };
 
-const showLikesNumber = (card, likes) => {
+/*const showLikesNumber = (card, likes) => {
   console.log(card)
   console.log(likes)
   card.querySelector('.element__like-count').textContent = likes.length
-}
+}*/
 
 //рендер и отрисовка карточек с сервера
 api
@@ -87,7 +87,19 @@ api
 //функция для создания карточки
 function createNewCard(data, list, cardID) {
   const card = new Card(data, '.template', openPreviewPopup, api, delPopup, cardID, userID,
-  () => {delPopup.setSubmitHandler(cardDeleteRequest(card)), delPopup.open()});
+  () => {delPopup.setSubmitHandler(cardDeleteRequest(card)), delPopup.open()},
+  () => {
+    api
+      .setLikeOnCard(card.getCardID())
+      .then((res) => {card.setLikesNumber(res.likes.length)})
+      .catch(err=>console.log(err))
+    },
+  () => {
+    api
+      .removeLikeFromCard(card.getCardID())
+      .then((res) => {card.setLikesNumber(res.likes.length)})
+      .catch(err=>console.log(err))
+  });
   const cardElement = card.generateCard();
   list.setItem(cardElement);
 	return cardElement;
@@ -167,7 +179,7 @@ function submitRender(popupSelector, isLoading) {
     }
 });*/
 
-const delPopup = new PopupWithDeleteForm(deletePopup);
+const delPopup = new PopupWithDelete(deletePopup);
 
 /*function onCardDelClick(element, id) {
   delPopup.setSubmitHandler(() => {

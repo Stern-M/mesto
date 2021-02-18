@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, api, delPopup, cardID, userID, cardDeleteRequest) {
+  constructor(data, cardSelector, handleCardClick, api, delPopup, cardID, userID, cardDeleteRequest, putLikeOnCard, deleteLikeFromCard) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
@@ -11,7 +11,9 @@ export default class Card {
     this._userID = userID;
     this._likes = data.likes;
     this._cardDeleteRequest = cardDeleteRequest;
-    //this._showLikesNumber = showLikesNumber;
+    this._putLike = putLikeOnCard;
+    this._deleteLike = deleteLikeFromCard;
+    this._handleLikeIcon = this._handleLikeIcon.bind(this);
   }
 
   getCardID() {
@@ -31,12 +33,8 @@ export default class Card {
 
   //добавляем слушатели
   _setEventListeners() {
-    this._element.querySelector('.element__like-button').addEventListener('click', () => {
-      this._handleLikeIcon(this._cardID, this._element);
-    });
-    this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._imageReview(this._name, this._link);
-    });
+    this._element.querySelector('.element__like-button').addEventListener('click', this._handleLikeIcon);
+    this._element.querySelector('.element__image').addEventListener('click', () => {this._imageReview(this._name, this._link)});
     this._element.querySelector('.element__remove-button').addEventListener('click', this._cardDeleteRequest);
   }
 
@@ -48,9 +46,20 @@ export default class Card {
 
 
   //добавляем событие лайка
-  _handleLikeIcon(cardID, card) {
+  _handleLikeIcon(evt) {
+    if (!evt.target.classList.contains('element__like-active')) {
+      this._putLike();
+      this._element.querySelector('.element__like-button').classList.add('element__like-active');
+    } else {
+      this._deleteLike();
+      this._element.querySelector('.element__like-button').classList.remove('element__like-active');
+  }
+    
+    //const
+    //if (popupSelector === '.')
+
     //если лайков еще нет, то PUT лайк и сердечко и вернуть кол-во лайков с сервера
-    if (this._likes.length === 0) {
+    /*if (this._likes.length === 0) {
       this._api
         .setLikeOnCard(cardID)
         .then((data) => {
@@ -58,7 +67,7 @@ export default class Card {
           card.querySelector('.element__like-button').classList.add('element__like-active');
         })
         .catch(err=>console.log(err))
-      }
+    }
     // если уже есть лайки, то проверяем есть ли мой лайк и если моего лайка еще нет (проверить id юзеров, поставивших лайки) то PUT лайк и сердечко и вернуть количество лайков с сервера
     else if (this._likes.length = !0 && this._checkLikeOwners() === false) {
       this._api
@@ -78,7 +87,7 @@ export default class Card {
           card.querySelector('.element__like-button').classList.remove('element__like-active');
         })
         .catch(err=>console.log(err))
-    }
+    }*/
   }
 
   //делаем корзину видимой если юзер = создатель карточки
@@ -97,9 +106,14 @@ export default class Card {
     }
   }
 
+  //обновить количество лайков
+  setLikesNumber(number) {
+    this._element.querySelector('.element__like-count').textContent = number;
+  }
+
   //показать количество лайков
-  _setLikesNumber() {
-    this._element.querySelector('.element__like-count').textContent = this._likes.length
+  _showLikesOnCard() {
+    this._element.querySelector('.element__like-count').textContent = this._likes.length;
   }
 
   //открытие попапа подтверждения удаления карточки
@@ -117,8 +131,7 @@ export default class Card {
     this._image.alt = this._name;
     this._element.querySelector('.element__title').textContent = this._name;
     this._setDelButtonState();
-    this._setLikesNumber();
-    //this._showLikesNumber();
+    this._showLikesOnCard();
     this._setHeartOnCard(this._element);
     return this._element;
   }
