@@ -132,6 +132,19 @@ const cardDeleteRequest = (card) => {
   }
 }
 
+//отображение актуальных данных пользователя
+function showUserData() {
+  api
+    .getUserData()
+    .then((data) => {
+      document.querySelector(profileTitleNode).textContent = data.name;
+      document.querySelector(profileSubTitleNode).textContent = data.about;
+      document.querySelector('.profile__avatar').src = data.avatar;
+      userID = data._id;
+    })
+    .catch(err=>console.log(err))
+}
+
 //функция для вывода "сохранение..." в момент загрузки
 function submitRender(popupSelector, isLoading) {
   const buttonElement = document.querySelector(popupSelector).querySelector('.popup__button');
@@ -196,19 +209,6 @@ function openEditProfilePopup() {
     })
     .catch(err=>console.log(err))
 } 
-
-//отображение актуальных данных пользователя
-function showUserData() {
-  api
-    .getUserData()
-    .then((data) => {
-      document.querySelector(profileTitleNode).textContent = data.name;
-      document.querySelector(profileSubTitleNode).textContent = data.about;
-      document.querySelector('.profile__avatar').src = data.avatar;
-      userID = data._id;
-    })
-    .catch(err=>console.log(err))
-}
 
 //открытие попап для добавления новой карточки
 function openAddCardPopup() {
