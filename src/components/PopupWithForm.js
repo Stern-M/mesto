@@ -21,6 +21,7 @@ export default class PopupWithForm extends Popup {
   //добавляю слушатели
   setEventListeners() {
     this._form.addEventListener('submit', (evt) => {
+      console.log('утечка данных')
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
     });

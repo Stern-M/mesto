@@ -169,9 +169,9 @@ const delPopup = new PopupWithDelete(deletePopup);
 const editPopup = new PopupWithForm(
   popupProfileNode,
   (data) => {
-    submitRender('.popup__container', true)
+    submitRender('.popup__container', true);
     api
-      .setUserData({name: titleInputNode.value, about: subInputNode.value})
+      .setUserData({name: data.name, about: data.description})
       .then(() => {
         userInfo.setUserInfo(data.name, data.description);
         editPopup.close();
