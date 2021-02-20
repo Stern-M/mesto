@@ -26,13 +26,6 @@ export default class PopupWithForm extends Popup {
     });
   }
 
-  setAvatarListners() {
-    this._form.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      this._handleFormSubmit();
-    })
-  }
-
   close(){
     super.close();
     this._form.reset();

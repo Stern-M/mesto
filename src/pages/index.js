@@ -168,12 +168,12 @@ const delPopup = new PopupWithDelete(deletePopup);
 //попап редактирования профиля
 const editPopup = new PopupWithForm(
   popupProfileNode,
-  () => {
+  (data) => {
     submitRender('.popup__container', true)
     api
       .setUserData({name: titleInputNode.value, about: subInputNode.value})
       .then(() => {
-        userInfo.setUserInfo(titleInputNode.value, subInputNode.value);
+        userInfo.setUserInfo(data.name, data.description);
         editPopup.close();
       })
       .catch(err=>console.log(err))
@@ -183,12 +183,12 @@ const editPopup = new PopupWithForm(
 //попап редактирования аватара
 const avatarPopup = new PopupWithForm(
   popupAvatarNode,
-  () => {
-    submitRender('.popup__avatar', true)
+  (avatar) => {
+    submitRender('.popup__avatar', true);
     api
-      .setUserAvatar({avatar: inputAvatar.value})
+      .setUserAvatar(avatar.avatar_url)
       .then(() => {
-        userInfo.setUserAvatar(inputAvatar.value);
+        userInfo.setUserAvatar(avatar.avatar_url);
         avatarPopup.close();
       })
       .catch(err=>console.log(err))
@@ -223,7 +223,7 @@ function openAddCardPopup() {
 
 editPopup.setEventListeners();
 addPopup.setEventListeners();
-avatarPopup.setAvatarListners();
+avatarPopup.setEventListeners();
 
 
 formEditValidate.enableValidation();
