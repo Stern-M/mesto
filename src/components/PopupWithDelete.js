@@ -15,7 +15,6 @@ export default class PopupWithDelete extends Popup {
 
   //добавляю слушатели для попапа с удалением
   setSubmitHandler(cardDeleteRequest) {
-    super.setEventListeners();
     this._cardDeleteRequest = cardDeleteRequest;
     this._form.addEventListener('click', this._cardDeleteRequest);
   }

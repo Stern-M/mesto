@@ -5,7 +5,6 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);
     this._popup = popupSelector;
     this._handleFormSubmit = handleFormSubmit;
-    this._buttonClose = this._popup.querySelector('.popup__cancel-button');
     this._form = this._popup.querySelector('.popup__form');
     this.close = this.close.bind(this);
   };
@@ -21,7 +20,6 @@ export default class PopupWithForm extends Popup {
 
   //добавляю слушатели
   setEventListeners() {
-    super.setEventListeners();
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
@@ -29,7 +27,6 @@ export default class PopupWithForm extends Popup {
   }
 
   setAvatarListners() {
-    this._buttonClose.addEventListener('click', this.close);
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit();

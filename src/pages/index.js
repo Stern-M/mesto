@@ -55,7 +55,6 @@ const api = new Api({
 
 //открытие попап с картинкой
 const openPreviewPopup = (name, link) => {
-  popupPreviewImage.setEventListeners();
   popupPreviewImage.open(name, link);
 };
 
@@ -183,16 +182,17 @@ const editPopup = new PopupWithForm(
 
 //попап редактирования аватара
 const avatarPopup = new PopupWithForm(
-  popupAvatarNode, () => {
-      submitRender('.popup__avatar', true)
-      api
-        .setUserAvatar(inputAvatar.value)
-        .then(() => {
-          userInfo.setUserAvatar(inputAvatar.value);
-          avatarPopup.close();
-        })
-        .catch(err=>console.log(err))
-        .finally(() => {submitRender('.popup__avatar', false)})
+  popupAvatarNode,
+  () => {
+    submitRender('.popup__avatar', true)
+    api
+      .setUserAvatar({avatar: inputAvatar.value})
+      .then(() => {
+        userInfo.setUserAvatar(inputAvatar.value);
+        avatarPopup.close();
+      })
+      .catch(err=>console.log(err))
+      .finally(() => {submitRender('.popup__avatar', false)})
     }
 );
 
