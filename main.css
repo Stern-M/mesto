@@ -7,7 +7,7 @@
 .content{margin:0}
 .root__profile{margin:2.5rem auto 0}@media screen and (max-width:1280px){.root__profile{margin:0;padding:2.5rem calc(50% - 440px) 0}}@media screen and (max-width:915px){.root__profile{padding:2.5rem calc(50% - 322.5px) 0}}@media screen and (max-width:645px){.root__profile{padding:2.62rem calc(50% - 250px) 0}}@media screen and (max-width:320px){.root__profile{padding:2.62rem calc(50% - 141px) 0}}
 .profile{max-width:880px;display:flex;justify-content:space-between}@media screen and (max-width:915px){.profile{max-width:645px}}@media screen and (max-width:645px){.profile{display:grid;row-gap:10px;justify-content:normal}}@media screen and (max-width:320px){.profile{max-width:282px}}
-.profile__image{position:relative;height:120px;width:120px}
+.profile__image{position:relative;height:120px;width:120px;display:flex;justify-self:center}
 .profile__avatar{width:100%;height:100%;border-radius:50%;-o-object-fit:cover;object-fit:cover}@media screen and (max-width:645px){.profile__avatar{justify-self:center}}.profile__avatar:hover{cursor:pointer;opacity:.8}
 .profile__avatar-edit{position:absolute;top:0;bottom:0;left:0;right:0;height:100%;width:100%;opacity:0;background:rgba(0,0,0,.8);background-image:url(images/profile_avatar_edit_button.ae1a976ddb506239e9f0.svg);background-position:50%;background-repeat:no-repeat;outline:none;padding:0;border:none}.profile__avatar-edit:hover{opacity:1;cursor:pointer}
 .profile__info{display:grid;grid-template-columns:120px minmax(-webkit-min-content,-webkit-max-content);grid-template-columns:120px minmax(min-content,max-content);-moz-column-gap:24px;column-gap:24px}@media screen and (max-width:645px){.profile__info{grid-template-columns:auto;justify-content:center;row-gap:22.2px}}
@@ -21,7 +21,7 @@
 .element{max-width:282px;border-radius:10px;display:grid;position:relative;grid-template-rows:282px 79px;overflow:hidden}
 .element__remove-button{width:18px;height:19px;background-image:url(images/trash.e3c42771bff3aaa52f76.svg);background-repeat:no-repeat;background-position:50%;background-color:transparent;border:none;align-self:center;padding:0;outline:none;position:absolute;top:18px;right:15px;visibility:hidden}.element__remove-button:hover{cursor:pointer;opacity:.6}
 .element__remove-button_visible{visibility:visible}
-.element__image{width:282px;height:282px}.element__image:hover{cursor:pointer}
+.element__image{width:282px;height:282px;-o-object-fit:cover;object-fit:cover}.element__image:hover{cursor:pointer}
 .element__like{display:grid}
 .element__like-count{text-align:center}
 .element__image-button{border:none;padding:0}
