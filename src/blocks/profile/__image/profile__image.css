@@ -2,4 +2,6 @@
   position: relative;
   height: 120px;
   width: 120px;
+  display: flex;
+  justify-self: center;
 }
