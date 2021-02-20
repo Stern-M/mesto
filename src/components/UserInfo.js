@@ -14,11 +14,11 @@ export default class UserInfo {
   }
 
   setUserInfo(inputName, inputDescription) {
-    this._name.textContent = inputName.value;
-    this._description.textContent = inputDescription.value;
+    this._name.textContent = inputName;
+    this._description.textContent = inputDescription;
   }
 
   setUserAvatar(avatar) {
-    this._avatar.src = avatar.value;
+    this._avatar.src = avatar;
   }
 }

@@ -1,10 +1,10 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, delPopup, cardID, userID, cardDeleteRequest, putLikeOnCard, deleteLikeFromCard) {
+  constructor(data, cardSelector, handleCardClick, delPopup, userID, cardDeleteRequest, putLikeOnCard, deleteLikeFromCard) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._imageReview = handleCardClick;
-    this._cardID = cardID;
+    this._cardID = data._id;
     this._owner = data.owner;
     this._delPopup = delPopup;
     this._userID = userID;
@@ -39,7 +39,7 @@ export default class Card {
 
   //получаем пользователей, которые поставили лайк
   _checkLikeOwners() {
-    const amILikeOwner = this._likes.some(owner => owner._id.includes(this._userID))
+    const amILikeOwner = this._likes.some(owner => owner._id === this._userID);
     return amILikeOwner
   };
 

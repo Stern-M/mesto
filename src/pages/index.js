@@ -15,11 +15,11 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const popupProfileNode = document.querySelector('.popup_profile_form');
 const popupAddingNode = document.querySelector('.popup_adding_form');
-export const profileTitleNode = '.profile__title';
-export const profileSubTitleNode = '.profile__subtitle';
+const profileTitleNode = '.profile__title';
+const profileSubTitleNode = '.profile__subtitle';
 const profileAvatar = '.profile__avatar';
 const avatarEditButton = document.querySelector('.profile__avatar-edit');
-const inputAvatar = document.querySelector('.popup__data_avatarurl');
+const inputAvatar = document.querySelector('.popup__data_avatar_url');
 const titleInputNode = document.querySelector('.popup__data_input_name');
 const subInputNode = document.querySelector('.popup__data_input_description');
 const targetCardReview = document.querySelector('.popup_preview_form');
@@ -59,27 +59,35 @@ const openPreviewPopup = (name, link) => {
   popupPreviewImage.open(name, link);
 };
 
-//рендер и отрисовка карточек с сервера
-api
-  .getAllCards()
-  .then((data) => {
-    const newCards = data.map(item=>{
-      return {name: item.name, link: item.link, id: item._id, owner: item.owner, likes:item.likes}
+//получаю данные юзера + карточки и отображаю данные юзера + отрисовываю карточки
+Promise.all([
+  api.getUserData(),
+  api.getAllCards()
+])
+  .then((values)=>{
+    const userData = values[0];
+    userID = userData._id;
+    userInfo.setUserInfo(userData.name, userData.about);
+    userInfo.setUserAvatar(userData.avatar);
+    const initialCards = values[1].map(item=>{
+      return {name: item.name, link: item.link, _id: item._id, owner: item.owner, likes:item.likes}
     })
     cardList = new Section({
-      data: newCards,
+      data: initialCards,
       renderer: (item) => {
-        createNewCard(item, cardList, item.id)
+        cardList.setItem(createNewCard(item), true)
       },
     }, cardListSelector);
     cardList.addItem();
     return cardList;
   })
-  .catch(err=>console.log(err))
+  .catch((err)=>{
+    console.log(err);
+  })
 
 //функция для создания карточки
-function createNewCard(data, list, cardID) {
-  const card = new Card(data, '.template', openPreviewPopup, delPopup, cardID, userID,
+function createNewCard(data) {
+  const card = new Card(data, '.template', openPreviewPopup, delPopup, userID,
   () => {
     delPopup.setSubmitHandler(cardDeleteRequest(card)),
     delPopup.open()
@@ -97,7 +105,6 @@ function createNewCard(data, list, cardID) {
       .catch(err=>console.log(err))
     });
   const cardElement = card.generateCard();
-  list.setItem(cardElement);
 	return cardElement;
 }
 
@@ -109,7 +116,7 @@ const addPopup = new PopupWithForm(
     api
       .addCard({name: data.place_name, link: data.place_url})
       .then((data) => {
-        createNewCard(data, cardList, data._id)
+        cardList.setItem(createNewCard(data), false);
         })
       .then(() => addPopup.close())
       .catch(err=>console.log(err))
@@ -120,29 +127,17 @@ const addPopup = new PopupWithForm(
 //удаление карточки
 const cardDeleteRequest = (card) => {
   return () => {
+    deleteRender('.popup__delete', true)
     api
     .removeCard(card.getCardID())
-    .then((res) => {
-      if (res.status) 
-      console.log('удаляю')
+    .then(() => {      
       card.deleteCard();
       delPopup.close();
     })
     .catch(err=>console.log(err))
+    .finally(() => {
+      deleteRender('.popup__delete', false)})
   }
-}
-
-//отображение актуальных данных пользователя
-function showUserData() {
-  api
-    .getUserData()
-    .then((data) => {
-      document.querySelector(profileTitleNode).textContent = data.name;
-      document.querySelector(profileSubTitleNode).textContent = data.about;
-      document.querySelector('.profile__avatar').src = data.avatar;
-      userID = data._id;
-    })
-    .catch(err=>console.log(err))
 }
 
 //функция для вывода "сохранение..." в момент загрузки
@@ -154,6 +149,16 @@ function submitRender(popupSelector, isLoading) {
     if (popupSelector === '.popup__add') {
       buttonElement.textContent = "Создать";
     } else {buttonElement.textContent = "Сохранить";}
+  }
+}
+
+//функция для вывода "удаление..." при удалении
+function deleteRender(popupSelector, isLoading) {
+  const buttonElement = document.querySelector(popupSelector).querySelector('.popup__button');
+  if (isLoading) {
+    buttonElement.textContent = "Удаление...";
+  } else { 
+    buttonElement.textContent = "Да";
   }
 }
 
@@ -169,7 +174,7 @@ const editPopup = new PopupWithForm(
     api
       .setUserData({name: titleInputNode.value, about: subInputNode.value})
       .then(() => {
-        userInfo.setUserInfo(titleInputNode, subInputNode);
+        userInfo.setUserInfo(titleInputNode.value, subInputNode.value);
         editPopup.close();
       })
       .catch(err=>console.log(err))
@@ -183,7 +188,7 @@ const avatarPopup = new PopupWithForm(
       api
         .setUserAvatar(inputAvatar.value)
         .then(() => {
-          userInfo.setUserAvatar(inputAvatar);
+          userInfo.setUserAvatar(inputAvatar.value);
           avatarPopup.close();
         })
         .catch(err=>console.log(err))
@@ -216,8 +221,6 @@ function openAddCardPopup() {
   formAddValidate.resetValidation();
 }
 
-showUserData();
-
 editPopup.setEventListeners();
 addPopup.setEventListeners();
 avatarPopup.setAvatarListners();
@@ -227,7 +230,7 @@ formEditValidate.enableValidation();
 formAddValidate.enableValidation();
 formAvatarValidate.enableValidation();
 
-//слушаетли для кнопок редактирования и новой карточки
+//слушатели для кнопок редактирования и новой карточки
 profileEditButton.addEventListener('click', openEditProfilePopup);
 profileAddButton.addEventListener('click', openAddCardPopup);
 avatarEditButton.addEventListener('click', openAvatarPopup);

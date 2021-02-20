@@ -1,14 +1,14 @@
-const onError = (res)=>{
-  if(res.ok){
-    return res.json();
-  }
-  return Promise.reject('Сервер не доступен')
-}
-
 export default class Api {
   constructor(config) {
     this._url = config.url;
     this._headers = config.headers;  
+  }
+
+  _onError(res) {
+    if(res.ok){
+      return res.json();
+    }
+    return Promise.reject('Сервер не доступен')
   }
 
   //запрос карточек с сервера
@@ -17,19 +17,16 @@ export default class Api {
       method: "GET",
       headers: this._headers
     })
-    .then(onError)
+    .then(this._onError)
   }
 
   setUserAvatar(avatar) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        authorization: '9b76e223-fcf4-4649-a71c-6a4d1969a300',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({avatar:avatar})
     })
-      .then(onError)
+      .then(this._onError)
   }
 
   //запрос данных по юзеру с сервера
@@ -38,23 +35,20 @@ export default class Api {
       method: "GET",
       headers: this._headers,
     })
-    .then(onError)
+    .then(this._onError)
   }
 
   //изменение данных юзера на сервере
   setUserData(data) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: '9b76e223-fcf4-4649-a71c-6a4d1969a300',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about
       })
     })
-      .then(onError)
+      .then(this._onError)
   }
 
   //добаввление новой карточки на сервер
@@ -64,7 +58,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(data)
     })
-    .then(onError)
+    .then(this._onError)
   }
 
   //удаление карточки с сервера
@@ -73,16 +67,7 @@ export default class Api {
       method: "DELETE",
       headers: this._headers
     })
-    .then(onError)
-  }
-
-  //запрос количества лайков карточки ПРОВЕРИТЬ А НУЖНО ЛИ МНЕ ЭТО!!!!
-  getLikeNumber() {
-    return fetch(`${this._url}/cards`, {
-      method: "GET",
-      headers: this._headers,
-    })
-    .then(onError)
+    .then(this._onError)
   }
 
   //ставлю лайк
@@ -91,7 +76,7 @@ export default class Api {
       method: "PUT",
       headers: this._headers
     })
-    .then(onError)
+    .then(this._onError)
   }
 
   //снимаю лайк с карточки
@@ -100,7 +85,7 @@ export default class Api {
       method: "DELETE",
       headers: this._headers
     })
-    .then(onError)
+    .then(this._onError)
   }
 
 }

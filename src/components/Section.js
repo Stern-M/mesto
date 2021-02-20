@@ -1,18 +1,9 @@
 export default class Section {
-  constructor({data, renderer}, container, api) {
+  constructor({data, renderer}, container) {
     this._renderedItems = data;
     this._renderer = renderer;
     this._containerSelector = container;
     this._container = document.querySelector(this._containerSelector);
-    this._api = api;
-  }
-
-  //добавление карточки на сервер
-  addNewCard(newCard) {
-    this._api
-    .addCard(newCard)
-    .then((data) => this._addItem({name: data.name, link: data.link}))
-    .catch(err => console.log(err))
   }
 
   addItem() {
