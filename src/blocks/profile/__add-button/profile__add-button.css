@@ -10,10 +10,16 @@
   outline: none;
 }
 
-@media screen and (max-width: 645px) {
+@media screen and (max-width: 695px) {
   .profile__add-button {
-    width: 100%;
+    width: 320px;
     padding-top: 46px;
+  }
+}
+
+@media screen and (max-width: 362px) {
+  .profile__add-button {
+    width: 282px;
   }
 }
 
